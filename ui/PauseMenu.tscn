@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://dojkqhtsd73go"]
+
+[ext_resource type="PackedScene" uid="uid://cj7vywxbe73c1" path="res://ui/VolumeBars.tscn" id="1"]
+[ext_resource type="Script" path="res://ui/PauseMenu.gd" id="2"]
+[ext_resource type="Theme" path="res://ui/MainUITheme.tres" id="3"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+layer = 100
+script = ExtResource("2")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("3")
+color = Color(0.280318, 0.266399, 0.420266, 1)
+
+[node name="ResumeButton" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -107.5
+offset_top = -20.0
+offset_right = 107.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -107.5
+offset_top = -68.0
+offset_right = 107.5
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Quit to Menu"
+
+[node name="VolumeBars" parent="ColorRect" instance=ExtResource("1")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.5
+offset_top = -192.0
+offset_right = 135.5
+offset_bottom = -112.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.5
+offset_top = 63.0
+offset_right = 25.5
+offset_bottom = 77.0
+text = "PAUSED"
+
+[connection signal="pressed" from="ColorRect/ResumeButton" to="." method="_on_ResumeButton_pressed"]
+[connection signal="pressed" from="ColorRect/QuitButton" to="." method="_on_QuitButton_pressed"]

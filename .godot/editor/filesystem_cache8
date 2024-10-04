@@ -1,0 +1,16 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1728064470
+default_bus_layout.tres::AudioBusLayout::-1::1728064431::0::1::::<><>::
+default_env.tres::Environment::-1::1728064431::0::1::::<><>::
+export_presets.cfg::TextFile::-1::1728064390::0::1::::<><>::
+Game.tscn::PackedScene::-1::1728064431::0::1::::<><>::res://ui/PauseMenu.tscn
+GS.gd::GDScript::-1::1728064431::0::1::::<>Node<>::
+icon.png::CompressedTexture2D::7684653452638968978::1728064390::1728064472::1::::<><>::
+MainMenu.tscn::PackedScene::-1::1728064431::0::1::::<><>::res://ui/VolumeBars.tscn<>res://ui/MainMenu.gd<>res://ui/MainUITheme.tres
+::res://ui/::1728064390
+MainMenu.gd::GDScript::-1::1728064431::0::1::::<>Control<>::
+MainUITheme.tres::Theme::-1::1728064431::0::1::::<><>::
+PauseMenu.gd::GDScript::-1::1728064431::0::1::::<>CanvasLayer<>::
+PauseMenu.tscn::PackedScene::-1::1728064431::0::1::::<><>::res://ui/VolumeBars.tscn<>res://ui/PauseMenu.gd<>res://ui/MainUITheme.tres
+VolumeBars.tscn::PackedScene::-1::1728064431::0::1::::<><>::res://ui/VolumeSlider.gd<>res://ui/MainUITheme.tres
+VolumeSlider.gd::GDScript::-1::1728064431::0::1::::<>HSlider<>::
