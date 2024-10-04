@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://feyduuodmg3a"]
+
+[ext_resource type="Texture2D" uid="uid://so31a8iyooat" path="res://players/body0.png" id="1_dkhxv"]
+[ext_resource type="Texture2D" uid="uid://dlefoohwcy7vf" path="res://players/sword.png" id="2_05pva"]
+
+[sub_resource type="Animation" id="Animation_h8hu0"]
+resource_name = "Bob"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.75, 1.33333),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -5)]
+}
+
+[sub_resource type="Animation" id="Animation_cwyuw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_to8dl"]
+_data = {
+"Bob": SubResource("Animation_h8hu0"),
+"RESET": SubResource("Animation_cwyuw")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u0yco"]
+radius = 5.00001
+height = 20.0
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_to8dl")
+}
+autoplay = "Bob"
+speed_scale = 5.0
+
+[node name="Body" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_dkhxv")
+
+[node name="Item" type="Sprite2D" parent="Body"]
+position = Vector2(156, -8)
+texture = ExtResource("2_05pva")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 23)
+rotation = -1.57079
+shape = SubResource("CapsuleShape2D_u0yco")

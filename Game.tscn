@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=3 format=3 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://feyduuodmg3a" path="res://players/player.tscn" id="2_k7n08"]
 
 [node name="Game" type="Node2D"]
 
 [node name="Camera3D" type="Camera2D" parent="."]
 
 [node name="PauseMenu" parent="." instance=ExtResource("1")]
+visible = false
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("2_k7n08")]

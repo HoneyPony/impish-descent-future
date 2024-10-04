@@ -1,6 +1,6 @@
 res://default_env.tres
-res://ui/VolumeBars.tscn
-res://ui/VolumeSlider.gd
 res://Game.tscn
 res://MainMenu.tscn
+res://ui/VolumeBars.tscn
 res://ui/PauseMenu.tscn
+res://players/player.tscn
