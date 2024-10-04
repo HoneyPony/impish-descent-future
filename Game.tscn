@@ -10,4 +10,9 @@
 [node name="PauseMenu" parent="." instance=ExtResource("1")]
 visible = false
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("2_k7n08")]
+[node name="CharacterBody2D" parent="." node_paths=PackedStringArray("tmp_target") instance=ExtResource("2_k7n08")]
+tmp_target = NodePath("../CharacterBody2D2")
+
+[node name="CharacterBody2D2" parent="." instance=ExtResource("2_k7n08")]
+position = Vector2(194, -104)
+script = null

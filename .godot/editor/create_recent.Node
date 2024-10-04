@@ -1,5 +1,7 @@
+Sprite2D
+AnimatableBody2D
+Node2D
 AnimationPlayer
 AnimationTree
 CollisionShape2D
-Sprite2D
 CharacterBody2D
