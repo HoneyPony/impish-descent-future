@@ -84,6 +84,7 @@ var valid_imps = [
 	[Class.Brawler, Item.Mace],
 	[Class.Mage, Item.Staff],
 	[Class.Mage, Item.Dagger],
+	[Class.Mage, Item.Club],
 	[Class.Cleric, Item.Staff],
 	[Class.Cleric, Item.Sword],
 	[Class.Cleric, Item.Scythe],

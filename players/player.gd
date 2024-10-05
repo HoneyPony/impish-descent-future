@@ -15,6 +15,13 @@ class_name Player
 #@export var melee_cooldown = 0.3
 @export var action_cooldown = 0.3
 
+enum DamageMode {
+	Fixed,
+	Random
+}
+
+var damage_mode: DamageMode = DamageMode.Fixed
+
 # We need to reset this each time we melee swing due to the possibility of buffs.
 # (too stateful, I guess...)
 var melee_base_damage = 1
@@ -128,6 +135,7 @@ const MELEE_GENERAL_BUFF = 1.2
 # Computes intrinsic class-based properties before we get to the effects of
 # relics.
 func compute_basic_properties():
+	damage_mode = DamageMode.Fixed
 	match current_class:
 		GS.Class.Brawler:
 			# Brwaler is thankfully always melee.
@@ -151,6 +159,10 @@ func compute_basic_properties():
 			if current_item == GS.Item.Dagger:
 				goal = Goals.GOAL_BUFF
 				buff_target_buff = GS.Buff.Dagger
+			if current_item == GS.Item.Club:
+				ranged_base_damage = 4
+				damage_mode = DamageMode.Random
+				action_speed *= 0.5
 		GS.Class.Cleric:
 			goal = Goals.GOAL_BUFF
 			buff_target_buff = GS.Buff.Shield
@@ -549,10 +561,16 @@ func is_split():
 	return false
 			
 func get_buffed_damage(damage: int) -> int:
+	# Randomize damage if it's random.
+	if damage_mode == DamageMode.Random:
+		damage = randi_range(0, damage)
+	
 	for i in range(0, 3):
 		# Split buff/debuff is never consumed
 		if buffs[i] == GS.Buff.Split:
 			damage -= 1
+			if damage < 0:
+				damage = 0
 	
 	# Consume dagger buff and return separately
 	for i in range(0, 3):

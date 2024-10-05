@@ -23,6 +23,8 @@ func hit_target(target):
 	# When we hit the target, see if we get a damage buff from the player.
 	# Note that this means that melee attacks that miss don't use up damage
 	# buffs.
-	damage = get_parent().get_buffed_damage(damage)
+	# ALSO: This means that e.g.. damage up buffs only apply to a single hit,
+	# rather than the whole attack.
+	damage = get_parent().get_buffed_damage(get_parent().melee_base_damage)
 	
 	

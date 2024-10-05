@@ -14,3 +14,5 @@ res://tiles/create_navigation.gd
 res://enemies/simple_ghost.gd
 res://camera.gd
 res://SpawnImps.gd
+res://GS.gd
+res://hazard/player_melee_hazard.gd
