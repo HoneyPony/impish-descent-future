@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://players/player.gd" id="1_w5dbm"]
 [ext_resource type="Script" path="res://hazard/hazard.gd" id="2_ot2ip"]
 [ext_resource type="Texture2D" uid="uid://bmyr52b8dwvrw" path="res://players/staff.png" id="3_gmg4u"]
-[ext_resource type="Texture2D" uid="uid://cvybokmbxkvby" path="res://players/body1.png" id="4_7f0rb"]
+[ext_resource type="Texture2D" uid="uid://b4rijupf75hec" path="res://players/body2.png" id="4_pg1ny"]
 
 [sub_resource type="Animation" id="Animation_h8hu0"]
 resource_name = "Bob"
@@ -87,7 +87,7 @@ shape = SubResource("RectangleShape2D_cigoc")
 
 [node name="Body" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("4_7f0rb")
+texture = ExtResource("4_pg1ny")
 centered = false
 offset = Vector2(-128, -384)
 
