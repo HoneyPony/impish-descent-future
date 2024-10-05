@@ -13,9 +13,9 @@ func _ready():
 	grid.update()
 
 	for cell in get_used_cells():
-		print(cell)
+		#print(cell)
 		grid.set_point_solid(cell)
-	print("---------------")
+	#print("---------------")
 	#print(grid)
 		
 	GS.nav = grid

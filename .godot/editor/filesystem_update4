@@ -1,5 +1,6 @@
 res://default_env.tres
 res://Game.tscn
+res://tileset.tres
 res://MainMenu.tscn
 res://ui/VolumeBars.tscn
 res://ui/PauseMenu.tscn
@@ -9,7 +10,4 @@ res://health/health.tscn
 res://buffs/split_buff.tscn
 res://enemies/enemy_projectile_1_particle.tscn
 res://players/player.gd
-res://SpawnImps.gd
 res://tiles/create_navigation.gd
-res://GS.gd
-res://tileset.tres
