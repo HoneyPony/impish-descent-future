@@ -303,7 +303,7 @@ func _physics_process(delta):
 	var all_players = get_tree().get_nodes_in_group("Players")
 	for imp in all_players:
 		var impulse_strength = 4096
-		var max_range = 1024
+		var max_range = 256
 		var stay_away = false
 		if current_class == GS.Class.Summoner && imp.current_class != GS.Class.Summoner:
 			stay_away = true
@@ -311,8 +311,8 @@ func _physics_process(delta):
 			stay_away = true
 		# summoners want to get hit, so make them stay far away from other imps.
 		if stay_away:
-			impulse_strength = 4096
-			max_range = 512
+			impulse_strength = 4096 * 4
+			max_range = 1024
 		var to_vec = global_position - imp.global_position
 		if to_vec.length_squared() < max_range * max_range:
 			var impulse = impulse_strength * to_vec / (to_vec.length_squared() + 0.005)
