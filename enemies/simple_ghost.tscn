@@ -35,4 +35,7 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard"]
 shape = SubResource("RectangleShape2D_kr1kd")
 
+[node name="FireFrom" type="Marker2D" parent="."]
+position = Vector2(0, -76)
+
 [connection signal="body_entered" from="Hazard" to="." method="_on_hazard_body_entered"]

@@ -10,3 +10,8 @@ res://players/player.gd
 res://health/health.tscn
 res://health/health.gd
 res://hazard/hazard.gd
+res://enemies/enemy_projectile1.tscn
+res://enemies/enemy_projectile_1.gd
+res://GS.gd
+res://enemies/enemy_projectile_1_particle.tscn
+res://temporary_particles.gd
