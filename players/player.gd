@@ -15,6 +15,9 @@ class_name Player
 #@export var melee_cooldown = 0.3
 @export var action_cooldown = 0.3
 
+# NOTE: Only set this to positive if you've actually added an ethereal buff.
+var ethereal_lifetime = -1.0
+
 enum DamageMode {
 	Fixed,
 	Random
@@ -74,6 +77,8 @@ func grab_buff_tex(buf):
 			return preload("res://buffs/buff_dagger.png")
 		GS.Buff.Split:
 			return preload("res://players/buff_split.png")
+		GS.Buff.Ethereal:
+			return preload("res://buffs/buff_ethereal.png")
 		_:
 			print("unknown buff!")
 			return null
@@ -288,7 +293,8 @@ func fire_generic_action():
 	# Summoner with staff: summons new imp on hit
 	if current_class == GS.Class.Summoner:
 		if current_item == GS.Item.Staff:
-			GS.spawn_imp(get_parent(), GS.valid_imps.pick_random(), global_position)
+			GS.spawn_imp(get_parent(), GS.valid_imps.pick_random(), global_position,
+				false, true)
 		# WIth sycthe: resurrect a random imp
 		if current_item == GS.Item.Scythe:
 			var dead = get_tree().get_nodes_in_group("DeadPlayers")
@@ -299,6 +305,11 @@ func fire_generic_action():
 func _physics_process(delta):
 	if is_dead:
 		return
+		
+	if ethereal_lifetime > 0.0:
+		ethereal_lifetime -= delta
+		if ethereal_lifetime <= 0:
+			die(null)
 	
 	# Uncomment this if we want to animate the item
 	# Note: Additional latency from the frame being delayed makes this not really work.
@@ -532,7 +543,7 @@ func _physics_process(delta):
 				if player.has_empty_buff():
 					target_player = player
 					break
-				elif not player.is_split():
+				elif not player.is_split(true):
 					target_player = player
 					break
 		# Only bother doing anything if we have a real target
@@ -557,7 +568,7 @@ func on_hit(body):
 			
 
 func split():
-	if self.is_split():
+	if self.is_split(true):
 		return
 	
 	#var split_dmg = melee_base_damage
@@ -589,8 +600,9 @@ func _on_hazard_body_entered(body):
 		return
 		
 	# Split players can't be split again.
+	# This includes ethereal players.
 	if body != null and is_instance_of(body, SplitBuff):
-		if self.is_split():
+		if self.is_split(true):
 			return
 	
 	body.hit_target(self)
@@ -623,6 +635,11 @@ func die(killer_projectile):
 	# on death.
 	on_death(killer_projectile)
 	
+	# Ethereal imps can't be resurrected
+	if is_ethereal():
+		queue_free()
+		return
+	
 	remove_from_group("Players")
 	add_to_group("DeadPlayers")
 	
@@ -642,6 +659,8 @@ func add_buff(buff: GS.Buff):
 	for i in range(0, 3):
 		if buffs[i] == GS.Buff.None:
 			buffs[i] = buff
+			if buff == GS.Buff.Ethereal:
+				ethereal_lifetime = 4.0
 			render_buffs()
 			return
 
@@ -665,11 +684,19 @@ func has_empty_buff():
 		if buffs[i] == GS.Buff.None:
 			return true
 			
-func is_split():
+func is_split(count_eth: bool = false):
 	for i in range(0, 3):
 		if buffs[i] == GS.Buff.Split:
 			return true
+		if count_eth and buffs[i] == GS.Buff.Ethereal:
+			return true
 			
+	return false
+	
+func is_ethereal():
+	for i in range(0, 3):
+		if buffs[i] == GS.Buff.Ethereal:
+			return true
 	return false
 			
 func get_buffed_damage(damage: int) -> int:
