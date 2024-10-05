@@ -58,6 +58,8 @@ var current_class: GS.Class = GS.Class.Mage
 
 var buffs = [GS.Buff.None, GS.Buff.None, GS.Buff.None]
 
+var ranged_attack_is_nova: bool = false
+
 func grab_buff_tex(buf):
 	match buf:
 		GS.Buff.None:
@@ -163,6 +165,10 @@ func compute_basic_properties():
 				ranged_base_damage = 4
 				damage_mode = DamageMode.Random
 				action_speed *= 0.5
+			if current_item == GS.Item.Scythe:
+				ranged_base_damage = 1
+				action_speed *= 0.5
+				ranged_attack_is_nova = true
 		GS.Class.Cleric:
 			goal = Goals.GOAL_BUFF
 			buff_target_buff = GS.Buff.Shield
@@ -300,27 +306,34 @@ func _physics_process(delta):
 			ranged_attack_target_cached = ranged_attack_target.global_position
 			
 		if state_timer >= 0.5 && may_fire:
-			# Fire the projectile when we cross the 0.5 on the timer.
-			var projectile = projectile_scene.instantiate()
-			projectile.global_position = item.global_position
-			var vel = ranged_attack_target_cached - item.global_position
-			# Hack for buff related textures
-			if goal == Goals.GOAL_ATTACK_OWN:
-				projectile.projectile_source = self
-				# do nothing special...?
-				pass
-			elif goal == Goals.GOAL_BUFF:
-				# TODO: Actually set our buff intent
-				projectile.set_sprite(grab_buff_tex(buff_target_buff))
-				projectile.buff = buff_target_buff
-				projectile.projectile_source = self
-			elif goal == Goals.GOAL_RANGED:
-				# Use up damage buffs when the projectile is fired.
-				projectile.damage = get_buffed_damage(ranged_base_damage)
-			
-			# TODO: Somehow set this velocity when relevant
-			projectile.velocity = vel.normalized() * 512.0
-			add_sibling(projectile)
+			if ranged_attack_is_nova:
+				for i in range(0, 5):
+					var projectile = projectile_scene.instantiate()
+					projectile.global_position = item.global_position
+					projectile.velocity = Vector2.from_angle(randf_range(0, TAU)) * 512.0
+					add_sibling(projectile)
+			else:
+				# Fire the projectile when we cross the 0.5 on the timer.
+				var projectile = projectile_scene.instantiate()
+				projectile.global_position = item.global_position
+				var vel = ranged_attack_target_cached - item.global_position
+				# Hack for buff related textures
+				if goal == Goals.GOAL_ATTACK_OWN:
+					projectile.projectile_source = self
+					# do nothing special...?
+					pass
+				elif goal == Goals.GOAL_BUFF:
+					# TODO: Actually set our buff intent
+					projectile.set_sprite(grab_buff_tex(buff_target_buff))
+					projectile.buff = buff_target_buff
+					projectile.projectile_source = self
+				elif goal == Goals.GOAL_RANGED:
+					# Use up damage buffs when the projectile is fired.
+					projectile.damage = get_buffed_damage(ranged_base_damage)
+				
+				# TODO: Somehow set this velocity when relevant
+				projectile.velocity = vel.normalized() * 512.0
+				add_sibling(projectile)
 			
 		var target_rot = item.global_position.angle_to_point(ranged_attack_target_cached)
 		item.rotation = lerp_angle(0.0, target_rot + TAU * 0.25, to_t)
