@@ -19,16 +19,17 @@ script = ExtResource("1_n6c1y")
 y_sort_enabled = true
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_4xqsb")
+offset = Vector2(0, -256)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 54)
 rotation = -1.57079
 shape = SubResource("CapsuleShape2D_m148u")
 
 [node name="Health" parent="." instance=ExtResource("3_kq0l4")]
-position = Vector2(0, 68)
+position = Vector2(0, 14)
 
 [node name="Hazard" type="Area2D" parent="."]
+position = Vector2(0, -54)
 collision_layer = 0
 collision_mask = 16
 
@@ -36,6 +37,6 @@ collision_mask = 16
 shape = SubResource("RectangleShape2D_kr1kd")
 
 [node name="FireFrom" type="Marker2D" parent="."]
-position = Vector2(0, -76)
+position = Vector2(0, -130)
 
 [connection signal="body_entered" from="Hazard" to="." method="_on_hazard_body_entered"]

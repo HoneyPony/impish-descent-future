@@ -31,6 +31,7 @@ func _physics_process(delta):
 		to_pos += p.global_position * randf_range(0.8, 1.2)
 		
 	to_pos /= players.size()
+	to_pos = GS.get_nav_move_target(global_position, to_pos)
 	
 	var vel_dir = (to_pos - global_position).normalized()
 	velocity = vel_dir * 32
