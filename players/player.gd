@@ -478,7 +478,7 @@ func split():
 	#if split_dmg < 0:
 		#split_dmg = 0
 	var pos = self.global_position
-	pos += Vector2.from_angle(randf_range(0, TAU)) * randf_range(16, 256)
+	#pos += Vector2.from_angle(randf_range(0, TAU)) * randf_range(16, 256)
 	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, true)
 
 func set_own_damage(amount: int):
