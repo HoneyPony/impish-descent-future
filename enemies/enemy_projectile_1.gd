@@ -8,9 +8,14 @@ var targetted_player = null
 
 const SPEED = 512
 
+# Projectiles can't hit twice.
+var slowness = 10.0
+
 # IMPORTANT: ALL ENEMY PROJECTILES MUST IMPLEMENT THIS
-func hit_target():
+func hit_target(target):
 	die()
+func killed_target(target):
+	pass
 
 func die():
 	var particle = GS.EnemyProjectile1Particle.instantiate()

@@ -86,6 +86,8 @@ func set_item(item: GS.Item):
 			tex = preload("res://players/scythe.png")
 		GS.Item.Dagger:
 			tex = preload("res://players/dagger.png")
+		GS.Item.Mace:
+			tex = preload("res://players/mace.png")
 		_:
 			print("Oops, we don't support that item yet")
 	
@@ -109,6 +111,9 @@ func set_class(klass: GS.Class):
 			
 	body_sprite.texture = tex
 	current_class = klass
+
+# general buff to melee speed
+const MELEE_GENERAL_BUFF = 1.2
 	
 # Computes intrinsic class-based properties before we get to the effects of
 # relics.
@@ -123,6 +128,9 @@ func compute_basic_properties():
 				GS.Item.Dagger:
 					melee_base_damage = 1
 					action_speed *= 2.0
+				GS.Item.Mace:
+					melee_base_damage = 5
+					$Item.only_half_health = true
 			
 		GS.Class.Mage:
 			goal = Goals.GOAL_RANGED
@@ -132,6 +140,14 @@ func compute_basic_properties():
 		GS.Class.Cleric:
 			goal = Goals.GOAL_BUFF
 			buff_target_buff = GS.Buff.Shield
+			
+			match current_item:
+				GS.Item.Sword:
+					melee_base_damage = 1
+					# This enemy doesn't get the buff.
+					action_speed *= 0.75 / MELEE_GENERAL_BUFF
+					goal = Goals.GOAL_MELEE
+					$Item.upgrades_on_kill = true
 		GS.Class.Summoner:
 			# Summoner can't do anything but get hit by default.
 			goal = Goals.GOAL_NONE
@@ -190,10 +206,18 @@ func finalize_properties():
 	render_buffs()
 	
 	# General melee buff: Increase our action speed because melee is hard.
-	action_speed *= 1.2
+	if goal == Goals.GOAL_MELEE:
+		action_speed *= MELEE_GENERAL_BUFF
 	
 	# The melee collision is only on when we are attacking melee.
 	melee_collision_shape.disabled = true
+	
+	$Item.slowness = 1.0 / action_speed
+
+func target_meets_goals(enemy) -> bool:
+	if $Item.only_half_health:
+		return enemy.health * 2 <= enemy.max_health
+	return true
 
 func _physics_process(delta):
 	# Uncomment this if we want to animate the item
@@ -281,11 +305,21 @@ func _physics_process(delta):
 		if not bodies.is_empty():
 			var closest = bodies[0]
 			var dist = (bodies[0].global_position - global_position).length_squared()
+			var meets_goals = target_meets_goals(bodies[0])
 			for i in range(1, bodies.size()):
 				var newdist = (bodies[i].global_position - global_position).length_squared()
-				if newdist < dist:
+				var new_meets_goals = target_meets_goals(bodies[i])
+				
+				var better = false
+				if new_meets_goals and not meets_goals:
+					better = true
+				else:
+					better = newdist < dist
+				
+				if better:
 					closest = bodies[i]
 					dist = newdist
+					meets_goals = new_meets_goals
 					
 			# Move to a random position near the targetted enemy. This hooks into
 			# the target_noise system so that we at once:
@@ -393,7 +427,7 @@ func on_death():
 		
 
 func _on_hazard_body_entered(body):
-	body.hit_target()
+	body.hit_target(self)
 	# TODO: Check shields, etc
 	on_hit()
 	
@@ -419,7 +453,7 @@ func _on_buff_body_entered(body):
 		if buffs[i] == GS.Buff.None and body.buff != GS.Buff.None:
 			buffs[i] = body.buff
 			render_buffs()
-			body.hit_target()
+			body.hit_target(self)
 			return
 
 func has_empty_buff():

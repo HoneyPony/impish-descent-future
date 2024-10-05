@@ -4,11 +4,17 @@ var velocity = Vector2.ZERO
 
 var damage: int = 1
 
+# Projectiles can't hit twice.
+var slowness = 10.0
+
 @onready var sprite = $Sprite
 
 # IMPORTANT: ALL  PROJECTILES MUST IMPLEMENT THIS
-func hit_target():
+func hit_target(target):
 	die()
+	
+func killed_target(target):
+	pass
 
 func die():
 	var particle = GS.EnemyProjectile1Particle.instantiate()

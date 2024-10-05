@@ -5,10 +5,13 @@ var buff = GS.Buff.None
 var buff_source = null
 
 # IMPORTANT: ALL  PROJECTILES MUST IMPLEMENT THIS
-func hit_target():
+func hit_target(target):
 	# Reset to None so we don't help more than one player
 	buff = GS.Buff.None
 	die()
+	
+func killed_target(target):
+	pass
 
 func die():
 	var particle = GS.EnemyProjectile1Particle.instantiate()

@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 var health: int = 6
+var max_health: int = 6
 
 var current_projectile = null
 
@@ -54,14 +55,15 @@ func _on_hazard_body_entered(body):
 		return
 	
 	# Call hit_target() first in case the damage gets buffed.
-	body.hit_target()
+	body.hit_target(self)
 	health -= body.damage
 	
 	
 	# Time out collision
-	collision_timeouts[body] = 0.5
+	collision_timeouts[body] = body.slowness
 	
 	if health <= 0:
 		if current_projectile != null and not current_projectile.fired:
 			current_projectile.die()
+		body.killed_target(self)
 		queue_free()
