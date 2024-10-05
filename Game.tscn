@@ -16,3 +16,56 @@ visible = false
 
 [node name="SimpleGhost" parent="." instance=ExtResource("3_vahep")]
 position = Vector2(-36, -227)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 414.0
+offset_top = 138.0
+offset_right = 687.0
+offset_bottom = 161.0
+text = "Choose an Imp to add to your army"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 356.0
+offset_top = 168.0
+offset_right = 733.0
+offset_bottom = 222.0
+text = "Brawler wielding Sword:
+- Attacks at 1x speed for 2 Melee damage."
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 357.0
+offset_top = 230.0
+offset_right = 734.0
+offset_bottom = 284.0
+text = "Summoner wielding Staff:
+- When Summoner is hit, spawns a random imp."
+
+[node name="Button3" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 357.0
+offset_top = 294.0
+offset_right = 734.0
+offset_bottom = 348.0
+text = "Mage wielding Staff:
+- Attacks at 1x speed for 1 Ranged damage."
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 362.0
+offset_right = 721.0
+offset_bottom = 385.0
+text = "... and Choose a Relic to enhance your power"

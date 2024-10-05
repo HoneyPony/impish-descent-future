@@ -30,13 +30,18 @@ var valid_imps = [
 	[Class.Brawler, Item.Sword]
 ]
 
-func spawn_imp(parent: Node, config: Array, global_pos: Vector2):
+func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2):
 	var imp = Player.instantiate()
 	parent.add_child(imp)
 	imp.global_position = global_pos
-	
 	imp.set_class(config[0])
 	imp.set_item(config[1])
+
+func spawn_imp(parent: Node, config: Array, global_pos: Vector2):
+	call_deferred("finish_spawn_imp", parent, config, global_pos)
+	
+	
+	
 
 func _ready():
 	pass
