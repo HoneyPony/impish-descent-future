@@ -15,6 +15,8 @@ extends CharacterBody2D
 var ranged_attack_target: Node2D = null
 var ranged_attack_target_cached: Vector2 = Vector2.ZERO
 
+var projectile_scene: PackedScene = GS.PlayerProjectile1
+
 enum State {
 	NO_ACTION,
 	MELEE_ATTACK,
@@ -24,11 +26,41 @@ enum State {
 enum Goals {
 	GOAL_MELEE,
 	GOAL_RANGED,
+	GOAL_BUFF,
 	GOAL_NONE,
 }
 
 var current_item: GS.Item = GS.Item.Staff
 var current_class: GS.Class = GS.Class.Mage
+
+var buffs = [GS.Buff.None, GS.Buff.None, GS.Buff.None]
+
+func grab_buff_tex(buf):
+	match buf:
+		GS.Buff.None:
+			return null
+		GS.Buff.Shield:
+			return preload("res://buffs/buff_protect.png")
+		_:
+			print("unknown buff!")
+			return null
+
+func render_buffs():
+	# NOTE: 1am code
+	# Probably better way to shift these down...
+	if buffs[1] == GS.Buff.None && buffs[2] != GS.Buff.None:
+		buffs[1] = buffs[2]
+		buffs[2] = GS.Buff.None
+	if buffs[0] == GS.Buff.None && buffs[2] != GS.Buff.None:
+		buffs[0] = buffs[2]
+		buffs[2] = GS.Buff.None
+	if buffs[0] == GS.Buff.None && buffs[1] != GS.Buff.None:
+		buffs[0] = buffs[1]
+		buffs[1] = GS.Buff.None
+
+	$Buff0.texture = grab_buff_tex(buffs[0])
+	$Buff1.texture = grab_buff_tex(buffs[1])
+	$Buff2.texture = grab_buff_tex(buffs[2])
 
 func set_item(item: GS.Item):
 	var tex = null
@@ -52,6 +84,10 @@ func set_class(klass: GS.Class):
 	match klass:
 		GS.Class.Brawler:
 			tex = preload("res://players/body0.png")
+		GS.Class.Mage:
+			tex = preload("res://players/body1.png")
+		GS.Class.Cleric:
+			tex = preload("res://players/body2.png")
 		GS.Class.Summoner:
 			tex = preload("res://players/body3.png")
 		_:
@@ -70,7 +106,8 @@ func compute_basic_properties():
 		GS.Class.Mage:
 			goal = Goals.GOAL_RANGED
 		GS.Class.Cleric:
-			pass
+			goal = Goals.GOAL_BUFF
+			projectile_scene = GS.BuffProjectile
 		GS.Class.Summoner:
 			# Summoner can't do anything but get hit by default.
 			goal = Goals.GOAL_NONE
@@ -119,6 +156,8 @@ func _ready():
 	# Set up our range based on our goals.
 	if goal == Goals.GOAL_RANGED:
 		$EnemyRange/CollisionShape.shape.radius *= 3
+		
+	render_buffs()
 
 func _physics_process(delta):
 	# Uncomment this if we want to animate the item
@@ -165,9 +204,17 @@ func _physics_process(delta):
 			
 		if state_timer >= 0.5 && may_fire:
 			# Fire the projectile when we cross the 0.5 on the timer.
-			var projectile = GS.PlayerProjectile1.instantiate()
+			var projectile = projectile_scene.instantiate()
 			projectile.global_position = item.global_position
 			var vel = ranged_attack_target_cached - item.global_position
+			# Hack for buff related textures
+			if goal == Goals.GOAL_BUFF:
+				# TODO: Actually set our buff intent
+				projectile.set_sprite(grab_buff_tex(GS.Buff.Shield))
+				projectile.buff = GS.Buff.Shield
+				projectile.buff_source = self
+			
+			# TODO: Somehow set this velocity when relevant
 			projectile.velocity = vel.normalized() * 512.0
 			add_sibling(projectile)
 			
@@ -222,7 +269,7 @@ func _physics_process(delta):
 			
 			if dir_to.length_squared() < melee_attack_range * melee_attack_range:
 				melee_attack(closest.global_position)
-	elif goal == Goals.GOAL_RANGED:
+	elif goal == Goals.GOAL_RANGED or goal == Goals.GOAL_BUFF:
 		# If we're ranged, we want to avoid damage, so back away from nearby enemies
 		# TODO: I guess we want a larger ranged here..?
 		var bodies: Array = melee_range.get_overlapping_bodies()
@@ -231,7 +278,8 @@ func _physics_process(delta):
 			var goal_shift = 80000.0 * to_vec / (to_vec.length_squared() + 0.005)
 			target_noise_nosmooth += goal_shift
 			
-		if not bodies.is_empty():
+		# Ranged characters actually try to attack the enemies
+		if not bodies.is_empty() and goal == Goals.GOAL_RANGED:
 			var closest = bodies[0]
 			var dist = (bodies[0].global_position - global_position).length_squared()
 			for i in range(1, bodies.size()):
@@ -250,14 +298,33 @@ func _physics_process(delta):
 	velocity = vel.limit_length(256)
 	
 	# Add impulses for each nearby imp.
-	for imp in get_tree().get_nodes_in_group("Players"):
+	var all_players = get_tree().get_nodes_in_group("Players")
+	for imp in all_players:
 		var to_vec = global_position - imp.global_position
 		if to_vec.length_squared() < 72.0 * 72.0:
 			var impulse = 1024.0 * to_vec / (to_vec.length_squared() + 0.005)
 			#print(impulse)
 			velocity += impulse
 	
-	
+	if goal == Goals.GOAL_BUFF:
+		# 10 tries to find a player
+		var target_player = all_players[0]
+		for i in range(0, 10):
+			var player = all_players.pick_random()
+			if player == self:
+				continue
+			# Always overwrite a target of self, as that's a really bad target.
+			if target_player == self:
+				target_player = player
+				continue
+			# Break if we find a good target
+			if player.has_empty_buff():
+				target_player = player
+				break
+		# Only bother doing anything if we have a real target
+		if target_player != self:
+			# We re-use the ranged attack logic.
+			ranged_attack(target_player)
 	
 	move_and_slide()
 		
@@ -277,3 +344,21 @@ func _on_hazard_body_entered(body):
 	on_hit()
 	on_death()
 	queue_free()
+
+
+func _on_buff_body_entered(body):
+	# Don't consume buffs we created
+	if body.buff_source == self:
+		return
+	for i in range(0, 3):
+		# Don't consume buffs if we already have 3.
+		if buffs[i] == GS.Buff.None:
+			buffs[i] = body.buff
+			render_buffs()
+			body.hit_target()
+			return
+
+func has_empty_buff():
+	for i in range(0, 3):
+		if buffs[i] == GS.Buff.None:
+			return true

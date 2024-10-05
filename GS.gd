@@ -11,6 +11,8 @@ var EnemyProjectile1Particle = preload("res://enemies/enemy_projectile_1_particl
 
 var PlayerProjectile1 = preload("res://hazard/player_projectile1.tscn")
 
+var BuffProjectile = preload("res://buffs/player_buff.tscn")
+
 var Player = preload("res://players/player.tscn")
 
 enum Item {
@@ -29,8 +31,14 @@ enum Class {
 	Summoner
 }
 
+enum Buff {
+	None,
+	Shield
+}
+
 var valid_imps = [
-	[Class.Brawler, Item.Sword]
+	[Class.Brawler, Item.Sword],
+	[Class.Cleric, Item.Staff],
 ]
 
 func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2):
@@ -39,6 +47,7 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2):
 	imp.global_position = global_pos
 	imp.set_class(config[0])
 	imp.set_item(config[1])
+	imp.compute_basic_properties()
 
 func spawn_imp(parent: Node, config: Array, global_pos: Vector2):
 	call_deferred("finish_spawn_imp", parent, config, global_pos)

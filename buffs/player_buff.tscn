@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfc8ruw1t8dcu"]
+
+[ext_resource type="Script" path="res://buffs/buff_projectile.gd" id="1_srmc8"]
+[ext_resource type="Texture2D" uid="uid://dijkoha64w0hv" path="res://hazard/player_projectile1.png" id="2_os0vr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qerqv"]
+radius = 15.0
+
+[node name="BuffProjectile" type="AnimatableBody2D"]
+collision_layer = 32
+sync_to_physics = false
+script = ExtResource("1_srmc8")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_os0vr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qerqv")

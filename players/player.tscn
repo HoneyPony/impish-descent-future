@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://feyduuodmg3a"]
+[gd_scene load_steps=13 format=3 uid="uid://feyduuodmg3a"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_w5dbm"]
 [ext_resource type="Script" path="res://hazard/hazard.gd" id="2_ot2ip"]
@@ -55,6 +55,9 @@ radius = 300.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_woakh"]
 radius = 31.0161
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g6wt4"]
+radius = 44.0
 
 [node name="Player" type="CharacterBody2D" groups=["Players"]]
 y_sort_enabled = true
@@ -113,4 +116,24 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard"]
 shape = SubResource("CircleShape2D_woakh")
 
+[node name="Buff" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Buff"]
+shape = SubResource("CircleShape2D_g6wt4")
+
+[node name="Buff0" type="Sprite2D" parent="."]
+position = Vector2(-25, 41)
+scale = Vector2(0.188, 0.188)
+
+[node name="Buff1" type="Sprite2D" parent="."]
+position = Vector2(1, 46)
+scale = Vector2(0.188, 0.188)
+
+[node name="Buff2" type="Sprite2D" parent="."]
+position = Vector2(28, 40)
+scale = Vector2(0.188, 0.188)
+
 [connection signal="body_entered" from="Hazard" to="." method="_on_hazard_body_entered"]
+[connection signal="body_entered" from="Buff" to="." method="_on_buff_body_entered"]
