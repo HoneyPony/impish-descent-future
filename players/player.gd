@@ -231,7 +231,7 @@ func _physics_process(delta):
 		
 	var move_target = get_global_mouse_position()
 		
-	var target_noise_nosmooth = Vector2.from_angle(randf_range(0, TAU)) * randf_range(0, 256.0)
+	var target_noise_nosmooth = Vector2.ZERO # Vector2.from_angle(randf_range(0, TAU)) * randf_range(256, 1024.0)
 	var smoothing = 0.05
 	
 	
@@ -295,14 +295,27 @@ func _physics_process(delta):
 		
 	move_target += target_noise
 	var vel = (move_target - global_position) * 5.0
-	velocity = vel.limit_length(256)
+	var target_vel = vel.limit_length(512)
+	
+	velocity += (target_vel - velocity) * 0.5
 	
 	# Add impulses for each nearby imp.
 	var all_players = get_tree().get_nodes_in_group("Players")
 	for imp in all_players:
+		var impulse_strength = 4096
+		var max_range = 1024
+		var stay_away = false
+		if current_class == GS.Class.Summoner && imp.current_class != GS.Class.Summoner:
+			stay_away = true
+		if current_class != GS.Class.Summoner && imp.current_class == GS.Class.Summoner:
+			stay_away = true
+		# summoners want to get hit, so make them stay far away from other imps.
+		if stay_away:
+			impulse_strength = 4096
+			max_range = 512
 		var to_vec = global_position - imp.global_position
-		if to_vec.length_squared() < 72.0 * 72.0:
-			var impulse = 1024.0 * to_vec / (to_vec.length_squared() + 0.005)
+		if to_vec.length_squared() < max_range * max_range:
+			var impulse = impulse_strength * to_vec / (to_vec.length_squared() + 0.005)
 			#print(impulse)
 			velocity += impulse
 	
@@ -362,7 +375,7 @@ func _on_buff_body_entered(body):
 		return
 	for i in range(0, 3):
 		# Don't consume buffs if we already have 3.
-		if buffs[i] == GS.Buff.None:
+		if buffs[i] == GS.Buff.None and body.buff != GS.Buff.None:
 			buffs[i] = body.buff
 			render_buffs()
 			body.hit_target()

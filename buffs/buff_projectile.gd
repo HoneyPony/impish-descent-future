@@ -6,6 +6,8 @@ var buff_source = null
 
 # IMPORTANT: ALL  PROJECTILES MUST IMPLEMENT THIS
 func hit_target():
+	# Reset to None so we don't help more than one player
+	buff = GS.Buff.None
 	die()
 
 func die():
