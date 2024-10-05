@@ -88,6 +88,8 @@ func set_item(item: GS.Item):
 			tex = preload("res://players/dagger.png")
 		GS.Item.Mace:
 			tex = preload("res://players/mace.png")
+		GS.Item.Club:
+			tex = preload("res://players/club.png")
 		_:
 			print("Oops, we don't support that item yet")
 	
@@ -128,6 +130,9 @@ func compute_basic_properties():
 				GS.Item.Dagger:
 					melee_base_damage = 1
 					action_speed *= 2.0
+				GS.Item.Club:
+					melee_base_damage = 3
+					action_speed *= 0.5
 				GS.Item.Mace:
 					melee_base_damage = 5
 					$Item.only_half_health = true
@@ -242,6 +247,9 @@ func _physics_process(delta):
 	if state == State.MELEE_ATTACK:
 		state_timer += delta * action_speed
 		var to_t = parabola_one(state_timer)
+		# The cooldown is basically the remaining time in the animation.
+		# Because then, we can attack again.
+		$Item.slowness = (1.0 - to_t) / action_speed
 		melee_collision_shape.disabled = not (to_t > 0.25 and to_t < 0.75)
 			
 		# To update both rotation and angle while sync_to_physics is on, we have to do it in
