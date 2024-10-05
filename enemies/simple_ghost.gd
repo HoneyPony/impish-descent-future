@@ -62,4 +62,6 @@ func _on_hazard_body_entered(body):
 	collision_timeouts[body] = 0.5
 	
 	if health <= 0:
+		if current_projectile != null and not current_projectile.fired:
+			current_projectile.die()
 		queue_free()

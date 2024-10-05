@@ -12,14 +12,11 @@ zoom = Vector2(0.75, 0.75)
 [node name="PauseMenu" parent="." instance=ExtResource("1")]
 visible = false
 
-[node name="SimpleGhost" parent="." instance=ExtResource("3_vahep")]
-position = Vector2(-36, -227)
+[node name="SimpleGhost4" parent="." instance=ExtResource("3_vahep")]
+position = Vector2(-136, -313)
 
-[node name="SimpleGhost2" parent="." instance=ExtResource("3_vahep")]
-position = Vector2(142, -245)
-
-[node name="SimpleGhost3" parent="." instance=ExtResource("3_vahep")]
-position = Vector2(372, -163)
+[node name="SimpleGhost5" parent="." instance=ExtResource("3_vahep")]
+position = Vector2(243, -318)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
