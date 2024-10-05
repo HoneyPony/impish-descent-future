@@ -42,13 +42,17 @@ func _physics_process(delta):
 	
 	var to_delete = []
 	
-	for k in collision_timeouts:
-		collision_timeouts[k] -= delta
+	var new_timeouts = {}
+	
+	var keys = collision_timeouts.keys()
+	for k in keys:
+		if not is_instance_valid(k):
+			continue
 		if collision_timeouts[k] < 0:
-			to_delete.push_back(k)
-			
-	for k in to_delete:
-		collision_timeouts.erase(k)
+			continue
+		new_timeouts[k] = collision_timeouts[k] - delta
+
+	collision_timeouts = new_timeouts
 
 
 func _on_hazard_body_entered(body):

@@ -377,7 +377,8 @@ func _physics_process(delta):
 		var bodies: Array = melee_range.get_overlapping_bodies()
 		for body in bodies:
 			var to_vec = global_position - body.global_position
-			var goal_shift = 80000.0 * to_vec / (to_vec.length_squared() + 0.005)
+			var IMPULSE = 20000
+			var goal_shift = IMPULSE * to_vec / (to_vec.length_squared() + 512)
 			target_noise_nosmooth += goal_shift
 			
 		# Ranged characters actually try to attack the enemies
@@ -406,7 +407,7 @@ func _physics_process(delta):
 	# Add impulses for each nearby imp.
 	var all_players = get_tree().get_nodes_in_group("Players")
 	for imp in all_players:
-		var impulse_strength = 4096
+		var impulse_strength = 2048
 		var max_range = 72
 		var stay_away = false
 		if current_class == GS.Class.Summoner && imp.current_class != GS.Class.Summoner:
@@ -415,11 +416,11 @@ func _physics_process(delta):
 			stay_away = true
 		# summoners want to get hit, so make them stay far away from other imps.
 		if stay_away:
-			impulse_strength = 4096 * 4
-			max_range = 1024
+			impulse_strength = 2048
+			max_range = 256
 		var to_vec = global_position - imp.global_position
 		if to_vec.length_squared() < max_range * max_range:
-			var impulse = impulse_strength * to_vec / (to_vec.length_squared() + 0.005)
+			var impulse = impulse_strength * to_vec / (to_vec.length_squared() + 512)
 			#print(impulse)
 			velocity += impulse
 	
