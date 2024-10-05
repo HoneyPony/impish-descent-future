@@ -21,3 +21,5 @@ res://buffs/player_buff.tscn
 res://buffs/buff_projectile.gd
 res://SpawnImps.gd
 res://hazard/player_melee_hazard.gd
+res://buffs/split_buff.tscn
+res://buffs/split_buff.gd

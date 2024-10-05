@@ -5,6 +5,8 @@ extends PhysicsBody2D
 var only_half_health: bool = false
 var upgrades_on_kill: bool = false
 
+var projectile_source = null
+
 var slowness = 1.0
 
 func killed_target(target):

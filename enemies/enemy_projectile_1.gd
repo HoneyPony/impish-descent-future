@@ -6,6 +6,8 @@ var fired = false
 
 var targetted_player = null
 
+var projectile_source = null
+
 const SPEED = 512
 
 # Projectiles can't hit twice.

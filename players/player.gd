@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @onready var item = $Item
 @onready var item_rest = $ItemRest
@@ -17,6 +18,10 @@ extends CharacterBody2D
 # We need to reset this each time we melee swing due to the possibility of buffs.
 # (too stateful, I guess...)
 var melee_base_damage = 1
+var ranged_base_damage = 1
+
+# Counter for splitter guy
+var other_players_hit = 0
 
 var action_speed = 1.0
 
@@ -38,6 +43,7 @@ enum Goals {
 	GOAL_RANGED,
 	GOAL_BUFF,
 	GOAL_NONE,
+	GOAL_ATTACK_OWN,
 }
 
 var current_item: GS.Item = GS.Item.Staff
@@ -139,6 +145,7 @@ func compute_basic_properties():
 			
 		GS.Class.Mage:
 			goal = Goals.GOAL_RANGED
+			ranged_base_damage = 1
 			if current_item == GS.Item.Dagger:
 				goal = Goals.GOAL_BUFF
 				buff_target_buff = GS.Buff.Dagger
@@ -147,6 +154,10 @@ func compute_basic_properties():
 			buff_target_buff = GS.Buff.Shield
 			
 			match current_item:
+				GS.Item.Scythe:
+					goal = Goals.GOAL_ATTACK_OWN
+					projectile_scene = GS.SplitProjectile
+					action_speed *= 0.5
 				GS.Item.Sword:
 					melee_base_damage = 1
 					# This enemy doesn't get the buff.
@@ -278,14 +289,18 @@ func _physics_process(delta):
 			projectile.global_position = item.global_position
 			var vel = ranged_attack_target_cached - item.global_position
 			# Hack for buff related textures
-			if goal == Goals.GOAL_BUFF:
+			if goal == Goals.GOAL_ATTACK_OWN:
+				projectile.projectile_source = self
+				# do nothing special...?
+				pass
+			elif goal == Goals.GOAL_BUFF:
 				# TODO: Actually set our buff intent
 				projectile.set_sprite(grab_buff_tex(buff_target_buff))
 				projectile.buff = buff_target_buff
-				projectile.buff_source = self
+				projectile.projectile_source = self
 			elif goal == Goals.GOAL_RANGED:
 				# Use up damage buffs when the projectile is fired.
-				projectile.damage = get_buffed_damage(projectile.damage)
+				projectile.damage = get_buffed_damage(ranged_base_damage)
 			
 			# TODO: Somehow set this velocity when relevant
 			projectile.velocity = vel.normalized() * 512.0
@@ -352,7 +367,7 @@ func _physics_process(delta):
 			
 			if dir_to.length_squared() < melee_attack_range * melee_attack_range:
 				melee_attack(closest.global_position)
-	elif goal == Goals.GOAL_RANGED or goal == Goals.GOAL_BUFF:
+	elif goal == Goals.GOAL_RANGED or goal == Goals.GOAL_BUFF or goal == Goals.GOAL_ATTACK_OWN:
 		# If we're ranged, we want to avoid damage, so back away from nearby enemies
 		# TODO: I guess we want a larger ranged here..?
 		var bodies: Array = melee_range.get_overlapping_bodies()
@@ -402,7 +417,7 @@ func _physics_process(delta):
 			#print(impulse)
 			velocity += impulse
 	
-	if goal == Goals.GOAL_BUFF:
+	if goal == Goals.GOAL_BUFF or goal == Goals.GOAL_ATTACK_OWN:
 		# 10 tries to find a player
 		var target_player = all_players[0]
 		for i in range(0, 10):
@@ -414,30 +429,66 @@ func _physics_process(delta):
 				target_player = player
 				continue
 			# Break if we find a good target
-			if player.has_empty_buff():
-				target_player = player
-				break
+			if goal == Goals.GOAL_BUFF:
+				# When we're buffing, look for players with an empty buff.
+				if player.has_empty_buff():
+					target_player = player
+					break
+				else:
+					target_player = player
+					break
 		# Only bother doing anything if we have a real target
 		if target_player != self:
 			# We re-use the ranged attack logic.
 			ranged_attack(target_player)
-	
+
 	move_and_slide()
+	
+	if goal == Goals.GOAL_ATTACK_OWN:
+		if other_players_hit >= 5:
+			on_death(null)
+			queue_free()
 		
 
-func on_hit():
+func on_hit(body):
 	# Summoner with sycthe: summons new imp on hit
 	if current_class == GS.Class.Summoner && current_item == GS.Item.Scythe:
 		GS.spawn_imp(get_parent(), GS.valid_imps.pick_random(), global_position)
 
-func on_death():
-	pass
+	if body.projectile_source != null:
+		if is_instance_of(body.projectile_source, Player):
+			body.projectile_source.other_players_hit += 1
+			
+
+func split():
+	var split_dmg = melee_base_damage
+	if self.goal != Goals.GOAL_MELEE:
+		split_dmg = ranged_base_damage
+	split_dmg -= 1
+	if split_dmg < 0:
+		split_dmg = 0
+	var pos = self.global_position
+	pos += Vector2.from_angle(randf_range(0, TAU)) * randf_range(16, 256)
+	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, split_dmg)
+
+func set_own_damage(amount: int):
+	melee_base_damage = amount
+	ranged_base_damage = amount
+
+func on_death(body):
+	# Splitters can't themselves be split.
+	if body != null and is_instance_of(body, SplitBuff) and self.goal != Goals.GOAL_ATTACK_OWN:
+		split()
+		split()
 		
 
 func _on_hazard_body_entered(body):
+	if body.projectile_source == self:
+		return
+	
 	body.hit_target(self)
 	# TODO: Check shields, etc
-	on_hit()
+	on_hit(body)
 	
 	for i in range(0, 3):
 		if buffs[i] == GS.Buff.Shield:
@@ -448,13 +499,13 @@ func _on_hazard_body_entered(body):
 			return
 	
 	# Do die now
-	on_death()
+	on_death(body)
 	queue_free()
 
 
 func _on_buff_body_entered(body):
 	# Don't consume buffs we created
-	if body.buff_source == self:
+	if body.projectile_source == self:
 		return
 	for i in range(0, 3):
 		# Don't consume buffs if we already have 3.

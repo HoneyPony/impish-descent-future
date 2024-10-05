@@ -2,7 +2,8 @@ extends AnimatableBody2D
 
 var velocity = Vector2.ZERO
 var buff = GS.Buff.None
-var buff_source = null
+var projectile_source = null
+
 
 # IMPORTANT: ALL  PROJECTILES MUST IMPLEMENT THIS
 func hit_target(target):
