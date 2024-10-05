@@ -98,7 +98,7 @@ var combat_imps = [
 	0, # All brawlers
 	1,
 	2,
-	3,
+	# 3, # No mace.
 	
 	4,
 	# 5

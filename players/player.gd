@@ -324,7 +324,7 @@ func _physics_process(delta):
 		var to_t = parabola_one(state_timer)
 		# The cooldown is basically the remaining time in the animation.
 		# Because then, we can attack again.
-		$Item.slowness = (1.0 - to_t) / action_speed
+		$Item.slowness = (1.0 - to_t) / action_speed + action_cooldown
 		melee_collision_shape.disabled = not (to_t > 0.25 and to_t < 0.75)
 			
 		# To update both rotation and angle while sync_to_physics is on, we have to do it in
