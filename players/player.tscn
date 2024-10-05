@@ -19,18 +19,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, -5)]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Body/ItemRest:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.0333333, 0.533333),
-"transitions": PackedFloat32Array(0.75, 1.33),
-"update": 0,
-"values": [Vector2(156, 0), Vector2(156, -3)]
-}
 
 [sub_resource type="Animation" id="Animation_cwyuw"]
 length = 0.001
@@ -45,18 +33,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Body/ItemRest:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(156, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_to8dl"]
@@ -94,7 +70,7 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_dkhxv")
 
 [node name="ItemRest" type="Node2D" parent="Body"]
-position = Vector2(156, 0)
+position = Vector2(156, 0.0217135)
 scale = Vector2(4, 4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

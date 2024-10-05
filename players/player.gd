@@ -34,8 +34,8 @@ func melee_attack(what: Vector2):
 
 func _physics_process(delta):
 	# Uncomment this if we want to animate the item
-	if state == State.NO_ACTION:
-		item.global_transform = item_rest.global_transform
+	#if state == State.NO_ACTION:
+		#item.global_transform = item_rest.global_transform
 	
 	if state == State.MELEE_ATTACK:
 		state_timer += delta
