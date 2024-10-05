@@ -6,12 +6,22 @@ extends CharacterBody2D
 @onready var item_rest = $ItemRest
 @onready var body_sprite = $Body
 
+@onready var melee_range = $MeleeRange
+
+@export var melee_attack_range = 150
+@export var melee_cooldown = 0.3
+
 enum State {
 	NO_ACTION,
 	MELEE_ATTACK
 }
 
+enum Goals {
+	GOAL_MELEE
+}
+
 var state: State = State.NO_ACTION
+var goal: Goals = Goals.GOAL_MELEE
 
 var state_timer = 0.0
 
@@ -24,7 +34,7 @@ func parabola_one(t: float) -> float:
 
 func melee_attack(what: Vector2):
 	# Only attack if we're not doing something else.
-	if state != State.NO_ACTION:
+	if state != State.NO_ACTION || state_timer < melee_cooldown:
 		return
 		
 	state = State.MELEE_ATTACK
@@ -45,7 +55,7 @@ func _physics_process(delta):
 	#else:
 		## For now...
 		#item.sync_to_physics = true
-		
+	
 	
 	if abs(velocity.x) > 64 and sign(velocity.x) != sign(body_sprite.scale.x):
 		body_sprite.scale.x *= -1
@@ -53,6 +63,8 @@ func _physics_process(delta):
 		# I guess for now we'll just leave ItemRest not under Body??
 		#item.global_position.x = item_rest.global_position.x
 	
+	if state == State.NO_ACTION:
+		state_timer += delta
 	if state == State.MELEE_ATTACK:
 		state_timer += delta
 		var to_t = parabola_one(state_timer)
@@ -71,10 +83,54 @@ func _physics_process(delta):
 	#if Input.is_action_just_pressed("player_right"):
 		#melee_attack(tmp_target.global_position)
 		
-	var target_noise_nosmooth = Vector2.from_angle(randf_range(0, TAU)) * randf_range(0.0, 512.0)
-	target_noise += (target_noise_nosmooth - target_noise) * 0.05
+	var move_target = get_global_mouse_position()
 		
-	var move_target = get_global_mouse_position() + target_noise
+	var target_noise_nosmooth = Vector2.from_angle(randf_range(0, TAU)) * randf_range(0.0, 512.0)
+	var smoothing = 0.05
+	
+	
+	if goal == Goals.GOAL_MELEE:
+		var bodies: Array = melee_range.get_overlapping_bodies()
+		if not bodies.is_empty():
+			var closest = bodies[0]
+			var dist = (bodies[0].global_position - global_position).length_squared()
+			for i in range(1, bodies.size()):
+				var newdist = (bodies[i].global_position - global_position).length_squared()
+				if newdist < dist:
+					closest = bodies[i]
+					dist = newdist
+					
+			# Move to a random position near the targetted enemy. This hooks into
+			# the target_noise system so that we at once:
+			# - Don't have extra random offset
+			var dir_to = global_position - closest.global_position
+			#smoothing = 0.3
+			target_noise_nosmooth = closest.global_position + dir_to.normalized() * 128
+			#print(noise)
+			# Ensure that we're headed straight to the average between the player intention
+			# and this targetting point
+			var player_intention_amount = (move_target - closest.global_position).length() - 128.0
+			player_intention_amount /= 512.0
+			player_intention_amount = clamp(player_intention_amount, 0.0, 1.0)
+			#print(player_intention_amount)
+			
+			# Right now we're treating target_noise_nosmooth at itself the real target position
+			# To make sure we only try to move near there if the player wants us to, we use
+			# an intention amount based on distance.
+			# Intention of 0 means do move there -- the lerp of 0 will take us straight there.
+			# Intention of 1 means do not -- instead we lerp back to the real move target
+			target_noise_nosmooth = lerp(target_noise_nosmooth, move_target, player_intention_amount)
+			# This is how we turn target_noise_nosmooth into the real  target
+			target_noise_nosmooth -= move_target
+			#
+			#print(closest)
+			
+			if dir_to.length_squared() < melee_attack_range * melee_attack_range:
+				melee_attack(closest.global_position)
+		
+	target_noise += (target_noise_nosmooth - target_noise) * smoothing
+		
+	move_target += target_noise
 	var vel = (move_target - global_position) * 0.8
 	velocity = vel.limit_length(128)
 	
