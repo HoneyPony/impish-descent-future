@@ -16,6 +16,7 @@ enum Item {
 	Club,
 	Dagger,
 	Mace,
+	Staff,
 	Scythe
 }
 

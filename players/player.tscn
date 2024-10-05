@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_w5dbm"]
 [ext_resource type="Script" path="res://hazard/hazard.gd" id="2_ot2ip"]
-[ext_resource type="Texture2D" uid="uid://d1chh5b3hitlx" path="res://players/scythe.png" id="3_qrq5e"]
-[ext_resource type="Texture2D" uid="uid://ck7yr4bbkqlub" path="res://players/body3.png" id="4_6dvwy"]
+[ext_resource type="Texture2D" uid="uid://bmyr52b8dwvrw" path="res://players/staff.png" id="3_gmg4u"]
+[ext_resource type="Texture2D" uid="uid://cvybokmbxkvby" path="res://players/body1.png" id="4_7f0rb"]
 
 [sub_resource type="Animation" id="Animation_h8hu0"]
 resource_name = "Bob"
@@ -78,7 +78,7 @@ script = ExtResource("2_ot2ip")
 z_index = 5
 y_sort_enabled = true
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_qrq5e")
+texture = ExtResource("3_gmg4u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Item"]
 position = Vector2(0, -9)
@@ -86,7 +86,7 @@ shape = SubResource("RectangleShape2D_cigoc")
 
 [node name="Body" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("4_6dvwy")
+texture = ExtResource("4_7f0rb")
 centered = false
 offset = Vector2(-128, -384)
 

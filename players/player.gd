@@ -19,11 +19,13 @@ enum State {
 }
 
 enum Goals {
-	GOAL_MELEE
+	GOAL_MELEE,
+	GOAL_RANGED,
+	GOAL_NONE,
 }
 
-var current_item: GS.Item = GS.Item.Scythe
-var current_class: GS.Class = GS.Class.Summoner
+var current_item: GS.Item = GS.Item.Staff
+var current_class: GS.Class = GS.Class.Mage
 
 func set_item(item: GS.Item):
 	var tex = null
@@ -31,6 +33,8 @@ func set_item(item: GS.Item):
 	match item:
 		GS.Item.Sword:
 			tex = preload("res://players/sword.png")
+		GS.Item.Staff:
+			tex = preload("res://players/staff.png")
 		GS.Item.Scythe:
 			tex = preload("res://players/scythe.png")
 		_:
@@ -52,7 +56,22 @@ func set_class(klass: GS.Class):
 			
 	body_sprite.texture = tex
 	current_class = klass
-
+	
+# Computes intrinsic class-based properties before we get to the effects of
+# relics.
+func compute_basic_properties():
+	match current_class:
+		GS.Class.Brawler:
+			# Brwaler is thankfully always melee.
+			goal = Goals.GOAL_MELEE
+		GS.Class.Mage:
+			goal = Goals.GOAL_RANGED
+		GS.Class.Cleric:
+			pass
+		GS.Class.Summoner:
+			# Summoner can't do anything but get hit by default.
+			goal = Goals.GOAL_NONE
+	
 var state: State = State.NO_ACTION
 var goal: Goals = Goals.GOAL_MELEE
 
@@ -80,6 +99,9 @@ var target_noise = Vector2.ZERO
 
 func _ready():
 	item.global_position = item_rest.global_position
+	
+	# TODO: Do we actually do this here? Probably not
+	compute_basic_properties()
 
 func _physics_process(delta):
 	# Uncomment this if we want to animate the item
@@ -93,7 +115,7 @@ func _physics_process(delta):
 		#item.sync_to_physics = true
 	
 	
-	if abs(velocity.x) > 64 and sign(velocity.x) != sign(body_sprite.scale.x):
+	if abs(velocity.x) > 128 and sign(velocity.x) != sign(body_sprite.scale.x):
 		body_sprite.scale.x *= -1
 		# Uncomment to have the items flip when stuff...
 		# I guess for now we'll just leave ItemRest not under Body??
@@ -159,6 +181,14 @@ func _physics_process(delta):
 			
 			if dir_to.length_squared() < melee_attack_range * melee_attack_range:
 				melee_attack(closest.global_position)
+	elif goal == Goals.GOAL_RANGED:
+		# If we're ranged, we want to avoid damage, so back away from nearby enemies
+		var bodies: Array = melee_range.get_overlapping_bodies()
+		for body in bodies:
+			var to_vec = global_position - body.global_position
+			var goal_shift = 160000.0 * to_vec / (to_vec.length_squared() + 0.005)
+			target_noise_nosmooth += goal_shift
+			
 		
 	target_noise += (target_noise_nosmooth - target_noise) * smoothing
 		
