@@ -11,6 +11,9 @@ var extra_sprites = []
 
 var current_val: int = 0
 
+# Initialized by the first call to render_amount, which decides where the bar will be centered.
+var real_total_width = 0
+
 func _ready():
 	call_deferred("render_amount", int(get_parent().health))
 
@@ -32,9 +35,13 @@ func render_amount(health: int):
 	var padding = 8
 	var total_sprites = (extra_sprites.size() + 1) 
 	var real_sprite_width = SPRITE_TEX_WIDTH * init.scale.x
-	var total_width = (total_sprites * real_sprite_width) + padding * (total_sprites - 1)
 	
-	var out_x = -total_width * 0.5 + SPRITE_TEX_WIDTH * 0.5
+	# Compute this once, when this is first called.
+	if real_total_width == 0:
+		var total_width = (total_sprites * real_sprite_width) + padding * (total_sprites - 1)
+		real_total_width = total_width
+	
+	var out_x = -real_total_width * 0.5 + real_sprite_width * 0.5
 	init.position.x = out_x
 	if health == 1:
 		init.texture = half_heart
