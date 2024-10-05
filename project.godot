@@ -22,6 +22,7 @@ GS="*res://GS.gd"
 [global_group]
 
 Players=""
+DeadPlayers=""
 
 [gui]
 

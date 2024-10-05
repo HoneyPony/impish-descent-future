@@ -22,6 +22,8 @@ enum DamageMode {
 
 var damage_mode: DamageMode = DamageMode.Fixed
 
+var is_dead: bool = false
+
 # We need to reset this each time we melee swing due to the possibility of buffs.
 # (too stateful, I guess...)
 var melee_base_damage = 1
@@ -226,6 +228,7 @@ var target_noise = Vector2.ZERO
 
 func _ready():
 	item.global_position = item_rest.global_position
+	add_to_group("Players")
 	
 func finalize_properties():
 	
@@ -256,8 +259,21 @@ func target_meets_goals(enemy) -> bool:
 	if $Item.only_half_health:
 		return enemy.health * 2 <= enemy.max_health
 	return true
+	
+func happy_to_take_hit() -> bool:
+	if current_class == GS.Class.Summoner:
+		if current_item == GS.Item.Scythe:
+			# Don't try to take hits if there are no dead imps.
+			if 0 == get_tree().get_node_count_in_group("DeadPlayers"):
+				return false
+			return true
+		return true
+	return false
 
 func _physics_process(delta):
+	if is_dead:
+		return
+	
 	# Uncomment this if we want to animate the item
 	# Note: Additional latency from the frame being delayed makes this not really work.
 	# Probably need to either reparent the item or...?
@@ -351,6 +367,13 @@ func _physics_process(delta):
 	var target_noise_nosmooth = Vector2.ZERO # Vector2.from_angle(randf_range(0, TAU)) * randf_range(256, 1024.0)
 	var smoothing = 0.05
 	
+	var stay_away_enemies = false
+	# These cases always stay away.
+	if goal == Goals.GOAL_RANGED or goal == Goals.GOAL_BUFF or goal == Goals.GOAL_ATTACK_OWN:
+		stay_away_enemies = true
+	# Summoner stays away if we don't want to be hit yet.
+	if current_class == GS.Class.Summoner && not happy_to_take_hit():
+		stay_away_enemies = true
 	
 	if goal == Goals.GOAL_MELEE:
 		var bodies: Array = melee_range.get_overlapping_bodies()
@@ -396,7 +419,7 @@ func _physics_process(delta):
 			
 			if dir_to.length_squared() < melee_attack_range * melee_attack_range:
 				melee_attack(closest.global_position)
-	elif goal == Goals.GOAL_RANGED or goal == Goals.GOAL_BUFF or goal == Goals.GOAL_ATTACK_OWN:
+	elif stay_away_enemies: # NOTE: THIS MUST BE TRUE FOR RANGED FOR THE ATTACKS TO WORK.
 		# If we're ranged, we want to avoid damage, so back away from nearby enemies
 		# TODO: I guess we want a larger ranged here..?
 		var bodies: Array = melee_range.get_overlapping_bodies()
@@ -435,9 +458,7 @@ func _physics_process(delta):
 		var impulse_strength = 2048
 		var max_range = 72
 		var stay_away = false
-		if current_class == GS.Class.Summoner && imp.current_class != GS.Class.Summoner:
-			stay_away = true
-		if current_class != GS.Class.Summoner && imp.current_class == GS.Class.Summoner:
+		if happy_to_take_hit() != imp.happy_to_take_hit():
 			stay_away = true
 		# summoners want to get hit, so make them stay far away from other imps.
 		if stay_away:
@@ -483,9 +504,16 @@ func _physics_process(delta):
 		
 
 func on_hit(body):
-	# Summoner with sycthe: summons new imp on hit
-	if current_class == GS.Class.Summoner && current_item == GS.Item.Scythe:
-		GS.spawn_imp(get_parent(), GS.valid_imps.pick_random(), global_position)
+	# Summoner with staff: summons new imp on hit
+	if current_class == GS.Class.Summoner:
+		if current_item == GS.Item.Staff:
+			GS.spawn_imp(get_parent(), GS.valid_imps.pick_random(), global_position)
+		# WIth sycthe: resurrect a random imp
+		if current_item == GS.Item.Scythe:
+			var dead = get_tree().get_nodes_in_group("DeadPlayers")
+			if not dead.is_empty():
+				var player = dead.pick_random()
+				player.resurrect()
 
 	if body.projectile_source != null:
 		if is_instance_of(body.projectile_source, Player):
@@ -518,6 +546,9 @@ func on_death(body):
 		
 
 func _on_hazard_body_entered(body):
+	if is_dead:
+		return
+	
 	if body.projectile_source == self:
 		return
 		
@@ -539,8 +570,37 @@ func _on_hazard_body_entered(body):
 			return
 	
 	# Do die now
-	on_death(body)
-	queue_free()
+	die(body)
+	
+func resurrect():
+	remove_from_group("DeadPlayers")
+	add_to_group("Players")
+	
+	# Undo other changes
+	$Item/Look.show()
+	$Body.modulate = Color(1, 1, 1)
+	# Bacc to life
+	is_dead = false
+	
+func die(killer_projectile):
+	# note that on death happens before we die, so we can't e.g. resurrect ourselves
+	# on death.
+	on_death(killer_projectile)
+	
+	remove_from_group("Players")
+	add_to_group("DeadPlayers")
+	
+	# Clear buffs when we die
+	for i in range(0, 3):
+		buffs[i] = GS.Buff.None
+	render_buffs()
+	
+	# Hide our item when we die
+	$Item/Look.hide()
+	$Body.modulate = Color(0.5, 0.5, 0.5)
+	# We will stop doing stuff till we're resurrected
+	is_dead = true
+	# TODO Show a "dead" sprite
 
 func add_buff(buff: GS.Buff):
 	for i in range(0, 3):
@@ -550,6 +610,9 @@ func add_buff(buff: GS.Buff):
 			return
 
 func _on_buff_body_entered(body):
+	if is_dead:
+		return
+	
 	# Don't consume buffs we created
 	if body.projectile_source == self:
 		return

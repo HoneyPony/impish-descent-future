@@ -89,6 +89,7 @@ var valid_imps = [
 	[Class.Cleric, Item.Staff],
 	[Class.Cleric, Item.Sword],
 	[Class.Cleric, Item.Scythe],
+	[Class.Summoner, Item.Staff],
 	[Class.Summoner, Item.Scythe],
 ]
 
