@@ -38,17 +38,25 @@ func _physics_process(delta):
 	
 	handle_simple_projectile()
 	
+	var to_delete = []
+	
 	for k in collision_timeouts:
 		collision_timeouts[k] -= delta
-	
+		if collision_timeouts[k] < 0:
+			to_delete.push_back(k)
+			
+	for k in to_delete:
+		collision_timeouts.erase(k)
 
 
 func _on_hazard_body_entered(body):
 	if collision_timeouts.get(body, -1.0) > 0.0:
 		return
 	
-	health -= body.damage
+	# Call hit_target() first in case the damage gets buffed.
 	body.hit_target()
+	health -= body.damage
+	
 	
 	# Time out collision
 	collision_timeouts[body] = 0.5

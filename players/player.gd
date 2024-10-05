@@ -14,10 +14,16 @@ extends CharacterBody2D
 #@export var melee_cooldown = 0.3
 @export var action_cooldown = 0.3
 
+# We need to reset this each time we melee swing due to the possibility of buffs.
+# (too stateful, I guess...)
+var melee_base_damage = 1
+
 var action_speed = 1.0
 
 var ranged_attack_target: Node2D = null
 var ranged_attack_target_cached: Vector2 = Vector2.ZERO
+
+var buff_target_buff: GS.Buff = GS.Buff.None
 
 var projectile_scene: PackedScene = GS.PlayerProjectile1
 
@@ -45,6 +51,8 @@ func grab_buff_tex(buf):
 			return null
 		GS.Buff.Shield:
 			return preload("res://buffs/buff_protect.png")
+		GS.Buff.Dagger:
+			return preload("res://buffs/buff_dagger.png")
 		_:
 			print("unknown buff!")
 			return null
@@ -111,16 +119,19 @@ func compute_basic_properties():
 			goal = Goals.GOAL_MELEE
 			match current_item:
 				GS.Item.Sword:
-					$Item.damage = 2
+					melee_base_damage = 2
 				GS.Item.Dagger:
-					$Item.damage = 1
+					melee_base_damage = 1
 					action_speed *= 2.0
 			
 		GS.Class.Mage:
 			goal = Goals.GOAL_RANGED
+			if current_item == GS.Item.Dagger:
+				goal = Goals.GOAL_BUFF
+				buff_target_buff = GS.Buff.Dagger
 		GS.Class.Cleric:
 			goal = Goals.GOAL_BUFF
-			projectile_scene = GS.BuffProjectile
+			buff_target_buff = GS.Buff.Shield
 		GS.Class.Summoner:
 			# Summoner can't do anything but get hit by default.
 			goal = Goals.GOAL_NONE
@@ -145,6 +156,7 @@ func melee_attack(what: Vector2):
 	state = State.MELEE_ATTACK
 	state_timer = 0.0
 	
+	$Item.damage = melee_base_damage
 	melee_attack_target_pos = what
 	melee_attack_target_rot = (what - global_position).angle()
 	
@@ -163,12 +175,17 @@ var target_noise = Vector2.ZERO
 func _ready():
 	item.global_position = item_rest.global_position
 	
+func finalize_properties():
+	
 	# TODO: Do we actually do this here? Probably not
-	compute_basic_properties()
+	# compute_basic_properties()
 	
 	# Set up our range based on our goals.
-	if goal == Goals.GOAL_RANGED:
+	if goal == Goals.GOAL_RANGED or goal == Goals.GOAL_BUFF:
 		$EnemyRange/CollisionShape.shape.radius *= 3
+		
+	if goal == Goals.GOAL_BUFF:
+		projectile_scene = GS.BuffProjectile
 		
 	render_buffs()
 	
@@ -231,9 +248,12 @@ func _physics_process(delta):
 			# Hack for buff related textures
 			if goal == Goals.GOAL_BUFF:
 				# TODO: Actually set our buff intent
-				projectile.set_sprite(grab_buff_tex(GS.Buff.Shield))
-				projectile.buff = GS.Buff.Shield
+				projectile.set_sprite(grab_buff_tex(buff_target_buff))
+				projectile.buff = buff_target_buff
 				projectile.buff_source = self
+			elif goal == Goals.GOAL_RANGED:
+				# Use up damage buffs when the projectile is fired.
+				projectile.damage = get_buffed_damage(projectile.damage)
 			
 			# TODO: Somehow set this velocity when relevant
 			projectile.velocity = vel.normalized() * 512.0
@@ -406,3 +426,12 @@ func has_empty_buff():
 	for i in range(0, 3):
 		if buffs[i] == GS.Buff.None:
 			return true
+			
+func get_buffed_damage(damage: int) -> int:
+	for i in range(0, 3):
+		if buffs[i] == GS.Buff.Dagger:
+			buffs[i] = GS.Buff.None
+			render_buffs()
+			return damage + 1
+			
+	return damage

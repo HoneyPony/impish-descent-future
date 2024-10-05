@@ -20,3 +20,4 @@ res://hazard/player_projectile1.gd
 res://buffs/player_buff.tscn
 res://buffs/buff_projectile.gd
 res://SpawnImps.gd
+res://hazard/player_melee_hazard.gd

@@ -33,13 +33,15 @@ enum Class {
 
 enum Buff {
 	None,
-	Shield
+	Shield,
+	Dagger
 }
 
 var valid_imps = [
 	[Class.Brawler, Item.Sword],
 	[Class.Brawler, Item.Dagger],
 	[Class.Mage, Item.Staff],
+	[Class.Mage, Item.Dagger],
 	[Class.Cleric, Item.Staff],
 	[Class.Summoner, Item.Scythe],
 ]
@@ -51,6 +53,7 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2):
 	imp.set_class(config[0])
 	imp.set_item(config[1])
 	imp.compute_basic_properties()
+	imp.finalize_properties()
 
 func spawn_imp(parent: Node, config: Array, global_pos: Vector2):
 	call_deferred("finish_spawn_imp", parent, config, global_pos)
