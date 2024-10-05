@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=4 format=3 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://feyduuodmg3a" path="res://players/player.tscn" id="2_k7n08"]
+[ext_resource type="PackedScene" uid="uid://rl585tjhmod7" path="res://enemies/simple_ghost.tscn" id="3_vahep"]
 
 [node name="Game" type="Node2D"]
 
@@ -16,3 +17,6 @@ tmp_target = NodePath("../CharacterBody2D2")
 [node name="CharacterBody2D2" parent="." instance=ExtResource("2_k7n08")]
 position = Vector2(194, -104)
 script = null
+
+[node name="SimpleGhost" parent="." instance=ExtResource("3_vahep")]
+position = Vector2(-36, -227)

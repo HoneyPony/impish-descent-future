@@ -1,6 +1,7 @@
 res://default_env.tres
+res://enemies/simple_ghost.tscn
+res://enemies/simple_ghost.gd
 res://players/player.tscn
-res://players/player.gd
 res://Game.tscn
 res://MainMenu.tscn
 res://ui/VolumeBars.tscn
