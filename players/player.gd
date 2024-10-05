@@ -34,8 +34,14 @@ func melee_attack(what: Vector2):
 
 func _physics_process(delta):
 	# Uncomment this if we want to animate the item
+	# Note: Additional latency from the frame being delayed makes this not really work.
+	# Probably need to either reparent the item or...?
 	#if state == State.NO_ACTION:
+		#item.sync_to_physics = false
 		#item.global_transform = item_rest.global_transform
+	#else:
+		## For now...
+		#item.sync_to_physics = true
 	
 	if state == State.MELEE_ATTACK:
 		state_timer += delta
