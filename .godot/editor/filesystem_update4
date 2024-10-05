@@ -6,3 +6,4 @@ res://Game.tscn
 res://MainMenu.tscn
 res://ui/VolumeBars.tscn
 res://ui/PauseMenu.tscn
+res://players/player.gd

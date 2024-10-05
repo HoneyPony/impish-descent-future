@@ -11,12 +11,13 @@
 [node name="PauseMenu" parent="." instance=ExtResource("1")]
 visible = false
 
-[node name="CharacterBody2D" parent="." node_paths=PackedStringArray("tmp_target") instance=ExtResource("2_k7n08")]
-tmp_target = NodePath("../CharacterBody2D2")
+[node name="Imp" parent="." instance=ExtResource("2_k7n08")]
 
-[node name="CharacterBody2D2" parent="." instance=ExtResource("2_k7n08")]
-position = Vector2(194, -104)
-script = null
+[node name="Imp2" parent="." instance=ExtResource("2_k7n08")]
+position = Vector2(97, 43)
+
+[node name="Imp3" parent="." instance=ExtResource("2_k7n08")]
+position = Vector2(102, -42)
 
 [node name="SimpleGhost" parent="." instance=ExtResource("3_vahep")]
 position = Vector2(-36, -227)
