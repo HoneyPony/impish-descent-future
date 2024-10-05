@@ -18,3 +18,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
+
+
+func _on_hazard_body_entered(body):
+	health -= body.damage

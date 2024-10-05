@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://feyduuodmg3a"]
+[gd_scene load_steps=11 format=3 uid="uid://feyduuodmg3a"]
 
 [ext_resource type="Texture2D" uid="uid://so31a8iyooat" path="res://players/body0.png" id="1_dkhxv"]
 [ext_resource type="Script" path="res://players/player.gd" id="1_w5dbm"]
 [ext_resource type="Texture2D" uid="uid://dlefoohwcy7vf" path="res://players/sword.png" id="2_05pva"]
+[ext_resource type="Script" path="res://hazard/hazard.gd" id="2_ot2ip"]
 
 [sub_resource type="Animation" id="Animation_h8hu0"]
 resource_name = "Bob"
@@ -41,6 +42,9 @@ _data = {
 "RESET": SubResource("Animation_cwyuw")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cigoc"]
+size = Vector2(18, 46)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u0yco"]
 radius = 5.00001
 height = 20.0
@@ -62,13 +66,20 @@ speed_scale = 5.0
 
 [node name="Item" type="AnimatableBody2D" parent="."]
 position = Vector2(39, -2)
+collision_layer = 16
+collision_mask = 0
 sync_to_physics = false
+script = ExtResource("2_ot2ip")
 
 [node name="Look" type="Sprite2D" parent="Item"]
 z_index = 5
 y_sort_enabled = true
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_05pva")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Item"]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_cigoc")
 
 [node name="Body" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)

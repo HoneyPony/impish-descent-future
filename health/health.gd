@@ -20,6 +20,8 @@ func render_amount(health: int):
 	var needed_sprites = (health + 1) / 2
 	var needed_extra = needed_sprites - 1
 	while extra_sprites.size() > needed_extra:
+		if extra_sprites.is_empty():
+			break
 		extra_sprites.pop_back().queue_free()
 		
 	while extra_sprites.size() < needed_extra:
@@ -38,6 +40,8 @@ func render_amount(health: int):
 		init.texture = half_heart
 	else:
 		init.texture = full_heart
+	init.visible = (health > 0)
+		
 	health -= 2
 		
 	out_x += padding + real_sprite_width
