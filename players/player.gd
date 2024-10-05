@@ -36,11 +36,12 @@ func _physics_process(delta):
 	if state == State.MELEE_ATTACK:
 		state_timer += delta
 		var to_t = parabola_one(state_timer)
-		print(lerp_angle(0.0, melee_attack_target_rot, to_t))
-		item.rotation = lerp_angle(0.0, melee_attack_target_rot, to_t)
-		print(item.rotation)
-		item.global_position = lerp(item_rest.global_position, melee_attack_target_pos, to_t)
-		print(item.rotation)
+		# To update both rotation and angle while sync_to_physics is on, we have to do it in
+		# one step.
+		var new_tform = Transform2D.IDENTITY
+		new_tform = new_tform.rotated(lerp_angle(0.0, melee_attack_target_rot + TAU * 0.25, to_t))
+		new_tform.origin = lerp(item_rest.global_position, melee_attack_target_pos, to_t)
+		item.global_transform = new_tform
 		
 		if state_timer >= 1.0:
 			item.global_transform = item_rest.global_transform
