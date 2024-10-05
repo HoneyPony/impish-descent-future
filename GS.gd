@@ -95,21 +95,22 @@ var valid_imps = [
 ]
 
 var combat_imps = [
-	0,
+	0, # All brawlers
 	1,
 	2,
 	3,
+	
 	4,
 	# 5
 	6,
 	7,
-	8,
-	# 9 [cleric staff]
-	10,
-	# 11 [cleric splitter]
-	# 12 might become another cleric
-	#12, [ sumoners ]
-	#13
+	
+	# 8, [cleric staff]
+ 	9 
+	# 10, [cleric splitter]
+	# 11 might become a cleric
+	
+	# Right now summoners are 11, etc
 ]
 
 func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool):

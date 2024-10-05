@@ -61,9 +61,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -335.0
+offset_left = -348.0
 offset_top = -196.0
-offset_right = 347.0
+offset_right = 360.0
 offset_bottom = 161.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -102,10 +102,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -329.0
-offset_top = 40.0
-offset_right = 329.0
-offset_bottom = 122.0
+offset_left = -341.5
+offset_top = 44.0
+offset_right = 341.5
+offset_bottom = 126.0
 grow_horizontal = 2
 
 [node name="ImpSelectRow2" parent="CanvasLayer/Control/ColorRect" instance=ExtResource("7_yvo4j")]
@@ -113,10 +113,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -329.0
-offset_top = 128.0
-offset_right = 329.0
-offset_bottom = 210.0
+offset_left = -341.5
+offset_top = 130.0
+offset_right = 341.5
+offset_bottom = 212.0
 grow_horizontal = 2
 
 [node name="ImpSelectRow3" parent="CanvasLayer/Control/ColorRect" instance=ExtResource("7_yvo4j")]
@@ -124,9 +124,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -329.0
+offset_left = -341.5
 offset_top = 216.0
-offset_right = 329.0
+offset_right = 341.5
 offset_bottom = 298.0
 grow_horizontal = 2
 

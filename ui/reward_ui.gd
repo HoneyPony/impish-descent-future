@@ -6,6 +6,10 @@ extends ColorRect
 	$ImpSelectRow3
 ]
 
+func unselect_imps():
+	for row in rows:
+		row.unselect()
+
 func sample_imp(require_combat: bool) -> int:
 	if require_combat:
 		return GS.combat_imps.pick_random()
@@ -30,6 +34,8 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 			
 	for i in range(0, 3):
 		rows[i].setup(GS.valid_imps[imps[i]])
+		
+	rows[0].select_this()
 	
 func _ready():
 	setup_rewards(false, true)

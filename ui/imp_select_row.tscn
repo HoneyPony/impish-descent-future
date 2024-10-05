@@ -7,17 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://bq4fctqe3aplh" path="res://players/club.png" id="3_f2vnn"]
 
 [node name="ImpSelectRow" type="ColorRect"]
-offset_right = 658.0
+offset_right = 683.0
 offset_bottom = 82.0
 theme = ExtResource("1_gddnt")
-color = Color(0.336608, 0.336608, 0.336608, 1)
+color = Color(0.266575, 0.266575, 0.266575, 1)
 script = ExtResource("2_sjpuu")
 
 [node name="Label" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 73.0
+offset_left = 99.0
 offset_top = 5.0
-offset_right = 530.0
+offset_right = 556.0
 offset_bottom = 78.0
 text = "Mage wielding Dagger:
 - Applies Split buff to nearby imps
@@ -25,20 +25,20 @@ text = "Mage wielding Dagger:
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 536.0
-offset_top = 20.0
-offset_right = 648.0
-offset_bottom = 59.0
+offset_left = 562.0
+offset_top = 15.0
+offset_right = 674.0
+offset_bottom = 64.0
 toggle_mode = true
 button_group = ExtResource("1_crth6")
 text = "Choose"
 
 [node name="Body" type="Sprite2D" parent="."]
-position = Vector2(27, 28)
+position = Vector2(38.5, 29.2501)
 scale = Vector2(0.183594, 0.183594)
 texture = ExtResource("2_eas8s")
 
 [node name="Item" type="Sprite2D" parent="."]
-position = Vector2(53, 39)
+position = Vector2(66.5001, 39.25)
 scale = Vector2(0.183594, 0.183594)
 texture = ExtResource("3_f2vnn")
