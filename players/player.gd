@@ -101,43 +101,11 @@ func render_buffs():
 	$Buff2.texture = grab_buff_tex(buffs[2])
 
 func set_item(item: GS.Item):
-	var tex = null
-	
-	match item:
-		GS.Item.Sword:
-			tex = preload("res://players/sword.png")
-		GS.Item.Staff:
-			tex = preload("res://players/staff.png")
-		GS.Item.Scythe:
-			tex = preload("res://players/scythe.png")
-		GS.Item.Dagger:
-			tex = preload("res://players/dagger.png")
-		GS.Item.Mace:
-			tex = preload("res://players/mace.png")
-		GS.Item.Club:
-			tex = preload("res://players/club.png")
-		_:
-			print("Oops, we don't support that item yet")
-	
-	item_tex.texture = tex
+	item_tex.texture = GS.get_item_tex(item)
 	current_item = item
 	
 func set_class(klass: GS.Class):
-	var tex = null
-	
-	match klass:
-		GS.Class.Brawler:
-			tex = preload("res://players/body0.png")
-		GS.Class.Mage:
-			tex = preload("res://players/body1.png")
-		GS.Class.Cleric:
-			tex = preload("res://players/body2.png")
-		GS.Class.Summoner:
-			tex = preload("res://players/body3.png")
-		_:
-			print("Oops, we don't support that class yet")
-			
-	body_sprite.texture = tex
+	body_sprite.texture = GS.get_body_tex(klass)
 	current_class = klass
 
 # general buff to melee speed

@@ -79,19 +79,19 @@ enum Buff {
 }
 
 var valid_imps = [
-	[Class.Brawler, Item.Sword],
-	[Class.Brawler, Item.Club],
-	[Class.Brawler, Item.Dagger],
-	[Class.Brawler, Item.Mace],
-	[Class.Mage, Item.Staff],
-	[Class.Mage, Item.Dagger],
-	[Class.Mage, Item.Club],
-	[Class.Mage, Item.Scythe],
-	[Class.Cleric, Item.Staff],
-	[Class.Cleric, Item.Sword],
-	[Class.Cleric, Item.Scythe],
-	[Class.Summoner, Item.Staff],
-	[Class.Summoner, Item.Scythe],
+	[Class.Brawler, Item.Sword, "Brawler wielding Sword:\n- Attacks at 100% speed for 2 Melee damage."],
+	[Class.Brawler, Item.Club, "Brawler wielding Club:\n- Attacks at 50% speed for 3 Melee damage."],
+	[Class.Brawler, Item.Dagger, "Brawler wielding Dagger:\n- Attacks at 200% speed for 1 Melee damage."],
+	[Class.Brawler, Item.Mace, "Brawler wielding Mace:\n- Attacks at 100% speed for 5 Melee damage.\n- Can only attack when enemies are below half health."],
+	[Class.Mage, Item.Staff, "Mage wielding Staff:\n- Attacks at 100% speed for 1 Melee damage."],
+	[Class.Mage, Item.Dagger, "Mage wielding Dagger:\n- Applies Strength buff to other imps.\n- Strength adds 1 damage to the next attack."],
+	[Class.Mage, Item.Club, "Mage wielding Club:\n- Attacks at 100% speed for 0-4 Ranged damage.\n- Damage is rolled randomly."],
+	[Class.Mage, Item.Scythe, "Mage wielding Scythe:\n- Attacks at 100% speed for 1 Ranged damage.\n- Shoots 5 shots in random directions."],
+	[Class.Cleric, Item.Staff, "Cleric wielding Staff:\n- Applies Shield buff to nearby imps.\n- Shield buff blocks 1 hit from enemies."],
+	[Class.Cleric, Item.Sword, "Cleric wielding Sword:\n- Attacks at 75% speed for 1 damage.\n- On kill, increase damage by 1 (resets next level)"],
+	[Class.Cleric, Item.Scythe, "Cleric wielding Scythe:\n- Applies Split buff to nearby imps\n- Split imps do 1 fewer damage and cannot be further split."],
+	[Class.Summoner, Item.Staff, "Summoner wielding Staff:\n- Summons random Ethereal imps.\n- Ethereal imps disappear after 4 seconds."],
+	[Class.Summoner, Item.Scythe, "Summoner wielding Scythe:\n- Resurrects dead imps."],
 ]
 
 var combat_imps = [
@@ -108,8 +108,8 @@ var combat_imps = [
 	10,
 	# 11 [cleric splitter]
 	# 12 might become another cleric
-	12,
-	13
+	#12, [ sumoners ]
+	#13
 ]
 
 func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool):
@@ -128,7 +128,39 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: b
 func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = false, ethereal: bool = false):
 	call_deferred("finish_spawn_imp", parent, config, global_pos, split, ethereal)
 	
+func get_item_tex(item: Item):
+	var tex = null
+	match item:
+		GS.Item.Sword:
+			tex = preload("res://players/sword.png")
+		GS.Item.Staff:
+			tex = preload("res://players/staff.png")
+		GS.Item.Scythe:
+			tex = preload("res://players/scythe.png")
+		GS.Item.Dagger:
+			tex = preload("res://players/dagger.png")
+		GS.Item.Mace:
+			tex = preload("res://players/mace.png")
+		GS.Item.Club:
+			tex = preload("res://players/club.png")
+		_:
+			print("Oops, we don't support that item yet")
+	return tex
 	
+func get_body_tex(klass: Class):
+	var tex = null
+	match klass:
+		GS.Class.Brawler:
+			tex = preload("res://players/body0.png")
+		GS.Class.Mage:
+			tex = preload("res://players/body1.png")
+		GS.Class.Cleric:
+			tex = preload("res://players/body2.png")
+		GS.Class.Summoner:
+			tex = preload("res://players/body3.png")
+		_:
+			print("Oops, we don't support that class yet")
+	return tex
 	#
 #func _process(delta):
 	#print(get_nav_point($"/root/Game".get_global_mouse_position()))

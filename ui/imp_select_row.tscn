@@ -1,41 +1,44 @@
-[gd_scene load_steps=5 format=3 uid="uid://dv7eaeqintp14"]
+[gd_scene load_steps=6 format=3 uid="uid://dv7eaeqintp14"]
 
 [ext_resource type="ButtonGroup" uid="uid://b5k4vtr4d3gne" path="res://ui/imp_select_group.tres" id="1_crth6"]
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="1_gddnt"]
 [ext_resource type="Texture2D" uid="uid://so31a8iyooat" path="res://players/body0.png" id="2_eas8s"]
+[ext_resource type="Script" path="res://ui/imp_select_row.gd" id="2_sjpuu"]
 [ext_resource type="Texture2D" uid="uid://bq4fctqe3aplh" path="res://players/club.png" id="3_f2vnn"]
 
 [node name="ImpSelectRow" type="ColorRect"]
-offset_right = 585.0
-offset_bottom = 60.0
+offset_right = 658.0
+offset_bottom = 82.0
 theme = ExtResource("1_gddnt")
 color = Color(0.336608, 0.336608, 0.336608, 1)
+script = ExtResource("2_sjpuu")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Label" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 70.5
+offset_left = 73.0
 offset_top = 5.0
-offset_right = 484.5
-offset_bottom = 58.0
-text = "Brawler wielding Sword:
-- Attacks at 100% speed for 2 Melee damage."
+offset_right = 530.0
+offset_bottom = 78.0
+text = "Mage wielding Dagger:
+- Applies Split buff to nearby imps
+- Split imps do 1 less damage and cannot be further split."
 
-[node name="Button4" type="Button" parent="."]
+[node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 462.0
-offset_top = 10.0
-offset_right = 574.0
-offset_bottom = 49.0
+offset_left = 536.0
+offset_top = 20.0
+offset_right = 648.0
+offset_bottom = 59.0
 toggle_mode = true
 button_group = ExtResource("1_crth6")
 text = "Choose"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(30, 17)
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(27, 28)
 scale = Vector2(0.183594, 0.183594)
 texture = ExtResource("2_eas8s")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(57, 28)
+[node name="Item" type="Sprite2D" parent="."]
+position = Vector2(53, 39)
 scale = Vector2(0.183594, 0.183594)
 texture = ExtResource("3_f2vnn")
