@@ -66,7 +66,7 @@ grow_vertical = 2
 color = Color(0.348043, 0.196363, 0.191862, 1)
 script = ExtResource("8_2s26y")
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/ColorRect"]
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/Control/ColorRect"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -171,3 +171,8 @@ offset_bottom = 67.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "... and Choose a Relic to enhance your power"
+
+[node name="ImpStartPos" type="Marker2D" parent="." groups=["ImpStartPos"]]
+position = Vector2(2, 124)
+
+[connection signal="pressed" from="CanvasLayer/Control/ColorRect/ConfirmButton" to="CanvasLayer/Control/ColorRect" method="_on_confirm_button_pressed"]

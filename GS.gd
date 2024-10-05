@@ -113,6 +113,15 @@ var combat_imps = [
 	# Right now summoners are 11, etc
 ]
 
+var current_army = []
+
+func spawn_current_army():
+	var pos = get_tree().get_first_node_in_group("ImpStartPos")
+	assert(pos != null)
+	
+	for imp in current_army:
+		spawn_imp(pos.get_parent(), valid_imps[imp], pos.global_position)
+
 func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool):
 	var imp = Player.instantiate()
 	parent.add_child(imp)

@@ -6,6 +6,8 @@ extends ColorRect
 	$ImpSelectRow3
 ]
 
+var current_new_imp = 0
+
 func unselect_imps():
 	for row in rows:
 		row.unselect()
@@ -33,9 +35,15 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 		imps.push_back(sample_imp(true))
 			
 	for i in range(0, 3):
-		rows[i].setup(GS.valid_imps[imps[i]])
+		rows[i].setup(GS.valid_imps[imps[i]], imps[i])
 		
 	rows[0].select_this()
 	
 func _ready():
 	setup_rewards(false, true)
+
+# This is basically the entry point into the gameplay for now.
+func _on_confirm_button_pressed():
+	get_parent().hide()
+	GS.current_army.push_back(current_new_imp)
+	GS.spawn_current_army()
