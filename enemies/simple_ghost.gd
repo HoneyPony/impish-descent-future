@@ -5,8 +5,6 @@ var health: int = 6
 var current_projectile = null
 
 func handle_simple_projectile():
-	return
-	
 	if current_projectile != null:
 		if not current_projectile.fired:
 			# If we have an un-fired projectile, update its pos

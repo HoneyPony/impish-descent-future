@@ -342,6 +342,16 @@ func _on_hazard_body_entered(body):
 	body.hit_target()
 	# TODO: Check shields, etc
 	on_hit()
+	
+	for i in range(0, 3):
+		if buffs[i] == GS.Buff.Shield:
+			# If we had a shield, it saves us from the hit
+			buffs[i] = GS.Buff.None
+			render_buffs()
+			# Don't die now
+			return
+	
+	# Do die now
 	on_death()
 	queue_free()
 
