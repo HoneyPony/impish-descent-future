@@ -8,9 +8,13 @@ extends CharacterBody2D
 
 @onready var item_tex = $Item/Look
 
+@onready var melee_collision_shape = $Item/CollisionShape2D
+
 @export var melee_attack_range = 150
 #@export var melee_cooldown = 0.3
 @export var action_cooldown = 0.3
+
+var action_speed = 1.0
 
 var ranged_attack_target: Node2D = null
 var ranged_attack_target_cached: Vector2 = Vector2.ZERO
@@ -72,6 +76,8 @@ func set_item(item: GS.Item):
 			tex = preload("res://players/staff.png")
 		GS.Item.Scythe:
 			tex = preload("res://players/scythe.png")
+		GS.Item.Dagger:
+			tex = preload("res://players/dagger.png")
 		_:
 			print("Oops, we don't support that item yet")
 	
@@ -103,6 +109,13 @@ func compute_basic_properties():
 		GS.Class.Brawler:
 			# Brwaler is thankfully always melee.
 			goal = Goals.GOAL_MELEE
+			match current_item:
+				GS.Item.Sword:
+					$Item.damage = 2
+				GS.Item.Dagger:
+					$Item.damage = 1
+					action_speed *= 2.0
+			
 		GS.Class.Mage:
 			goal = Goals.GOAL_RANGED
 		GS.Class.Cleric:
@@ -158,6 +171,12 @@ func _ready():
 		$EnemyRange/CollisionShape.shape.radius *= 3
 		
 	render_buffs()
+	
+	# General melee buff: Increase our action speed because melee is hard.
+	action_speed *= 1.2
+	
+	# The melee collision is only on when we are attacking melee.
+	melee_collision_shape.disabled = true
 
 func _physics_process(delta):
 	# Uncomment this if we want to animate the item
@@ -180,8 +199,10 @@ func _physics_process(delta):
 	if state == State.NO_ACTION:
 		state_timer += delta
 	if state == State.MELEE_ATTACK:
-		state_timer += delta
+		state_timer += delta * action_speed
 		var to_t = parabola_one(state_timer)
+		melee_collision_shape.disabled = not (to_t > 0.25 and to_t < 0.75)
+			
 		# To update both rotation and angle while sync_to_physics is on, we have to do it in
 		# one step.
 		var new_tform = Transform2D.IDENTITY
@@ -195,7 +216,7 @@ func _physics_process(delta):
 			state_timer = 0.0
 	elif state == State.RANGED_ATTACK:
 		var may_fire = state_timer < 0.5
-		state_timer += delta
+		state_timer += delta * action_speed
 		
 		var to_t = parabola_one(state_timer)
 		
@@ -303,7 +324,7 @@ func _physics_process(delta):
 	var all_players = get_tree().get_nodes_in_group("Players")
 	for imp in all_players:
 		var impulse_strength = 4096
-		var max_range = 256
+		var max_range = 72
 		var stay_away = false
 		if current_class == GS.Class.Summoner && imp.current_class != GS.Class.Summoner:
 			stay_away = true

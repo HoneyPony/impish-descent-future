@@ -4,6 +4,8 @@ var health: int = 6
 
 var current_projectile = null
 
+var collision_timeouts = {}
+
 func handle_simple_projectile():
 	if current_projectile != null:
 		if not current_projectile.fired:
@@ -36,11 +38,20 @@ func _physics_process(delta):
 	
 	handle_simple_projectile()
 	
+	for k in collision_timeouts:
+		collision_timeouts[k] -= delta
+	
 
 
 func _on_hazard_body_entered(body):
+	if collision_timeouts.get(body, -1.0) > 0.0:
+		return
+	
 	health -= body.damage
 	body.hit_target()
+	
+	# Time out collision
+	collision_timeouts[body] = 0.5
 	
 	if health <= 0:
 		queue_free()

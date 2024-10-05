@@ -38,6 +38,7 @@ enum Buff {
 
 var valid_imps = [
 	[Class.Brawler, Item.Sword],
+	[Class.Brawler, Item.Dagger],
 	[Class.Mage, Item.Staff],
 	[Class.Cleric, Item.Staff],
 	[Class.Summoner, Item.Scythe],
