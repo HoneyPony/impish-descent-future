@@ -44,7 +44,8 @@ var projectile_scene: PackedScene = GS.PlayerProjectile1
 enum State {
 	NO_ACTION,
 	MELEE_ATTACK,
-	RANGED_ATTACK
+	RANGED_ATTACK,
+	SIMPLE_ACTION
 }
 
 enum Goals {
@@ -53,6 +54,7 @@ enum Goals {
 	GOAL_BUFF,
 	GOAL_NONE,
 	GOAL_ATTACK_OWN,
+	GOAL_GENERIC,
 }
 
 var current_item: GS.Item = GS.Item.Staff
@@ -188,7 +190,9 @@ func compute_basic_properties():
 					$Item.upgrades_on_kill = true
 		GS.Class.Summoner:
 			# Summoner can't do anything but get hit by default.
-			goal = Goals.GOAL_NONE
+			goal = Goals.GOAL_GENERIC
+			# Summoner has powerful effects that are slow.
+			action_speed *= 0.333
 	
 var state: State = State.NO_ACTION
 var goal: Goals = Goals.GOAL_MELEE
@@ -201,6 +205,16 @@ var melee_attack_target_rot: float
 func parabola_one(t: float) -> float:
 	t = 2.0 * t - 1.0
 	return 1.0 - t * t
+	
+func start_generic():
+	if state != State.NO_ACTION || state_timer < action_cooldown:
+		return
+		
+	if not happy_to_start_action():
+		return
+		
+	state = State.SIMPLE_ACTION
+	state_timer = 0.0
 
 func melee_attack(what: Vector2):
 	# Only attack if we're not doing something else.
@@ -260,7 +274,7 @@ func target_meets_goals(enemy) -> bool:
 		return enemy.health * 2 <= enemy.max_health
 	return true
 	
-func happy_to_take_hit() -> bool:
+func happy_to_start_action() -> bool:
 	if current_class == GS.Class.Summoner:
 		if current_item == GS.Item.Scythe:
 			# Don't try to take hits if there are no dead imps.
@@ -269,6 +283,18 @@ func happy_to_take_hit() -> bool:
 			return true
 		return true
 	return false
+	
+func fire_generic_action():
+	# Summoner with staff: summons new imp on hit
+	if current_class == GS.Class.Summoner:
+		if current_item == GS.Item.Staff:
+			GS.spawn_imp(get_parent(), GS.valid_imps.pick_random(), global_position)
+		# WIth sycthe: resurrect a random imp
+		if current_item == GS.Item.Scythe:
+			var dead = get_tree().get_nodes_in_group("DeadPlayers")
+			if not dead.is_empty():
+				var player = dead.pick_random()
+				player.resurrect()
 
 func _physics_process(delta):
 	if is_dead:
@@ -293,6 +319,22 @@ func _physics_process(delta):
 	
 	if state == State.NO_ACTION:
 		state_timer += delta
+	if state == State.SIMPLE_ACTION:
+		var may_fire = state_timer < 0.5
+		state_timer += delta * action_speed
+		var to_t = parabola_one(state_timer)
+		if state_timer >= 0.5 && may_fire:
+			fire_generic_action()
+			
+		var tform = item_rest.global_transform
+		tform = tform.rotated_local(TAU * -0.125 * to_t)
+		tform = tform.translated(Vector2(0, to_t * -16))
+		
+		item.global_transform = tform
+		if state_timer >= 1.0:
+			item.global_transform = item_rest.global_transform
+			state = State.NO_ACTION
+			state_timer = 0.0
 	if state == State.MELEE_ATTACK:
 		state_timer += delta * action_speed
 		var to_t = parabola_one(state_timer)
@@ -362,6 +404,9 @@ func _physics_process(delta):
 	#if Input.is_action_just_pressed("player_right"):
 		#melee_attack(tmp_target.global_position)
 		
+	if goal == Goals.GOAL_GENERIC:
+		start_generic()
+		
 	var move_target = get_global_mouse_position()
 		
 	var target_noise_nosmooth = Vector2.ZERO # Vector2.from_angle(randf_range(0, TAU)) * randf_range(256, 1024.0)
@@ -372,7 +417,7 @@ func _physics_process(delta):
 	if goal == Goals.GOAL_RANGED or goal == Goals.GOAL_BUFF or goal == Goals.GOAL_ATTACK_OWN:
 		stay_away_enemies = true
 	# Summoner stays away if we don't want to be hit yet.
-	if current_class == GS.Class.Summoner && not happy_to_take_hit():
+	if current_class == GS.Class.Summoner:
 		stay_away_enemies = true
 	
 	if goal == Goals.GOAL_MELEE:
@@ -458,8 +503,8 @@ func _physics_process(delta):
 		var impulse_strength = 2048
 		var max_range = 72
 		var stay_away = false
-		if happy_to_take_hit() != imp.happy_to_take_hit():
-			stay_away = true
+		#if happy_to_take_hit() != imp.happy_to_take_hit():
+		#	stay_away = true
 		# summoners want to get hit, so make them stay far away from other imps.
 		if stay_away:
 			impulse_strength = 2048
@@ -504,16 +549,7 @@ func _physics_process(delta):
 		
 
 func on_hit(body):
-	# Summoner with staff: summons new imp on hit
-	if current_class == GS.Class.Summoner:
-		if current_item == GS.Item.Staff:
-			GS.spawn_imp(get_parent(), GS.valid_imps.pick_random(), global_position)
-		# WIth sycthe: resurrect a random imp
-		if current_item == GS.Item.Scythe:
-			var dead = get_tree().get_nodes_in_group("DeadPlayers")
-			if not dead.is_empty():
-				var player = dead.pick_random()
-				player.resurrect()
+	
 
 	if body.projectile_source != null:
 		if is_instance_of(body.projectile_source, Player):
