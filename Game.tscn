@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=9 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="1"]
 [ext_resource type="Script" path="res://camera.gd" id="1_p8npq"]
@@ -6,13 +6,13 @@
 [ext_resource type="Script" path="res://tiles/create_navigation.gd" id="4_gaf27"]
 [ext_resource type="TileSet" uid="uid://d3qyn64c7iut5" path="res://tileset.tres" id="4_ty7d8"]
 [ext_resource type="PackedScene" uid="uid://rl585tjhmod7" path="res://enemies/simple_ghost.tscn" id="5_x40r0"]
+[ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="7_fio87"]
 [ext_resource type="PackedScene" uid="uid://dv7eaeqintp14" path="res://ui/imp_select_row.tscn" id="7_yvo4j"]
 
 [node name="Game" type="Node2D"]
 
 [node name="Camera3D" type="Camera2D" parent="."]
-enabled = false
-zoom = Vector2(0.75, 0.75)
+zoom = Vector2(0.5, 0.5)
 script = ExtResource("1_p8npq")
 
 [node name="PauseMenu" parent="." instance=ExtResource("1")]
@@ -45,12 +45,14 @@ position = Vector2(197, -656)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("7_fio87")
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
 layout_mode = 1
@@ -59,20 +61,72 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -264.0
+offset_left = -298.0
 offset_top = -196.0
-offset_right = 264.0
-offset_bottom = 196.0
+offset_right = 310.0
+offset_bottom = 103.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.471116, 0.207546, 0.239089, 1)
+color = Color(0.348043, 0.196363, 0.191862, 1)
 
-[node name="Label" type="Label" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 414.0
-offset_top = 138.0
-offset_right = 687.0
-offset_bottom = 161.0
+[node name="Button" type="Button" parent="CanvasLayer/Control/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -81.5
+offset_top = -50.0
+offset_right = 81.5
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Confirm"
+
+[node name="select_row" parent="CanvasLayer/Control/ColorRect" instance=ExtResource("7_yvo4j")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -292.5
+offset_top = 44.0
+offset_right = 292.5
+offset_bottom = 104.0
+grow_horizontal = 2
+
+[node name="select_row2" parent="CanvasLayer/Control/ColorRect" instance=ExtResource("7_yvo4j")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -292.5
+offset_top = 110.0
+offset_right = 292.5
+offset_bottom = 170.0
+grow_horizontal = 2
+
+[node name="select_row3" parent="CanvasLayer/Control/ColorRect" instance=ExtResource("7_yvo4j")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -292.5
+offset_top = 176.0
+offset_right = 292.5
+offset_bottom = 236.0
+grow_horizontal = 2
+
+[node name="ImpTitle" type="Label" parent="CanvasLayer/Control/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -136.5
+offset_top = 11.0
+offset_right = 136.5
+offset_bottom = 34.0
+grow_horizontal = 2
 text = "Choose an Imp to add to your army"
 
 [node name="Button" type="Button" parent="CanvasLayer/Control"]
@@ -106,30 +160,17 @@ text = "Mage wielding Staff:
 - Attacks at 1x speed for 1 Ranged damage."
 
 [node name="Label2" type="Label" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 376.0
-offset_top = 366.0
-offset_right = 721.0
-offset_bottom = 389.0
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.5
+offset_top = 44.5
+offset_right = 172.5
+offset_bottom = 67.5
+grow_horizontal = 2
+grow_vertical = 2
 text = "... and Choose a Relic to enhance your power"
-
-[node name="select_row" parent="CanvasLayer/Control" instance=ExtResource("7_yvo4j")]
-layout_mode = 0
-offset_left = 288.0
-offset_top = 173.0
-offset_right = 873.0
-offset_bottom = 233.0
-
-[node name="select_row2" parent="CanvasLayer/Control" instance=ExtResource("7_yvo4j")]
-layout_mode = 0
-offset_left = 288.0
-offset_top = 236.0
-offset_right = 873.0
-offset_bottom = 296.0
-
-[node name="select_row3" parent="CanvasLayer/Control" instance=ExtResource("7_yvo4j")]
-layout_mode = 0
-offset_left = 288.0
-offset_top = 299.0
-offset_right = 873.0
-offset_bottom = 359.0
