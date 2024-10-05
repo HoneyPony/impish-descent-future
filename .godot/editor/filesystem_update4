@@ -7,3 +7,5 @@ res://MainMenu.tscn
 res://ui/VolumeBars.tscn
 res://ui/PauseMenu.tscn
 res://players/player.gd
+res://health/health.tscn
+res://health/health.gd

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c28o3vm70ky5b"]
+
+[ext_resource type="Script" path="res://health/health.gd" id="1_bhn11"]
+[ext_resource type="Texture2D" uid="uid://cc4fs5yuqatn8" path="res://health/full_heart.png" id="2_gsstg"]
+
+[node name="Health" type="Node2D"]
+script = ExtResource("1_bhn11")
+
+[node name="Init" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_gsstg")

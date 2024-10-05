@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var health: int = 6
+
 func _physics_process(delta):
 	var players = get_tree().get_nodes_in_group("Players")
 	if players.is_empty():
