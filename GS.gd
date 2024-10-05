@@ -38,7 +38,9 @@ enum Buff {
 
 var valid_imps = [
 	[Class.Brawler, Item.Sword],
+	[Class.Mage, Item.Staff],
 	[Class.Cleric, Item.Staff],
+	[Class.Summoner, Item.Scythe],
 ]
 
 func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2):

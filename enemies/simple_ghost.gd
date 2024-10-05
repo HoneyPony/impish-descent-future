@@ -41,3 +41,6 @@ func _physics_process(delta):
 func _on_hazard_body_entered(body):
 	health -= body.damage
 	body.hit_target()
+	
+	if health <= 0:
+		queue_free()

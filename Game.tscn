@@ -15,6 +15,12 @@ visible = false
 [node name="SimpleGhost" parent="." instance=ExtResource("3_vahep")]
 position = Vector2(-36, -227)
 
+[node name="SimpleGhost2" parent="." instance=ExtResource("3_vahep")]
+position = Vector2(142, -245)
+
+[node name="SimpleGhost3" parent="." instance=ExtResource("3_vahep")]
+position = Vector2(372, -163)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="CanvasLayer"]
