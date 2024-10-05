@@ -18,7 +18,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(0.75, 1.33333),
 "update": 0,
-"values": [Vector2(0, 32), Vector2(0, 27)]
+"values": [Vector2(0, 32), Vector2(0, 32)]
 }
 
 [sub_resource type="Animation" id="Animation_cwyuw"]
@@ -50,6 +50,7 @@ radius = 5.00001
 height = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kpg5o"]
+resource_local_to_scene = true
 radius = 300.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_woakh"]
@@ -98,11 +99,11 @@ shape = SubResource("CapsuleShape2D_u0yco")
 [node name="ItemRest" type="Node2D" parent="."]
 position = Vector2(39, 0)
 
-[node name="MeleeRange" type="Area2D" parent="."]
+[node name="EnemyRange" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeRange"]
+[node name="CollisionShape" type="CollisionShape2D" parent="EnemyRange"]
 shape = SubResource("CircleShape2D_kpg5o")
 
 [node name="Hazard" type="Area2D" parent="."]

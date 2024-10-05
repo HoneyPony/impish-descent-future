@@ -4,7 +4,7 @@ extends CharacterBody2D
 @onready var item_rest = $ItemRest
 @onready var body_sprite = $Body
 
-@onready var melee_range = $MeleeRange
+@onready var melee_range = $EnemyRange
 
 @onready var item_tex = $Item/Look
 
@@ -115,6 +115,10 @@ func _ready():
 	
 	# TODO: Do we actually do this here? Probably not
 	compute_basic_properties()
+	
+	# Set up our range based on our goals.
+	if goal == Goals.GOAL_RANGED:
+		$EnemyRange/CollisionShape.shape.radius *= 3
 
 func _physics_process(delta):
 	# Uncomment this if we want to animate the item
@@ -167,8 +171,8 @@ func _physics_process(delta):
 			projectile.velocity = vel.normalized() * 512.0
 			add_sibling(projectile)
 			
-		var target_rot = item.global_position.angle_to(ranged_attack_target_cached)
-		item.rotation = lerp_angle(0.0, target_rot - TAU * 0.25, to_t)
+		var target_rot = item.global_position.angle_to_point(ranged_attack_target_cached)
+		item.rotation = lerp_angle(0.0, target_rot + TAU * 0.25, to_t)
 		
 		if state_timer >= 1.0:
 			item.global_transform = item_rest.global_transform
