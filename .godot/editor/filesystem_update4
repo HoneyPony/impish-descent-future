@@ -16,3 +16,4 @@ res://camera.gd
 res://SpawnImps.gd
 res://GS.gd
 res://hazard/player_melee_hazard.gd
+res://ui/imp_select_row.tscn

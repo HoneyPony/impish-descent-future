@@ -4,7 +4,7 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	GS.spawn_imp(get_parent(), GS.valid_imps[11], global_position)
-	#GS.spawn_imp(get_parent(), GS.valid_imps[0], global_position)
+	GS.spawn_imp(get_parent(), GS.valid_imps[10], global_position)
 	#GS.spawn_imp(get_parent(), GS.valid_imps[1], global_position)
 	#GS.spawn_imp(get_parent(), GS.valid_imps[8], global_position)
 	#GS.spawn_imp(get_parent(), GS.valid_imps[4], global_position)

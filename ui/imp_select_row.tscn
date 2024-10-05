@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv7eaeqintp14"]
+
+[ext_resource type="ButtonGroup" uid="uid://b5k4vtr4d3gne" path="res://ui/imp_select_group.tres" id="1_crth6"]
+[ext_resource type="Texture2D" uid="uid://so31a8iyooat" path="res://players/body0.png" id="2_eas8s"]
+[ext_resource type="Texture2D" uid="uid://bq4fctqe3aplh" path="res://players/club.png" id="3_f2vnn"]
+
+[node name="ImpSelectRow" type="ColorRect"]
+offset_right = 585.0
+offset_bottom = 60.0
+color = Color(0.336608, 0.336608, 0.336608, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 70.5
+offset_top = 5.0
+offset_right = 484.5
+offset_bottom = 58.0
+text = "Brawler wielding Sword:
+- Attacks at 100% speed for 2 Melee damage."
+
+[node name="Button4" type="Button" parent="."]
+layout_mode = 0
+offset_left = 462.0
+offset_top = 10.0
+offset_right = 574.0
+offset_bottom = 49.0
+toggle_mode = true
+button_group = ExtResource("1_crth6")
+text = "Choose"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(30, 17)
+scale = Vector2(0.183594, 0.183594)
+texture = ExtResource("2_eas8s")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(57, 28)
+scale = Vector2(0.183594, 0.183594)
+texture = ExtResource("3_f2vnn")

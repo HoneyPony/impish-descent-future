@@ -94,6 +94,24 @@ var valid_imps = [
 	[Class.Summoner, Item.Scythe],
 ]
 
+var combat_imps = [
+	0,
+	1,
+	2,
+	3,
+	4,
+	# 5
+	6,
+	7,
+	8,
+	# 9 [cleric staff]
+	10,
+	# 11 [cleric splitter]
+	# 12 might become another cleric
+	12,
+	13
+]
+
 func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool):
 	var imp = Player.instantiate()
 	parent.add_child(imp)

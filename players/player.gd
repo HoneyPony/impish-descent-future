@@ -197,7 +197,12 @@ func compute_basic_properties():
 			# Summoner can't do anything but get hit by default.
 			goal = Goals.GOAL_GENERIC
 			# Summoner has powerful effects that are slow.
-			action_speed *= 0.333
+			
+			if current_item == GS.Item.Staff:
+				# Make summoning eth guys very slow.
+				action_speed *= 0.25
+			else:
+				action_speed *= 0.333
 	
 var state: State = State.NO_ACTION
 var goal: Goals = Goals.GOAL_MELEE
@@ -585,12 +590,15 @@ func set_own_damage(amount: int):
 	melee_base_damage = amount
 	ranged_base_damage = amount
 
-func on_death(body):
+# Return whether to outright delete the palyer (prevent it from resurrecting)
+func on_death(body) -> bool:
 	# Splitters can't themselves be split.
 	if body != null and is_instance_of(body, SplitBuff) and self.goal != Goals.GOAL_ATTACK_OWN:
 		split()
 		split()
-		
+		# Don't let us resurrect after we split
+		return true
+	return false	
 
 func _on_hazard_body_entered(body):
 	if is_dead:
@@ -633,10 +641,10 @@ func resurrect():
 func die(killer_projectile):
 	# note that on death happens before we die, so we can't e.g. resurrect ourselves
 	# on death.
-	on_death(killer_projectile)
+	var perma = on_death(killer_projectile)
 	
 	# Ethereal imps can't be resurrected
-	if is_ethereal():
+	if is_ethereal() or perma:
 		queue_free()
 		return
 	
