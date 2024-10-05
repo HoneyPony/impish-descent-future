@@ -396,6 +396,21 @@ func _physics_process(delta):
 	target_noise += (target_noise_nosmooth - target_noise) * smoothing
 		
 	move_target += target_noise
+	
+	var from_point = GS.get_nav_point(global_position)
+	var to_point = GS.get_nav_point(move_target)
+	if from_point != to_point:
+		var move_target_nav = GS.nav.get_id_path(from_point, to_point, false)
+		#print(move_target_nav)
+		if move_target_nav.size() >= 2:
+			var p0 = GS.nav.get_point_position(move_target_nav[0])
+			var p1 = GS.nav.get_point_position(move_target_nav[1])
+			#print(from_point, " ", to_point, " ", move_target_nav[0], " ", move_target_nav[1])
+			#print(global_position, " ", move_target, " ", p0, " ", p1)
+			move_target = p1 + Vector2(64, 64)
+			
+			
+		
 	var vel = (move_target - global_position) * 5.0
 	var target_vel = vel.limit_length(512)
 	

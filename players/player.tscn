@@ -46,8 +46,8 @@ _data = {
 size = Vector2(18, 46)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u0yco"]
-radius = 5.00001
-height = 20.0
+radius = 5.99999
+height = 26.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kpg5o"]
 resource_local_to_scene = true
@@ -95,7 +95,6 @@ centered = false
 offset = Vector2(-128, -384)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 23)
 rotation = -1.57079
 shape = SubResource("CapsuleShape2D_u0yco")
 

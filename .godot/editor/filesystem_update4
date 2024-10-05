@@ -10,3 +10,6 @@ res://buffs/split_buff.tscn
 res://enemies/enemy_projectile_1_particle.tscn
 res://players/player.gd
 res://SpawnImps.gd
+res://tiles/create_navigation.gd
+res://GS.gd
+res://tileset.tres

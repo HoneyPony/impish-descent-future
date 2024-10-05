@@ -16,6 +16,15 @@ var SplitProjectile = preload("res://buffs/split_buff.tscn")
 
 var Player = preload("res://players/player.tscn")
 
+var nav: AStarGrid2D = AStarGrid2D.new()
+
+func get_nav_point(global_pos: Vector2) -> Vector2i:
+	global_pos -= Vector2(64, 64)
+	var point = Vector2i((global_pos / 128.0).round())
+	#point -= nav.region.position
+	#print(point)
+	return point
+
 enum Item {
 	Sword,
 	Club,
@@ -67,7 +76,9 @@ func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = f
 	call_deferred("finish_spawn_imp", parent, config, global_pos, split)
 	
 	
-	
+	#
+#func _process(delta):
+	#print(get_nav_point($"/root/Game".get_global_mouse_position()))
 
 func _ready():
 	pass
