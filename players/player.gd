@@ -59,6 +59,8 @@ func grab_buff_tex(buf):
 			return preload("res://buffs/buff_protect.png")
 		GS.Buff.Dagger:
 			return preload("res://buffs/buff_dagger.png")
+		GS.Buff.Split:
+			return preload("res://players/buff_split.png")
 		_:
 			print("unknown buff!")
 			return null
@@ -229,6 +231,8 @@ func finalize_properties():
 	melee_collision_shape.disabled = true
 	
 	$Item.slowness = 1.0 / action_speed
+	
+	#print(melee_attack_range)
 
 func target_meets_goals(enemy) -> bool:
 	if $Item.only_half_health:
@@ -434,7 +438,7 @@ func _physics_process(delta):
 				if player.has_empty_buff():
 					target_player = player
 					break
-				else:
+				elif not player.is_split():
 					target_player = player
 					break
 		# Only bother doing anything if we have a real target
@@ -444,10 +448,10 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
-	if goal == Goals.GOAL_ATTACK_OWN:
-		if other_players_hit >= 5:
-			on_death(null)
-			queue_free()
+	#if goal == Goals.GOAL_ATTACK_OWN:
+		#if other_players_hit >= 5:
+			#on_death(null)
+			#queue_free()
 		
 
 func on_hit(body):
@@ -461,15 +465,18 @@ func on_hit(body):
 			
 
 func split():
-	var split_dmg = melee_base_damage
-	if self.goal != Goals.GOAL_MELEE:
-		split_dmg = ranged_base_damage
-	split_dmg -= 1
-	if split_dmg < 0:
-		split_dmg = 0
+	if self.is_split():
+		return
+	
+	#var split_dmg = melee_base_damage
+	#if self.goal != Goals.GOAL_MELEE:
+		#split_dmg = ranged_base_damage
+	#split_dmg -= 1
+	#if split_dmg < 0:
+		#split_dmg = 0
 	var pos = self.global_position
 	pos += Vector2.from_angle(randf_range(0, TAU)) * randf_range(16, 256)
-	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, split_dmg)
+	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, true)
 
 func set_own_damage(amount: int):
 	melee_base_damage = amount
@@ -485,6 +492,11 @@ func on_death(body):
 func _on_hazard_body_entered(body):
 	if body.projectile_source == self:
 		return
+		
+	# Split players can't be split again.
+	if body != null and is_instance_of(body, SplitBuff):
+		if self.is_split():
+			return
 	
 	body.hit_target(self)
 	# TODO: Check shields, etc
@@ -502,6 +514,12 @@ func _on_hazard_body_entered(body):
 	on_death(body)
 	queue_free()
 
+func add_buff(buff: GS.Buff):
+	for i in range(0, 3):
+		if buffs[i] == GS.Buff.None:
+			buffs[i] = buff
+			render_buffs()
+			return
 
 func _on_buff_body_entered(body):
 	# Don't consume buffs we created
@@ -520,7 +538,20 @@ func has_empty_buff():
 		if buffs[i] == GS.Buff.None:
 			return true
 			
+func is_split():
+	for i in range(0, 3):
+		if buffs[i] == GS.Buff.Split:
+			return true
+			
+	return false
+			
 func get_buffed_damage(damage: int) -> int:
+	for i in range(0, 3):
+		# Split buff/debuff is never consumed
+		if buffs[i] == GS.Buff.Split:
+			damage -= 1
+	
+	# Consume dagger buff and return separately
 	for i in range(0, 3):
 		if buffs[i] == GS.Buff.Dagger:
 			buffs[i] = GS.Buff.None

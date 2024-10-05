@@ -35,7 +35,8 @@ enum Class {
 enum Buff {
 	None,
 	Shield,
-	Dagger
+	Dagger,
+	Split
 }
 
 var valid_imps = [
@@ -51,7 +52,7 @@ var valid_imps = [
 	[Class.Summoner, Item.Scythe],
 ]
 
-func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, damage_override: int):
+func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool):
 	var imp = Player.instantiate()
 	parent.add_child(imp)
 	imp.global_position = global_pos
@@ -59,11 +60,11 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, damage_o
 	imp.set_item(config[1])
 	imp.compute_basic_properties()
 	imp.finalize_properties()
-	if damage_override != -1:
-		imp.set_own_damage(damage_override)
+	if split:
+		imp.add_buff(GS.Buff.Split)
 
-func spawn_imp(parent: Node, config: Array, global_pos: Vector2, damage_override: int = -1):
-	call_deferred("finish_spawn_imp", parent, config, global_pos, damage_override)
+func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = false):
+	call_deferred("finish_spawn_imp", parent, config, global_pos, split)
 	
 	
 	
