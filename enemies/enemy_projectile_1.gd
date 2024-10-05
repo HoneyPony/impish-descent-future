@@ -8,6 +8,10 @@ var targetted_player = null
 
 const SPEED = 512
 
+# IMPORTANT: ALL ENEMY PROJECTILES MUST IMPLEMENT THIS
+func hit_player():
+	die()
+
 func die():
 	var particle = GS.EnemyProjectile1Particle.instantiate()
 	particle.position = position

@@ -8,6 +8,8 @@ extends CharacterBody2D
 
 @onready var melee_range = $MeleeRange
 
+@onready var item_tex = $Item/Look
+
 @export var melee_attack_range = 150
 @export var melee_cooldown = 0.3
 
@@ -19,6 +21,37 @@ enum State {
 enum Goals {
 	GOAL_MELEE
 }
+
+var current_item: GS.Item = GS.Item.Scythe
+var current_class: GS.Class = GS.Class.Summoner
+
+func set_item(item: GS.Item):
+	var tex = null
+	
+	match item:
+		GS.Item.Sword:
+			tex = preload("res://players/sword.png")
+		GS.Item.Scythe:
+			tex = preload("res://players/scythe.png")
+		_:
+			print("Oops, we don't support that item yet")
+	
+	item_tex.texture = tex
+	current_item = item
+	
+func set_class(klass: GS.Class):
+	var tex = null
+	
+	match klass:
+		GS.Class.Brawler:
+			tex = preload("res://players/body0.png")
+		GS.Class.Summoner:
+			tex = preload("res://players/body3.png")
+		_:
+			print("Oops, we don't support that class yet")
+			
+	body_sprite.texture = tex
+	current_class = klass
 
 var state: State = State.NO_ACTION
 var goal: Goals = Goals.GOAL_MELEE
@@ -45,13 +78,16 @@ func melee_attack(what: Vector2):
 	
 var target_noise = Vector2.ZERO
 
+func _ready():
+	item.global_position = item_rest.global_position
+
 func _physics_process(delta):
 	# Uncomment this if we want to animate the item
 	# Note: Additional latency from the frame being delayed makes this not really work.
 	# Probably need to either reparent the item or...?
-	#if state == State.NO_ACTION:
+	if state == State.NO_ACTION:
 		#item.sync_to_physics = false
-		#item.global_transform = item_rest.global_transform
+		item.global_transform = item_rest.global_transform
 	#else:
 		## For now...
 		#item.sync_to_physics = true
@@ -142,3 +178,19 @@ func _physics_process(delta):
 	
 	move_and_slide()
 		
+
+func on_hit():
+	# Summoner with sycthe: summons new imp on hit
+	if current_class == GS.Class.Summoner && current_item == GS.Item.Scythe:
+		GS.spawn_imp(get_parent(), GS.valid_imps.pick_random(), global_position)
+
+func on_death():
+	pass
+		
+
+func _on_hazard_body_entered(body):
+	body.hit_player()
+	# TODO: Check shields, etc
+	on_hit()
+	on_death()
+	queue_free()
