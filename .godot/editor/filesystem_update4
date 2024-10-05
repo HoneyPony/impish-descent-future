@@ -15,3 +15,5 @@ res://enemies/enemy_projectile_1.gd
 res://GS.gd
 res://enemies/enemy_projectile_1_particle.tscn
 res://temporary_particles.gd
+res://hazard/player_projectile1.tscn
+res://hazard/player_projectile1.gd

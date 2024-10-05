@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bl4pr73om53qr"]
+
+[ext_resource type="Script" path="res://hazard/player_projectile1.gd" id="1_jvgln"]
+[ext_resource type="Texture2D" uid="uid://dijkoha64w0hv" path="res://hazard/player_projectile1.png" id="2_q3sjp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qerqv"]
+radius = 15.0
+
+[node name="PlayerProjectile1" type="AnimatableBody2D"]
+collision_layer = 16
+sync_to_physics = false
+script = ExtResource("1_jvgln")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_q3sjp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qerqv")

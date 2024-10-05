@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-@export var tmp_target: Node = null
-
 @onready var item = $Item
 @onready var item_rest = $ItemRest
 @onready var body_sprite = $Body
@@ -11,11 +9,16 @@ extends CharacterBody2D
 @onready var item_tex = $Item/Look
 
 @export var melee_attack_range = 150
-@export var melee_cooldown = 0.3
+#@export var melee_cooldown = 0.3
+@export var action_cooldown = 0.3
+
+var ranged_attack_target: Node2D = null
+var ranged_attack_target_cached: Vector2 = Vector2.ZERO
 
 enum State {
 	NO_ACTION,
-	MELEE_ATTACK
+	MELEE_ATTACK,
+	RANGED_ATTACK
 }
 
 enum Goals {
@@ -86,7 +89,7 @@ func parabola_one(t: float) -> float:
 
 func melee_attack(what: Vector2):
 	# Only attack if we're not doing something else.
-	if state != State.NO_ACTION || state_timer < melee_cooldown:
+	if state != State.NO_ACTION || state_timer < action_cooldown:
 		return
 		
 	state = State.MELEE_ATTACK
@@ -94,6 +97,16 @@ func melee_attack(what: Vector2):
 	
 	melee_attack_target_pos = what
 	melee_attack_target_rot = (what - global_position).angle()
+	
+func ranged_attack(target: Node2D):
+	if state != State.NO_ACTION || state_timer < action_cooldown:
+		return
+		
+	state = State.RANGED_ATTACK
+	state_timer = 0.0
+	
+	ranged_attack_target = target
+	ranged_attack_target_cached = target.global_position
 	
 var target_noise = Vector2.ZERO
 
@@ -137,13 +150,37 @@ func _physics_process(delta):
 			item.global_transform = item_rest.global_transform
 			state = State.NO_ACTION
 			state_timer = 0.0
+	elif state == State.RANGED_ATTACK:
+		var may_fire = state_timer < 0.5
+		state_timer += delta
+		
+		var to_t = parabola_one(state_timer)
+		
+		if ranged_attack_target != null:
+			ranged_attack_target_cached = ranged_attack_target.global_position
+			
+		if state_timer >= 0.5 && may_fire:
+			# Fire the projectile when we cross the 0.5 on the timer.
+			var projectile = GS.PlayerProjectile1.instantiate()
+			projectile.global_position = item.global_position
+			var vel = ranged_attack_target_cached - item.global_position
+			projectile.velocity = vel.normalized() * 512.0
+			add_sibling(projectile)
+			
+		var target_rot = item.global_position.angle_to(ranged_attack_target_cached)
+		item.rotation = lerp_angle(0.0, target_rot - TAU * 0.25, to_t)
+		
+		if state_timer >= 1.0:
+			item.global_transform = item_rest.global_transform
+			state = State.NO_ACTION
+			state_timer = 0.0
 			
 	#if Input.is_action_just_pressed("player_right"):
 		#melee_attack(tmp_target.global_position)
 		
 	var move_target = get_global_mouse_position()
 		
-	var target_noise_nosmooth = Vector2.from_angle(randf_range(0, TAU)) * randf_range(256, 1024.0)
+	var target_noise_nosmooth = Vector2.from_angle(randf_range(0, TAU)) * randf_range(0, 256.0)
 	var smoothing = 0.05
 	
 	
@@ -183,11 +220,23 @@ func _physics_process(delta):
 				melee_attack(closest.global_position)
 	elif goal == Goals.GOAL_RANGED:
 		# If we're ranged, we want to avoid damage, so back away from nearby enemies
+		# TODO: I guess we want a larger ranged here..?
 		var bodies: Array = melee_range.get_overlapping_bodies()
 		for body in bodies:
 			var to_vec = global_position - body.global_position
-			var goal_shift = 160000.0 * to_vec / (to_vec.length_squared() + 0.005)
+			var goal_shift = 80000.0 * to_vec / (to_vec.length_squared() + 0.005)
 			target_noise_nosmooth += goal_shift
+			
+		if not bodies.is_empty():
+			var closest = bodies[0]
+			var dist = (bodies[0].global_position - global_position).length_squared()
+			for i in range(1, bodies.size()):
+				var newdist = (bodies[i].global_position - global_position).length_squared()
+				if newdist < dist:
+					closest = bodies[i]
+					dist = newdist
+			
+			ranged_attack(closest)
 			
 		
 	target_noise += (target_noise_nosmooth - target_noise) * smoothing
@@ -219,7 +268,7 @@ func on_death():
 		
 
 func _on_hazard_body_entered(body):
-	body.hit_player()
+	body.hit_target()
 	# TODO: Check shields, etc
 	on_hit()
 	on_death()

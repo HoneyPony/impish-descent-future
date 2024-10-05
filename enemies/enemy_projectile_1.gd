@@ -9,7 +9,7 @@ var targetted_player = null
 const SPEED = 512
 
 # IMPORTANT: ALL ENEMY PROJECTILES MUST IMPLEMENT THIS
-func hit_player():
+func hit_target():
 	die()
 
 func die():

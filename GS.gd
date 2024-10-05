@@ -9,6 +9,8 @@ var MainMenu = preload("res://MainMenu.tscn")
 var EnemyProjectile1 = preload("res://enemies/enemy_projectile1.tscn")
 var EnemyProjectile1Particle = preload("res://enemies/enemy_projectile_1_particle.tscn")
 
+var PlayerProjectile1 = preload("res://hazard/player_projectile1.tscn")
+
 var Player = preload("res://players/player.tscn")
 
 enum Item {
