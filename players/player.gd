@@ -403,11 +403,21 @@ func _physics_process(delta):
 		var move_target_nav = GS.nav.get_id_path(from_point, to_point, false)
 		#print(move_target_nav)
 		if move_target_nav.size() >= 2:
-			var p0 = GS.nav.get_point_position(move_target_nav[0])
+			#var p0 = GS.nav.get_point_position(move_target_nav[0])
 			var p1 = GS.nav.get_point_position(move_target_nav[1])
 			#print(from_point, " ", to_point, " ", move_target_nav[0], " ", move_target_nav[1])
 			#print(global_position, " ", move_target, " ", p0, " ", p1)
-			move_target = p1 + Vector2(64, 64)
+			var good_move_target = p1 + Vector2(64, 64)
+			
+			# If the move target and good_move_target are in a similar direction,
+			# mostly use the existing move_target.
+			
+			var d0 = (good_move_target - global_position).normalized()
+			var d1 = (move_target - global_position).normalized()
+			# Exaggerate the nav weight to some degree.
+			var good_weight = (1.0 - d0.dot(d1)) * 5.0
+			good_weight = clamp(good_weight, 0, 1)
+			move_target = lerp(move_target, good_move_target, good_weight)
 			
 			
 		
