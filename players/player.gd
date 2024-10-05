@@ -85,7 +85,7 @@ func _physics_process(delta):
 		
 	var move_target = get_global_mouse_position()
 		
-	var target_noise_nosmooth = Vector2.from_angle(randf_range(0, TAU)) * randf_range(0.0, 512.0)
+	var target_noise_nosmooth = Vector2.from_angle(randf_range(0, TAU)) * randf_range(256, 1024.0)
 	var smoothing = 0.05
 	
 	
@@ -104,26 +104,22 @@ func _physics_process(delta):
 			# the target_noise system so that we at once:
 			# - Don't have extra random offset
 			var dir_to = global_position - closest.global_position
-			#smoothing = 0.3
-			target_noise_nosmooth = closest.global_position + dir_to.normalized() * 128
-			#print(noise)
+			#target_noise_nosmooth = closest.global_position + dir_to.normalized() * 128
 			# Ensure that we're headed straight to the average between the player intention
 			# and this targetting point
-			var player_intention_amount = (move_target - closest.global_position).length() - 128.0
-			player_intention_amount /= 512.0
-			player_intention_amount = clamp(player_intention_amount, 0.0, 1.0)
-			#print(player_intention_amount)
+			
+			#var player_intention_amount = (move_target - closest.global_position).length() - 128.0
+			#player_intention_amount /= 128.0
+			#player_intention_amount = clamp(player_intention_amount, 0.0, 1.0)
 			
 			# Right now we're treating target_noise_nosmooth at itself the real target position
 			# To make sure we only try to move near there if the player wants us to, we use
 			# an intention amount based on distance.
 			# Intention of 0 means do move there -- the lerp of 0 will take us straight there.
 			# Intention of 1 means do not -- instead we lerp back to the real move target
-			target_noise_nosmooth = lerp(target_noise_nosmooth, move_target, player_intention_amount)
+			#target_noise_nosmooth = lerp(target_noise_nosmooth, move_target, player_intention_amount)
 			# This is how we turn target_noise_nosmooth into the real  target
-			target_noise_nosmooth -= move_target
-			#
-			#print(closest)
+			#target_noise_nosmooth -= move_target
 			
 			if dir_to.length_squared() < melee_attack_range * melee_attack_range:
 				melee_attack(closest.global_position)
@@ -131,8 +127,8 @@ func _physics_process(delta):
 	target_noise += (target_noise_nosmooth - target_noise) * smoothing
 		
 	move_target += target_noise
-	var vel = (move_target - global_position) * 0.8
-	velocity = vel.limit_length(128)
+	var vel = (move_target - global_position) * 5.0
+	velocity = vel.limit_length(256)
 	
 	# Add impulses for each nearby imp.
 	for imp in get_tree().get_nodes_in_group("Players"):

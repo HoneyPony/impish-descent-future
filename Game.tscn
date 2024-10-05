@@ -7,11 +7,18 @@
 [node name="Game" type="Node2D"]
 
 [node name="Camera3D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
 
 [node name="PauseMenu" parent="." instance=ExtResource("1")]
 visible = false
 
 [node name="Imp" parent="." instance=ExtResource("2_k7n08")]
+
+[node name="Imp2" parent="." instance=ExtResource("2_k7n08")]
+position = Vector2(205, -111)
+
+[node name="Imp3" parent="." instance=ExtResource("2_k7n08")]
+position = Vector2(441, -74)
 
 [node name="SimpleGhost" parent="." instance=ExtResource("3_vahep")]
 position = Vector2(-36, -227)
