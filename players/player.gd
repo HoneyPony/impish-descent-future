@@ -638,7 +638,7 @@ func _on_hazard_body_entered(body):
 		
 	# Split players can't be split again.
 	# This includes ethereal players.
-	if body != null and is_instance_of(body, SplitBuff):
+	if body != null and is_instance_of(body, SplitBuff) and body.still_has_split:
 		if self.is_split(true):
 			return
 		else:
@@ -770,7 +770,7 @@ func get_buffed_damage(damage: int) -> int:
 	for i in range(0, 3):
 		# Split buff/debuff is never consumed
 		if buffs[i] == GS.Buff.Split:
-			damage -= randi_range(0, 1)
+			damage = randi_range(0, damage)
 			if damage < 0:
 				damage = 0
 		

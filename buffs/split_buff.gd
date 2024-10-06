@@ -5,11 +5,13 @@ var velocity = Vector2.ZERO
 var projectile_source = null
 
 @export var is_buff = false
+var still_has_split = true
 
 @onready var sprite = $Sprite
 
 # IMPORTANT: ALL  PROJECTILES MUST IMPLEMENT THIS
 func hit_target(target):
+	still_has_split = false
 	die()
 	
 func killed_target(target):

@@ -129,14 +129,14 @@ var valid_imps = [
 	[Class.Mage, Item.Scythe, "Mage wielding Scythe:\n- Attacks at 100% speed for 1 Ranged damage.\n- Shoots 5 shots in random directions."],
 	[Class.Cleric, Item.Staff, "Cleric wielding Staff:\n- Applies Shield buff to nearby imps.\n- Shield buff blocks 1 hit from enemies."],
 	[Class.Cleric, Item.Sword, "Cleric wielding Sword:\n- Attacks at 100% speed for 1 damage.\n- On kill, increase damage by 1 (resets next level)"],
-	[Class.Cleric, Item.Scythe, "Cleric wielding Scythe:\n- Splits nearby imps into two imps.\n- Split imps randomly do 1 fewer damage."],
+	[Class.Cleric, Item.Scythe, "Cleric wielding Scythe:\n- Splits nearby imps into two imps.\n- Split imps randomize their damage."],
 	[Class.Summoner, Item.Staff, "Summoner wielding Staff:\n- Summons random Ethereal imps.\n- Ethereal imps disappear after 4 seconds."],
 	[Class.Summoner, Item.Scythe, "Summoner wielding Scythe:\n- Resurrects dead imps."],
 ]
 
 var nonbreaking_imps = [0, 1, 2, 3,
-4, 5, 6, # no 7, because it splits
-8, 9, 10, 11, 12]
+4, 5, 6, 7, 8, 9,  # no 10, because it splits
+ 11, 12]
 
 var combat_imps = [
 	0, # All brawlers
@@ -231,7 +231,7 @@ func get_body_tex(klass: Class):
 var relics = [
 "Essence of Slime
 When your imps would die, they Split instead.
-Split imps randomly do -1 damage and cannot split.",
+Split imps randomize their damage and cannot split.",
 
 "Conch Horn
 Every 3rd time you kill an enemy, spawn a random Brawler.",
