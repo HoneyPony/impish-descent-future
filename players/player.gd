@@ -186,7 +186,8 @@ func compute_basic_properties():
 				# Make summoning eth guys very slow.
 				action_speed *= 0.25
 			else:
-				action_speed *= 0.333
+				# resurrecting can actually be quite fast.
+				action_speed *= 1.5
 	
 var state: State = State.NO_ACTION
 var goal: Goals = Goals.GOAL_MELEE
@@ -304,7 +305,10 @@ func _physics_process(delta):
 		return
 		
 	if invulnerability > 0:
+		modulate = Color(1.5, 1, 1, 0.8)
 		invulnerability -= delta
+	else:
+		modulate = Color(1, 1, 1)
 		
 	if ethereal_lifetime > 0.0:
 		ethereal_lifetime -= delta
@@ -642,7 +646,7 @@ func _on_hazard_body_entered(body):
 	body.hit_target(self)
 	# TODO: Check shields, etc
 	on_hit(body)
-	invulnerability = 1.0
+	invulnerability = 0.5
 	
 	for i in range(0, 3):
 		if buffs[i] == GS.Buff.Shield:
@@ -666,8 +670,8 @@ func resurrect():
 	is_dead = false
 	
 	# Resurrected imps spawn with one shield?
-	#add_buff(GS.Buff.Shield)
-	invulnerability = 1.0
+	add_buff(GS.Buff.Shield)
+	#invulnerability = 1.0
 	
 func die(killer_projectile):
 	if GS.has_won:

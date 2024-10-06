@@ -36,7 +36,7 @@ func _physics_process(delta):
 	
 	shoot_timer -= delta
 	if shoot_timer <= 0:
-		shoot_timer = 0.75
+		shoot_timer = 1.25
 		var bullet = GS.EnemyProjectile2.instantiate()
 		add_child(bullet)
 
