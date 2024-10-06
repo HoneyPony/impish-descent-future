@@ -316,6 +316,7 @@ func reset_game_state():
 	flag_retry_this_level = false
 	
 	current_army = []
+	owned_relics = []
 	#relic_tripledmg_killself = true
 
 func get_imp_spawn_info():
