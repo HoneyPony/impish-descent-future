@@ -594,7 +594,9 @@ func on_death(body) -> bool:
 		split()
 		# Don't let us resurrect after we split
 		return true
-	elif GS.relic_always_split:
+	# In order to ensure that the relic doesn't change the bevhaivor of whether we can resurrect
+	# on split, we add this second part of the condition.
+	elif GS.relic_always_split and not self.is_split():
 		split()
 		split()
 		return true
