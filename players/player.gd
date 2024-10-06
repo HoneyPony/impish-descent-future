@@ -208,6 +208,8 @@ func start_generic():
 	if not happy_to_start_action():
 		return
 		
+	Sounds.imp_act.play_rand()
+		
 	state = State.SIMPLE_ACTION
 	state_timer = 0.0
 
@@ -219,6 +221,8 @@ func melee_attack(what: Vector2):
 	state = State.MELEE_ATTACK
 	state_timer = 0.0
 	
+	Sounds.imp_act.play_rand()
+	
 	$Item.damage = melee_base_damage
 	melee_attack_target_pos = what
 	melee_attack_target_rot = (what - global_position).angle()
@@ -229,6 +233,8 @@ func ranged_attack(target: Node2D):
 		
 	state = State.RANGED_ATTACK
 	state_timer = 0.0
+	 	
+	Sounds.imp_act.play_rand()
 	
 	ranged_attack_target = target
 	ranged_attack_target_cached = target.global_position

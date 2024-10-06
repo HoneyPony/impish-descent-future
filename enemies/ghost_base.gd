@@ -82,7 +82,10 @@ func _on_hazard_body_entered(body):
 	collision_timeouts[body] = body.slowness
 	
 	if health <= 0:
+		Sounds.kill_ghost.play_rand()
 		on_death(body)
 		body.killed_target(self)
 		GS.an_enemy_died()
 		queue_free()
+	else:
+		Sounds.hit_ghost.play_rand()

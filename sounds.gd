@@ -5,6 +5,10 @@ var game_vol_actual = 0.0
 
 var game_vol_adjust = -9
 
+@onready var imp_act = $ImpAct
+@onready var hit_ghost = $HitGhost
+@onready var kill_ghost = $KillGhost
+
 func _ready():
 	$MenuMusic.volume_db = linear_to_db(0)
 	$GameMusic.volume_db = linear_to_db(0) + game_vol_adjust
