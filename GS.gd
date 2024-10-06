@@ -23,6 +23,7 @@ var EnemyProjectile1 = preload("res://enemies/enemy_projectile1.tscn")
 var EnemyProjectile1Particle = preload("res://enemies/enemy_projectile_1_particle.tscn")
 
 var PlayerProjectile1 = preload("res://hazard/player_projectile1.tscn")
+var PlayerProjectile1Particle = preload("res://hazard/player_projectile1_particle.tscn")
 
 var BuffProjectile = preload("res://buffs/player_buff.tscn")
 var SplitProjectile = preload("res://buffs/split_buff.tscn")

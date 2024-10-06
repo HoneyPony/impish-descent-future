@@ -19,7 +19,7 @@ func killed_target(target):
 	pass
 
 func die():
-	var particle = GS.EnemyProjectile1Particle.instantiate()
+	var particle = GS.PlayerProjectile1Particle.instantiate()
 	particle.position = position
 	add_sibling(particle)
 	queue_free()
