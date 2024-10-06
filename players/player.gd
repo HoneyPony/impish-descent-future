@@ -208,8 +208,6 @@ func start_generic():
 	if not happy_to_start_action():
 		return
 		
-	Sounds.imp_act.play_rand()
-		
 	state = State.SIMPLE_ACTION
 	state_timer = 0.0
 
@@ -221,7 +219,7 @@ func melee_attack(what: Vector2):
 	state = State.MELEE_ATTACK
 	state_timer = 0.0
 	
-	Sounds.imp_act.play_rand()
+	Sounds.imp_act_crunchy.play_rand()
 	
 	$Item.damage = melee_base_damage
 	melee_attack_target_pos = what
@@ -233,8 +231,6 @@ func ranged_attack(target: Node2D):
 		
 	state = State.RANGED_ATTACK
 	state_timer = 0.0
-	 	
-	Sounds.imp_act.play_rand()
 	
 	ranged_attack_target = target
 	ranged_attack_target_cached = target.global_position
@@ -345,6 +341,7 @@ func _physics_process(delta):
 		state_timer += delta * action_speed
 		var to_t = parabola_one(state_timer)
 		if state_timer >= 0.5 && may_fire:
+			Sounds.imp_act.play_rand()
 			fire_generic_action()
 			
 		var tform = item_rest.global_transform
@@ -357,7 +354,10 @@ func _physics_process(delta):
 			state = State.NO_ACTION
 			state_timer = 0.0
 	if state == State.MELEE_ATTACK:
+
 		state_timer += delta * action_speed
+		
+			
 		var to_t = parabola_one(state_timer)
 		# The cooldown is basically the remaining time in the animation.
 		# Because then, we can attack again.
@@ -394,6 +394,7 @@ func _physics_process(delta):
 			ranged_attack_target_cached = ranged_attack_target.global_position
 			
 		if state_timer >= 0.5 && may_fire:
+			Sounds.imp_act.play_rand()
 			if ranged_attack_is_nova:
 				# Buffs are very vvery good on nova.
 				var damage: int = get_buffed_damage(ranged_base_damage)
