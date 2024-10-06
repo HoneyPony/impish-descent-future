@@ -1,7 +1,7 @@
 extends ColorRect
 
 const GRAY_UNSELECT = 0.337
-const GRAY_SELECT = 0.267
+const GRAY_SELECT = 0.184
 
 var relic_id = 0
 

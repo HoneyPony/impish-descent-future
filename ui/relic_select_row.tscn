@@ -9,7 +9,7 @@
 offset_right = 683.0
 offset_bottom = 82.0
 theme = ExtResource("1_jgw28")
-color = Color(0.266575, 0.266575, 0.266575, 1)
+color = Color(0.18359, 0.18359, 0.18359, 1)
 script = ExtResource("2_0oprs")
 
 [node name="Label" type="RichTextLabel" parent="."]

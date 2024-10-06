@@ -1,7 +1,7 @@
 extends ColorRect
 
 const GRAY_UNSELECT = 0.337
-const GRAY_SELECT = 0.267
+const GRAY_SELECT = 0.184
 
 @export var index = 0
 
