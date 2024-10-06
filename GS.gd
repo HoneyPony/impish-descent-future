@@ -271,8 +271,8 @@ func reset_game_state():
 	has_won = false
 	flag_retry_this_level = false
 	
-	current_army = [12]
-	relic_tripledmg_killself = true
+	current_army = []
+	#relic_tripledmg_killself = true
 
 func get_imp_spawn_info():
 	var to_pos = Vector2.ZERO

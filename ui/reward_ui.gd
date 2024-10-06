@@ -8,7 +8,8 @@ extends ColorRect
 
 @onready var relic_rows = [
 	$Relics/RelicSelectRow,
-	$Relics/RelicSelectRow2
+	$Relics/RelicSelectRow2,
+	$Relics/NoRelic
 ]
 
 var current_new_imp = 0
@@ -60,6 +61,7 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 		
 		relic_rows[0].setup(first)
 		relic_rows[1].setup(second)
+		relic_rows[2].setup(-1)
 		
 		relic_rows[0].select_this()
 		
@@ -100,7 +102,7 @@ func _ready():
 func _on_confirm_button_pressed():
 	hide()
 	GS.current_army.push_back(current_new_imp)
-	if do_choose_relic:
+	if do_choose_relic and current_new_relic >= 0:
 		GS.accept_relic(current_new_relic)
 	GS.spawn_current_army()
 	%DefeatMenu.going = true

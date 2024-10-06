@@ -8,8 +8,9 @@ var relic_id = 0
 func setup(id):
 	relic_id = id
 	
+	if id >= 0:
 	#$Body.texture = GS.get_body_tex(klass)
-	$Label.text = GS.relics[id]
+		$Label.text = GS.relics[id]
 	
 func _ready():
 	$Button.pressed.connect(self.select_this)

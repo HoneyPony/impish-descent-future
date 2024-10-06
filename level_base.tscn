@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=13 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="Script" path="res://camera.gd" id="1_qvjw2"]
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="2_f1kks"]
@@ -9,7 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://dv7eaeqintp14" path="res://ui/imp_select_row.tscn" id="8_2b3rg"]
 [ext_resource type="Script" path="res://ui/success_menu.gd" id="8_a0vcg"]
 [ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="8_k35jv"]
+[ext_resource type="Script" path="res://ui/relic_select_row.gd" id="9_p0a2q"]
 [ext_resource type="Script" path="res://ui/defeat_menu.gd" id="10_reeg6"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_mprjm"]
 
 [node name="Level" type="Node2D"]
 
@@ -48,7 +51,6 @@ grow_vertical = 2
 theme = ExtResource("6_jm28w")
 
 [node name="UpgradeMenu" type="ColorRect" parent="UpgradeMenu/Control"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -56,9 +58,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -348.0
-offset_top = -294.0
+offset_top = -314.0
 offset_right = 360.0
-offset_bottom = 63.0
+offset_bottom = 43.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.348043, 0.196363, 0.191862, 1)
@@ -134,7 +136,7 @@ anchor_bottom = 1.0
 offset_left = -354.0
 offset_top = -53.0
 offset_right = 354.0
-offset_bottom = 227.0
+offset_bottom = 274.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.34902, 0.196078, 0.192157, 1)
@@ -160,6 +162,38 @@ offset_top = 142.0
 offset_right = 341.5
 offset_bottom = 224.0
 grow_horizontal = 2
+
+[node name="NoRelic" type="ColorRect" parent="UpgradeMenu/Control/UpgradeMenu/Relics"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -341.0
+offset_top = 228.0
+offset_right = 342.0
+offset_bottom = 267.0
+grow_horizontal = 2
+theme = ExtResource("6_jm28w")
+color = Color(0.266575, 0.266575, 0.266575, 1)
+script = ExtResource("9_p0a2q")
+
+[node name="Label" type="RichTextLabel" parent="UpgradeMenu/Control/UpgradeMenu/Relics/NoRelic"]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 7.0
+offset_right = 558.0
+offset_bottom = 33.0
+text = "Skip Relic"
+
+[node name="Button" type="Button" parent="UpgradeMenu/Control/UpgradeMenu/Relics/NoRelic"]
+layout_mode = 0
+offset_left = 562.0
+offset_top = 4.0
+offset_right = 674.0
+offset_bottom = 35.0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_mprjm")
+text = "Choose"
 
 [node name="Label2" type="Label" parent="UpgradeMenu/Control/UpgradeMenu/Relics"]
 layout_mode = 1
@@ -237,6 +271,7 @@ horizontal_alignment = 1
 
 [node name="DefeatMenu" type="ColorRect" parent="UpgradeMenu/Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
