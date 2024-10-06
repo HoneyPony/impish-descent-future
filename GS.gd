@@ -32,6 +32,7 @@ var PlayerProjectile1 = preload("res://hazard/player_projectile1.tscn")
 var PlayerProjectile1Particle = preload("res://hazard/player_projectile1_particle.tscn")
 
 var BuffProjectile = preload("res://buffs/player_buff.tscn")
+var BuffParticle = preload("res://buffs/buff_particle.tscn")
 var SplitProjectile = preload("res://buffs/split_buff.tscn")
 
 var Player = preload("res://players/player.tscn")
@@ -233,9 +234,8 @@ All daggers gain an additional x1.5 speed.",
 "Cursed Sword
 Melee attacks gain +1 damage. Your imps can no longer resurrect.",
 
-"Mystical Necromancer
-When you kill an enemy, summon an Ethereal imp that will
-Resurrect a random dead imp, and one random Ethereal imp.",
+"Strange Skull
+When you kill an enemy, summon two random Ethereal imps.",
 
 "Holy Scepter
 Non-Ethereal imps deal triple melee damage.
@@ -315,9 +315,10 @@ func an_enemy_died():
 			
 	if relic_kill_equals_eth_resurrecter:
 		var info = get_imp_spawn_info()
-		spawn_imp(info[0], valid_imps[12], info[1], false, true)
+		spawn_imp(info[0], pick_nonbreaking_imp(), info[1], false, true)
+		#spawn_imp(info[0], valid_imps[12], info[1], false, true)
 		var info2 = get_imp_spawn_info()
-		spawn_imp(info2[0], pick_nonbreaking_imp(), info[1], false, true)
+		spawn_imp(info2[0], pick_nonbreaking_imp(), info2[1], false, true)
 
 var relic_always_split = false
 var relic_3_enemies_spawn_brawler = false

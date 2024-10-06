@@ -4,6 +4,8 @@ class_name SplitBuff
 var velocity = Vector2.ZERO
 var projectile_source = null
 
+@export var is_buff = false
+
 @onready var sprite = $Sprite
 
 # IMPORTANT: ALL  PROJECTILES MUST IMPLEMENT THIS
@@ -14,7 +16,11 @@ func killed_target(target):
 	pass
 
 func die():
-	var particle = GS.EnemyProjectile1Particle.instantiate()
+	var particle = null
+	if is_buff:
+		particle = GS.BuffParticle.instantiate()
+	else:
+		particle = GS.EnemyProjectile1Particle.instantiate()
 	particle.position = position
 	add_sibling(particle)
 	queue_free()

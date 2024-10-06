@@ -10,6 +10,7 @@ radius = 15.0
 collision_layer = 8
 sync_to_physics = false
 script = ExtResource("1_sio8h")
+is_buff = true
 
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
