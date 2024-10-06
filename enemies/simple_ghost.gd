@@ -5,6 +5,7 @@ var fire_timer = 2.3
 @export var big = false
 
 func _ready():
+	health = max_health
 	fire_timer = randf_range(0, 2.3)
 
 func handle_simple_projectile(delta):

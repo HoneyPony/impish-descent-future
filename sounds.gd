@@ -12,6 +12,9 @@ var game_vol_adjust = -9
 @onready var ghost_bullet_shoot = $GhostBulletShoot
 @onready var ghost_bullet_spawn = $GhostBulletSpawn
 @onready var buffed = $Buffed
+@onready var imp_hit = $ImpHit
+@onready var imp_kill = $ImpKill
+@onready var imp_spawn = $ImpSpawn
 
 func _ready():
 	$MenuMusic.volume_db = linear_to_db(0)

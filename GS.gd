@@ -151,9 +151,9 @@ func spawn_current_army():
 	assert(pos != null)
 	
 	for imp in current_army:
-		spawn_imp(pos.get_parent(), valid_imps[imp], pos.global_position)
+		spawn_imp(pos.get_parent(), valid_imps[imp], pos.global_position, false, false, false)
 
-func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool):
+func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool, play_sound: bool):
 	var imp = Player.instantiate()
 	parent.add_child(imp)
 	imp.global_position = global_pos
@@ -168,9 +168,12 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: b
 		
 	if relic_spawn_shield:
 		imp.add_buff(GS.Buff.Shield)
+	
+	if play_sound:	
+		Sounds.imp_spawn.play_rand()
 
-func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = false, ethereal: bool = false):
-	call_deferred("finish_spawn_imp", parent, config, global_pos, split, ethereal)
+func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = false, ethereal: bool = false, play_sound: bool = true):
+	call_deferred("finish_spawn_imp", parent, config, global_pos, split, ethereal, play_sound)
 	
 func get_item_tex(item: Item):
 	var tex = null

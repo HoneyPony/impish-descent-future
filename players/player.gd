@@ -655,14 +655,17 @@ func _on_hazard_body_entered(body):
 	on_hit(body)
 	invulnerability = 0.5
 	
-	for i in range(0, 3):
-		if buffs[i] == GS.Buff.Shield:
-			# If we had a shield, it saves us from the hit
-			buffs[i] = GS.Buff.None
-			render_buffs()
-			# Don't die now
-			return
+	if not GS.relic_shields_are_damage:
+		for i in range(0, 3):
+			if buffs[i] == GS.Buff.Shield:
+				# If we had a shield, it saves us from the hit
+				buffs[i] = GS.Buff.None
+				render_buffs()
+				# Don't die now, play hit sound
+				Sounds.imp_hit.play_rand()
+				return
 	
+	Sounds.imp_kill.play_rand()
 	# Do die now
 	die(body)
 	
@@ -678,6 +681,7 @@ func resurrect():
 	
 	# Resurrected imps spawn with one shield?
 	add_buff(GS.Buff.Shield)
+	Sounds.imp_spawn.play_rand()
 	#invulnerability = 1.0
 	
 func die(killer_projectile):

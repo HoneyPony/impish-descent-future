@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://djminn0neh2kc"]
+[gd_scene load_steps=15 format=3 uid="uid://djminn0neh2kc"]
 
 [ext_resource type="Script" path="res://sounds.gd" id="1_8eu58"]
 [ext_resource type="AudioStream" uid="uid://nxgqc7nkp8oo" path="res://sounds/menu_music.ogg" id="2_ess2a"]
@@ -11,6 +11,9 @@
 [ext_resource type="AudioStream" uid="uid://bft55j3f78sal" path="res://sounds/ghost_bullet_shoot.wav" id="9_gm4am"]
 [ext_resource type="AudioStream" uid="uid://wa45l58k8agr" path="res://sounds/ghost_bullet_spawn.wav" id="10_quyck"]
 [ext_resource type="AudioStream" uid="uid://pvigtv13etsf" path="res://sounds/imp_buff.wav" id="11_mi2oy"]
+[ext_resource type="AudioStream" uid="uid://b2tgfabtvmx6a" path="res://sounds/imp_hurt.wav" id="12_ic51b"]
+[ext_resource type="AudioStream" uid="uid://bihxdvysc1pd4" path="res://sounds/imp_kill.wav" id="13_y3xnc"]
+[ext_resource type="AudioStream" uid="uid://dgc31rnrynj7d" path="res://sounds/imp_spawn.wav" id="14_wuhxf"]
 
 [node name="Sounds" type="Node"]
 script = ExtResource("1_8eu58")
@@ -25,11 +28,13 @@ bus = &"Music"
 
 [node name="ImpAct" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jrno4")
+volume_db = -6.0
 bus = &"SFX"
 script = ExtResource("5_i5see")
 
 [node name="ImpActCrunchy" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_xe87s")
+volume_db = -6.0
 bus = &"SFX"
 script = ExtResource("5_i5see")
 
@@ -55,5 +60,23 @@ script = ExtResource("5_i5see")
 
 [node name="Buffed" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_mi2oy")
+bus = &"SFX"
+script = ExtResource("5_i5see")
+
+[node name="ImpHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_ic51b")
+volume_db = -6.0
+bus = &"SFX"
+script = ExtResource("5_i5see")
+
+[node name="ImpKill" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_y3xnc")
+volume_db = -4.0
+bus = &"SFX"
+script = ExtResource("5_i5see")
+
+[node name="ImpSpawn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_wuhxf")
+volume_db = -12.0
 bus = &"SFX"
 script = ExtResource("5_i5see")
