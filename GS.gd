@@ -229,6 +229,14 @@ func get_body_tex(klass: Class):
 			print("Oops, we don't support that class yet")
 	return tex
 	#
+
+func _process(delta):
+	if Input.is_action_just_pressed("toggle_fullscreen"):
+
+		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 #func _process(delta):
 	#print(get_nav_point($"/root/Game".get_global_mouse_position()))
 
@@ -368,4 +376,7 @@ func accept_relic(id: int):
 		8: relic_tripledmg_killself = true
 
 func _ready():
+		# Go in fullscreen for nicer experience..?
+	if OS.get_name() != "Web":
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	reset_game_state()

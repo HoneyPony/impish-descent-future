@@ -12,3 +12,7 @@ func _on_PlayButton_pressed():
 	Sounds.get_node("GameMusic").seek(0)
 	#print(Sounds.get_node("GameMusic").playing)
 	SceneTransition.change_scene(GS.levels(0))
+
+
+func _on_quit_pressed():
+	get_tree().quit()

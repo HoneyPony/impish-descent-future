@@ -42,6 +42,21 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Play"
 
+[node name="Quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = 178.0
+offset_right = 250.0
+offset_bottom = 221.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 11.0
@@ -131,3 +146,4 @@ script = ExtResource("5_83eal")
 index = 4
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
