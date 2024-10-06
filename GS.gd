@@ -186,5 +186,42 @@ func get_body_tex(klass: Class):
 #func _process(delta):
 	#print(get_nav_point($"/root/Game".get_global_mouse_position()))
 
+var relics = [
+"Essence of Slime
+When your imps would die, they Split instead.
+Imps spawned this way cannot themselves Split.",
+
+"Battle Cry
+Every 3rd time you kill an enemy, spawn a random Brawler.",
+
+"Quarterstaff
+All Mages now Melee attack for 3 damage.",
+
+"Amulet of Protection
+All imps spawn with 1 Shield.
+(Shields protect against one hit).",
+
+"Thorny Bush
+Your Shields no longer protect. Instead, they grant +2 damage
+to the next attack.",
+
+"Book of Stabbing
+All daggers gain an additional x1.5 speed.",
+
+"Cursed Sword
+All attacks gain +1 damage. Your imps can no longer resurrect.",
+
+"Mystical Necromancer
+When you kill an enemy, summon an Ethereal imp that will
+Resurrect a random dead imp.",
+
+"Holy Scepter
+Non-Ethereal imps deal triple melee damage.
+Attacks made this way kill that imp.",
+]
+
+var avail_relics: Array = []
+
 func _ready():
-	pass
+	for i in range(0, relics.size()):
+		avail_relics.push_back(i)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=10 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="Script" path="res://camera.gd" id="1_qvjw2"]
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="2_f1kks"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://ui/reward_ui.gd" id="7_jy4qv"]
 [ext_resource type="PackedScene" uid="uid://dv7eaeqintp14" path="res://ui/imp_select_row.tscn" id="8_2b3rg"]
 [ext_resource type="Script" path="res://ui/success_menu.gd" id="8_a0vcg"]
+[ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="8_k35jv"]
 
 [node name="Level" type="Node2D"]
 
@@ -46,7 +47,6 @@ grow_vertical = 2
 theme = ExtResource("6_jm28w")
 
 [node name="UpgradeMenu" type="ColorRect" parent="UpgradeMenu/Control"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -54,9 +54,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -348.0
-offset_top = -196.0
+offset_top = -294.0
 offset_right = 360.0
-offset_bottom = 161.0
+offset_bottom = 63.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.348043, 0.196363, 0.191862, 1)
@@ -122,8 +122,73 @@ offset_right = 341.5
 offset_bottom = 298.0
 grow_horizontal = 2
 
+[node name="Relics" type="ColorRect" parent="UpgradeMenu/Control/UpgradeMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -354.0
+offset_top = -53.0
+offset_right = 354.0
+offset_bottom = 227.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.34902, 0.196078, 0.192157, 1)
+
+[node name="RelicSelectRow" parent="UpgradeMenu/Control/UpgradeMenu/Relics" instance=ExtResource("8_k35jv")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -341.5
+offset_top = 56.0
+offset_right = 341.5
+offset_bottom = 138.0
+grow_horizontal = 2
+
+[node name="RelicSelectRow2" parent="UpgradeMenu/Control/UpgradeMenu/Relics" instance=ExtResource("8_k35jv")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -341.5
+offset_top = 142.0
+offset_right = 341.5
+offset_bottom = 224.0
+grow_horizontal = 2
+
+[node name="Label2" type="Label" parent="UpgradeMenu/Control/UpgradeMenu/Relics"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -172.5
+offset_top = 21.0
+offset_right = 172.5
+offset_bottom = 44.0
+grow_horizontal = 2
+text = "... and Choose a Relic to enhance your power"
+
+[node name="ConfirmButton2" type="Button" parent="UpgradeMenu/Control/UpgradeMenu/Relics"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -81.5
+offset_top = -48.0
+offset_right = 81.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Confirm"
+
 [node name="SuccessMenu" type="ColorRect" parent="UpgradeMenu/Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -198,24 +263,9 @@ offset_bottom = 348.0
 text = "Mage wielding Staff:
 - Attacks at 1x speed for 1 Ranged damage."
 
-[node name="Label2" type="Label" parent="UpgradeMenu/Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -172.5
-offset_top = 44.5
-offset_right = 172.5
-offset_bottom = 67.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "... and Choose a Relic to enhance your power"
-
 [node name="ImpStartPos" type="Marker2D" parent="." groups=["ImpStartPos"]]
 position = Vector2(2, 124)
 
 [connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu/ConfirmButton" to="UpgradeMenu/Control/UpgradeMenu" method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu/Relics/ConfirmButton2" to="UpgradeMenu/Control/UpgradeMenu" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/SuccessMenu/ConfirmButton" to="UpgradeMenu/Control/SuccessMenu" method="_on_confirm_button_pressed"]

@@ -6,10 +6,19 @@ extends ColorRect
 	$ImpSelectRow3
 ]
 
+@onready var relic_rows = [
+	$Relics/RelicSelectRow,
+	$Relics/RelicSelectRow2
+]
+
 var current_new_imp = 0
 
 func unselect_imps():
 	for row in rows:
+		row.unselect()
+		
+func unselect_relics():
+	for row in relic_rows:
 		row.unselect()
 
 func sample_imp(require_combat: bool) -> int:
@@ -39,6 +48,17 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 		
 	rows[0].select_this()
 	
+	if relic:
+		var first = GS.avail_relics.pick_random()
+		GS.avail_relics.remove_at(GS.avail_relics.find(first))
+		var second = GS.avail_relics.pick_random()
+		GS.avail_relics.remove_at(GS.avail_relics.find(second))
+		
+		relic_rows[0].setup(first)
+		relic_rows[1].setup(second)
+		
+	$Relics.visible = relic
+	
 func _ready():
 	# Make sure we haven't won yet
 	GS.has_won = false
@@ -53,7 +73,12 @@ func _ready():
 	# We always get an imp capable of dealing damage on the first level.
 	if GS.current_level == 0:
 		require_combat = true
-	setup_rewards(false, require_combat)
+		
+	var relics = false
+	if GS.current_level == 1 or GS.current_level == 3 or GS.current_level == 5:
+		relics = true
+		
+	setup_rewards(relics, require_combat)
 
 # This is basically the entry point into the gameplay for now.
 func _on_confirm_button_pressed():
