@@ -665,7 +665,7 @@ func _on_hazard_body_entered(body):
 				Sounds.imp_hit.play_rand()
 				return
 	
-	Sounds.imp_kill.play_rand()
+	
 	# Do die now
 	die(body)
 	
@@ -694,12 +694,19 @@ func die(killer_projectile):
 	var perma = on_death(killer_projectile)
 	
 	# Ethereal imps can't be resurrected
-	if is_ethereal() or perma or GS.relic_attacks_1dmg_no_resurrect:
+	if is_ethereal() or is_split() or perma or GS.relic_attacks_1dmg_no_resurrect:
+		var explode = GS.PlayerExplode.instantiate()
+		explode.global_position = global_position
+		add_sibling(explode)
 		queue_free()
+		
+		Sounds.imp_kill_eth.play_rand()
 		return
 	
 	remove_from_group("Players")
 	add_to_group("DeadPlayers")
+	
+	Sounds.imp_kill.play_rand()
 	
 	# Clear buffs when we die
 	for i in range(0, 3):

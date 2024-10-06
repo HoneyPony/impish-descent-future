@@ -54,6 +54,7 @@ var SplitProjectile = preload("res://buffs/split_buff.tscn")
 var Player = preload("res://players/player.tscn")
 
 var GhostExplode = preload("res://enemies/ghost_explode.tscn")
+var PlayerExplode = preload("res://players/player_explode.tscn")
 
 var nav: AStarGrid2D = AStarGrid2D.new()
 

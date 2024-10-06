@@ -16,6 +16,7 @@ var game_vol_adjust = -9
 @onready var imp_hit = $ImpHit
 @onready var imp_kill = $ImpKill
 @onready var imp_spawn = $ImpSpawn
+@onready var imp_kill_eth = $ImpDieEth
 
 func _ready():
 	$MenuMusic.volume_db = linear_to_db(0)
