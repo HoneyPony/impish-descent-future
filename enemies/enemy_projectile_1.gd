@@ -43,7 +43,11 @@ func _physics_process(delta):
 func fire_now():
 	var dir = Vector2.DOWN
 	
-	var players = get_tree().get_nodes_in_group("Players")
+	var tree = get_tree()
+	if tree == null:
+		return
+	
+	var players = tree.get_nodes_in_group("Players")
 	if not players.is_empty():
 		var random = players.pick_random()
 		dir = (random.global_position - global_position).normalized()

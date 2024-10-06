@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=4 uid="uid://cmyqhv43ip1re"]
+
+[ext_resource type="PackedScene" uid="uid://b7h6g17gdadaw" path="res://level_base.tscn" id="1_8lvn8"]
+[ext_resource type="PackedScene" uid="uid://cg7yjl75y7x12" path="res://enemies/rotate_ghost.tscn" id="2_mv4wi"]
+
+[node name="Level" instance=ExtResource("1_8lvn8")]
+
+[node name="Floors" parent="." index="2"]
+tile_map_data = PackedByteArray("AAD//wEAAgAAAAAAAAD+////AgAAAAAAAAD+/wAAAgAAAAAAAAD+/wEAAgAAAAAAAAABAAAAAgAAAAAAAAABAP//AgAAAAAAAAD/////AgAAAAAAAAD//wAAAgAAAAAAAAAAAP//AgAAAAAAAAAAAAEAAgAAAAAAAAABAAEAAgAAAAAAAAAAAAAAAgAAAAAAAAD+//7/AgAAAAAAAAD///7/AgAAAAAAAAAAAP7/AgAAAAAAAAABAP7/AgAAAAAAAAAGAPD/AgAAAAAAAAAGAPH/AgAAAAAAAAAGAPL/AgAAAAAAAAAGAPP/AgAAAAAAAAAGAPT/AgAAAAAAAAAGAPX/AgAAAAAAAAAGAPb/AgAAAAAAAAAHAPD/AgAAAAAAAAAHAPH/AgAAAAAAAAAHAPL/AgAAAAAAAAAHAPP/AgAAAAAAAAAHAPT/AgAAAAAAAAAHAPX/AgAAAAAAAAAHAPb/AgAAAAAAAAAIAPD/AgAAAAAAAAAIAPH/AgAAAAAAAAAIAPL/AgAAAAAAAAAIAPP/AgAAAAAAAAAIAPT/AgAAAAAAAAAIAPX/AgAAAAAAAAAIAPb/AgAAAAAAAAA=")
+
+[node name="Walls" parent="." index="3"]
+tile_map_data = PackedByteArray()
+
+[node name="RotateGhost" parent="." index="7" instance=ExtResource("2_mv4wi")]
+position = Vector2(-2, -234)
