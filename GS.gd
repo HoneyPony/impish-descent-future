@@ -17,6 +17,7 @@ var current_level = 0
 	load("res://levels/level3.tscn"),
 	load("res://levels/level4.tscn"),
 	load("res://levels/level5.tscn"),
+	load("res://levels/level6.tscn"),
 	
 	load("res://ui/win_screen.tscn")
 ]

@@ -28,3 +28,13 @@ func _on_QuitButton_pressed():
 func _process(delta):
 	if Input.is_action_just_pressed("pause_button"):
 		toggle_pause()
+		
+	if Input.is_action_just_pressed("retry"):
+		_on_retry_pressed()
+
+
+func _on_retry_pressed():
+	GS.flag_retry_this_level = true
+	GS.reset_inter_level_state()
+	if GS.current_level < GS.levels.size():
+		SceneTransition.change_scene(GS.levels[GS.current_level])
