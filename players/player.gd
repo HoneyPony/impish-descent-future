@@ -575,6 +575,10 @@ func on_death(body) -> bool:
 		split()
 		# Don't let us resurrect after we split
 		return true
+	elif GS.relic_always_split:
+		split()
+		split()
+		return true
 	return false	
 
 func _on_hazard_body_entered(body):

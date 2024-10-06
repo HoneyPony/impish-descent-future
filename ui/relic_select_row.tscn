@@ -18,9 +18,9 @@ offset_left = 79.0
 offset_top = 5.0
 offset_right = 556.0
 offset_bottom = 78.0
-text = "Holy Scepter
-Non-Ethereal imps deal triple melee damage.
-Attacks made this way kill that imp."
+text = "\"Essence of Slime
+When your imps would die, they Split instead.
+Split imps do -1 damage and cannot themselves split."
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0

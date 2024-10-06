@@ -189,7 +189,7 @@ func get_body_tex(klass: Class):
 var relics = [
 "Essence of Slime
 When your imps would die, they Split instead.
-Imps spawned this way cannot themselves Split.",
+Split imps do -1 damage and cannot themselves split.",
 
 "Battle Cry
 Every 3rd time you kill an enemy, spawn a random Brawler.",
