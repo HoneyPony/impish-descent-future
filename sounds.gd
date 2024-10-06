@@ -5,8 +5,9 @@ var game_vol_actual = 0.0
 
 func _ready():
 	$MenuMusic.volume_db = linear_to_db(0)
-	
+	$GameMusic.volume_db = linear_to_db(0)
 	$MenuMusic.play()
+	$GameMusic.play()
 
 func _process(delta):
 	var menu_vol = 0.0
@@ -18,3 +19,4 @@ func _process(delta):
 	game_vol_actual += (game_vol - game_vol_actual) * 0.01
 	
 	$MenuMusic.volume_db = linear_to_db(menu_vol_actual)
+	$GameMusic.volume_db = linear_to_db(game_vol_actual)
