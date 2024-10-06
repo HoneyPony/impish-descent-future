@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=15 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="Script" path="res://camera.gd" id="1_qvjw2"]
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="2_f1kks"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="8_k35jv"]
 [ext_resource type="Script" path="res://ui/relic_select_row.gd" id="9_p0a2q"]
 [ext_resource type="Script" path="res://ui/defeat_menu.gd" id="10_reeg6"]
+[ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="12_w2t3q"]
+[ext_resource type="Script" path="res://relic_icon.gd" id="13_50h4x"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_mprjm"]
 
@@ -360,6 +362,26 @@ offset_right = 734.0
 offset_bottom = 348.0
 text = "Mage wielding Staff:
 - Attacks at 1x speed for 1 Ranged damage."
+
+[node name="Relic0" type="Sprite2D" parent="UpgradeMenu/Control"]
+position = Vector2(13, 13)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("12_w2t3q")
+script = ExtResource("13_50h4x")
+
+[node name="Relic1" type="Sprite2D" parent="UpgradeMenu/Control"]
+position = Vector2(39, 13)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("12_w2t3q")
+script = ExtResource("13_50h4x")
+index = 1
+
+[node name="Relic2" type="Sprite2D" parent="UpgradeMenu/Control"]
+position = Vector2(65, 13)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("12_w2t3q")
+script = ExtResource("13_50h4x")
+index = 2
 
 [node name="ImpStartPos" type="Marker2D" parent="." groups=["ImpStartPos"]]
 position = Vector2(2, 124)

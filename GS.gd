@@ -274,6 +274,7 @@ var relic_sprite = [
 ]
 
 var avail_relics: Array = []
+var owned_relics: Array = []
 
 var enemy_killed_mod3 = 0
 
@@ -350,6 +351,7 @@ var relic_kill_equals_eth_resurrecter = false
 var relic_tripledmg_killself = false
 
 func accept_relic(id: int):
+	owned_relics.push_back(id)
 	match id:
 		0: relic_always_split = true
 		1: relic_3_enemies_spawn_brawler = true

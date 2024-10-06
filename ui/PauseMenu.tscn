@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dojkqhtsd73go"]
+[gd_scene load_steps=5 format=3 uid="uid://dojkqhtsd73go"]
 
 [ext_resource type="PackedScene" uid="uid://cj7vywxbe73c1" path="res://ui/VolumeBars.tscn" id="1"]
 [ext_resource type="Script" path="res://ui/PauseMenu.gd" id="2"]
 [ext_resource type="Theme" uid="uid://briaychot8p50" path="res://ui/MainUITheme.tres" id="3"]
+[ext_resource type="PackedScene" uid="uid://cvean8gyhgqdr" path="res://ui/relic_show_row.tscn" id="4_iahc1"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
@@ -23,10 +24,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -107.5
-offset_top = -20.0
-offset_right = 107.5
-offset_bottom = 20.0
+offset_left = 40.0
+offset_top = -190.0
+offset_right = 255.0
+offset_bottom = -150.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Resume"
@@ -38,10 +39,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -107.5
-offset_top = 28.0
-offset_right = 107.5
-offset_bottom = 68.0
+offset_left = 40.0
+offset_top = -142.0
+offset_right = 255.0
+offset_bottom = -102.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Retry Level"
@@ -68,10 +69,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -135.5
-offset_top = -192.0
-offset_right = 135.5
-offset_bottom = -112.0
+offset_left = -275.0
+offset_top = -214.0
+offset_right = -4.0
+offset_bottom = -134.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -87,6 +88,29 @@ offset_bottom = 83.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 40
 text = "PAUSED"
+
+[node name="RelicSelectRow" parent="ColorRect" instance=ExtResource("4_iahc1")]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 250.0
+offset_right = 867.0
+offset_bottom = 332.0
+
+[node name="RelicSelectRow2" parent="ColorRect" instance=ExtResource("4_iahc1")]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 353.0
+offset_right = 867.0
+offset_bottom = 435.0
+index = 1
+
+[node name="RelicSelectRow3" parent="ColorRect" instance=ExtResource("4_iahc1")]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 456.0
+offset_right = 867.0
+offset_bottom = 538.0
+index = 2
 
 [connection signal="pressed" from="ColorRect/ResumeButton" to="." method="_on_ResumeButton_pressed"]
 [connection signal="pressed" from="ColorRect/Retry" to="." method="_on_retry_pressed"]

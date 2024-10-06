@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvean8gyhgqdr"]
+
+[ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="1_3ga40"]
+[ext_resource type="Script" path="res://ui/relic_show_row.gd" id="2_bcpnk"]
+[ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="3_75f5w"]
+
+[node name="RelicSelectRow" type="ColorRect"]
+offset_left = 246.0
+offset_top = 413.0
+offset_right = 803.0
+offset_bottom = 495.0
+theme = ExtResource("1_3ga40")
+color = Color(0.266575, 0.266575, 0.266575, 1)
+script = ExtResource("2_bcpnk")
+
+[node name="Label" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 5.0
+offset_right = 558.0
+offset_bottom = 78.0
+text = "Essence of Slime
+When your imps would die, they Split instead.
+Split imps randomly do -1 damage and cannot split."
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(38.5, 41)
+scale = Vector2(0.183594, 0.183594)
+texture = ExtResource("3_75f5w")

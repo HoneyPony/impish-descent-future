@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://etpy5iodwxou"]
+[gd_scene load_steps=11 format=3 uid="uid://etpy5iodwxou"]
 
 [ext_resource type="Theme" uid="uid://briaychot8p50" path="res://ui/MainUITheme.tres" id="1_jva50"]
 [ext_resource type="Script" path="res://ui/win_screen.gd" id="2_jamyw"]
 [ext_resource type="Texture2D" uid="uid://so31a8iyooat" path="res://players/body0.png" id="3_o6qnu"]
 [ext_resource type="Script" path="res://ui/imp_disp.gd" id="4_infrv"]
 [ext_resource type="Texture2D" uid="uid://bq4fctqe3aplh" path="res://players/club.png" id="5_45dha"]
+[ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="6_a08gb"]
+[ext_resource type="Script" path="res://relic_icon.gd" id="7_nketm"]
 
 [sub_resource type="Animation" id="Animation_6dhxc"]
 resource_name = "FadeIn"
@@ -94,6 +96,18 @@ tracks/6/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../Control/Sprite2D:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_uy336"]
 length = 0.001
@@ -180,6 +194,18 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../Control/Sprite2D:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ojl18"]
@@ -314,14 +340,48 @@ libraries = {
 }
 autoplay = "FadeIn"
 
-[node name="ImpDisp" type="Sprite2D" parent="."]
-position = Vector2(573, 150)
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-556, 0)
+
+[node name="ImpDisp" type="Sprite2D" parent="Control/Sprite2D"]
+position = Vector2(573, 99)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_o6qnu")
 script = ExtResource("4_infrv")
 
-[node name="Item" type="Sprite2D" parent="ImpDisp"]
+[node name="Item" type="Sprite2D" parent="Control/Sprite2D/ImpDisp"]
 position = Vector2(136, 52)
 texture = ExtResource("5_45dha")
+
+[node name="Relic0" type="Sprite2D" parent="Control/Sprite2D"]
+position = Vector2(522, 177.8)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_a08gb")
+script = ExtResource("7_nketm")
+
+[node name="Relic1" type="Sprite2D" parent="Control/Sprite2D"]
+position = Vector2(572.8, 177.8)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_a08gb")
+script = ExtResource("7_nketm")
+index = 1
+
+[node name="Relic2" type="Sprite2D" parent="Control/Sprite2D"]
+position = Vector2(624, 177.8)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_a08gb")
+script = ExtResource("7_nketm")
+index = 2
 
 [connection signal="pressed" from="MainMenu" to="." method="_on_main_menu_pressed"]
