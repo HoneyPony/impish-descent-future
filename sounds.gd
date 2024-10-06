@@ -3,9 +3,11 @@ extends Node
 var menu_vol_actual = 0.0
 var game_vol_actual = 0.0
 
+var game_vol_adjust = -9
+
 func _ready():
 	$MenuMusic.volume_db = linear_to_db(0)
-	$GameMusic.volume_db = linear_to_db(0)
+	$GameMusic.volume_db = linear_to_db(0) + game_vol_adjust
 	$MenuMusic.play()
 	$GameMusic.play()
 
@@ -19,4 +21,4 @@ func _process(delta):
 	game_vol_actual += (game_vol - game_vol_actual) * 0.01
 	
 	$MenuMusic.volume_db = linear_to_db(menu_vol_actual)
-	$GameMusic.volume_db = linear_to_db(game_vol_actual)
+	$GameMusic.volume_db = linear_to_db(game_vol_actual) + game_vol_adjust
