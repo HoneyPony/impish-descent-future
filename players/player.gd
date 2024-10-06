@@ -146,6 +146,11 @@ func compute_basic_properties():
 				ranged_base_damage = 1
 				action_speed *= 0.5
 				ranged_attack_is_nova = true
+				
+			# Relic can turn mages into melee fighters
+			if GS.relic_mages_melee:
+				melee_base_damage = 3
+				goal = Goals.GOAL_MELEE
 		GS.Class.Cleric:
 			goal = Goals.GOAL_BUFF
 			buff_target_buff = GS.Buff.Shield

@@ -12,6 +12,9 @@ extends ColorRect
 ]
 
 var current_new_imp = 0
+var current_new_relic = 0
+
+var do_choose_relic = false
 
 func unselect_imps():
 	for row in rows:
@@ -28,6 +31,7 @@ func sample_imp(require_combat: bool) -> int:
 		return randi_range(0, GS.valid_imps.size() - 1)
 
 func setup_rewards(relic: bool = false, require_combat: bool = false):
+	do_choose_relic = relic
 	var imps = []
 	
 	# Sample imps
@@ -78,10 +82,14 @@ func _ready():
 	if GS.current_level == 1 or GS.current_level == 3 or GS.current_level == 5:
 		relics = true
 		
+	relics = true
+		
 	setup_rewards(relics, require_combat)
 
 # This is basically the entry point into the gameplay for now.
 func _on_confirm_button_pressed():
 	hide()
 	GS.current_army.push_back(current_new_imp)
+	if do_choose_relic:
+		GS.accept_relic(current_new_relic)
 	GS.spawn_current_army()

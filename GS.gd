@@ -249,7 +249,7 @@ func an_enemy_died():
 var relic_always_split = false
 var relic_3_enemies_spawn_brawler = false
 var relic_mages_melee = false
-var relic_spawn_shield = false
+var relic_spawn_shield = true
 var relic_shields_are_damage = false
 var relic_daggers_150_speed = false
 var relic_attacks_1dmg_no_resurrect = false
