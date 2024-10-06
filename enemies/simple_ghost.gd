@@ -62,7 +62,7 @@ func _physics_process(delta):
 	handle_simple_projectile(delta)
 
 func on_death(body):
-	return
+	do_explode()
 #
 #func on_death(body):
 	#if current_projectile != null and not current_projectile.fired:

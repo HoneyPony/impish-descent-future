@@ -48,4 +48,4 @@ func _physics_process(delta):
 
 
 func on_death(body):
-	pass
+	do_explode()
