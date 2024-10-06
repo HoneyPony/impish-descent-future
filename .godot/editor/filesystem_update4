@@ -16,3 +16,7 @@ res://level_base.tscn
 res://levels/level1.tscn
 res://ui/MainMenu.gd
 res://decoration/torch.tscn
+res://enemies/enemy_projectile1.tscn
+res://hazard/player_projectile1.tscn
+res://buffs/player_buff.tscn
+res://enemies/simple_ghost.gd

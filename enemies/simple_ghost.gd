@@ -3,6 +3,8 @@ extends CharacterBody2D
 var health: int = 6
 var max_health: int = 6
 
+var asleep = true
+
 var current_projectile = null
 
 var collision_timeouts = {}
@@ -31,6 +33,14 @@ func _physics_process(delta):
 		to_pos += p.global_position * randf_range(0.8, 1.2)
 		
 	to_pos /= players.size()
+	
+	if asleep:
+		var dist = (to_pos - global_position).length_squared()
+		if dist < 512 * 512:
+			asleep = false
+		else:
+			return
+	
 	to_pos = GS.get_nav_move_target(global_position, to_pos)
 	
 	var vel_dir = (to_pos - global_position).normalized()

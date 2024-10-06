@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://rl585tjhmod7"]
+[gd_scene load_steps=7 format=3 uid="uid://rl585tjhmod7"]
 
 [ext_resource type="Texture2D" uid="uid://ws5gduar7c47" path="res://enemies/enemy1.png" id="1_4xqsb"]
 [ext_resource type="Script" path="res://enemies/simple_ghost.gd" id="1_n6c1y"]
 [ext_resource type="PackedScene" uid="uid://c28o3vm70ky5b" path="res://health/health.tscn" id="3_kq0l4"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ol7kp"]
+blend_mode = 1
+light_mode = 1
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m148u"]
 radius = 8.0
@@ -17,6 +21,7 @@ script = ExtResource("1_n6c1y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
+material = SubResource("CanvasItemMaterial_ol7kp")
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_4xqsb")
 offset = Vector2(0, -256)

@@ -1,7 +1,35 @@
-[gd_scene load_steps=7 format=3 uid="uid://bp3ojbyx4exs5"]
+[gd_scene load_steps=8 format=3 uid="uid://bp3ojbyx4exs5"]
 
 [ext_resource type="Script" path="res://enemies/enemy_projectile_1.gd" id="1_cv0up"]
+[ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="2_ru7eh"]
 [ext_resource type="Texture2D" uid="uid://dgria8gxiwta8" path="res://enemies/enemy_projectile1.png" id="2_skhln"]
+
+[sub_resource type="Animation" id="Animation_t0c52"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyProjectile1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.25, 0.25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemyProjectile1:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_7ple2"]
 resource_name = "Spawn"
@@ -48,33 +76,6 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_t0c52"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("EnemyProjectile1:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.25, 0.25)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("EnemyProjectile1:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lnosb"]
 _data = {
 "RESET": SubResource("Animation_t0c52"),
@@ -90,6 +91,7 @@ sync_to_physics = false
 script = ExtResource("1_cv0up")
 
 [node name="EnemyProjectile1" type="Sprite2D" parent="."]
+material = ExtResource("2_ru7eh")
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_skhln")
 
