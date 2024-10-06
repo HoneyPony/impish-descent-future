@@ -12,3 +12,6 @@ res://GS.gd
 res://ui/imp_select_row.gd
 res://players/player.gd
 res://ui/reward_ui.gd
+res://level_base.tscn
+res://levels/level1.tscn
+res://ui/MainMenu.gd

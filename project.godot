@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="LD56"
-run/main_scene="res://Game.tscn"
+run/main_scene="res://level_base.tscn"
 config/features=PackedStringArray("4.3")
 config/icon="res://icon.png"
 
@@ -84,6 +84,7 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/defaults/default_clear_color=Color(0.0383972, 0.0383972, 0.0383971, 1)
 environment/defaults/default_environment="res://default_env.tres"
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
