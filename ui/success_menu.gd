@@ -13,8 +13,9 @@ func _process(delta):
 		# Freeze the camera.
 		%GameCamera.frozen = true
 		
-	if Input.is_action_just_pressed("debug"):
-		_on_confirm_button_pressed()
+	# Cheat code
+	#if Input.is_action_just_pressed("debug"):
+	#	_on_confirm_button_pressed()
 
 
 func _on_confirm_button_pressed():
