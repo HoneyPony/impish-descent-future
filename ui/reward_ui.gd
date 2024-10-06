@@ -40,10 +40,19 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 	rows[0].select_this()
 	
 func _ready():
+	# Make sure we haven't won yet
+	GS.has_won = false
+	# This menu begins each level. Note that the camera won't move until enemies
+	# are spawned in, which is perfect.
+	show()
+	
+	# Nonetheless, reset the camera to point at the ImpStartPos.
+	%GameCamera.global_position = get_tree().get_first_node_in_group("ImpStartPos").global_position
+	
 	setup_rewards(false, true)
 
 # This is basically the entry point into the gameplay for now.
 func _on_confirm_button_pressed():
-	get_parent().hide()
+	hide()
 	GS.current_army.push_back(current_new_imp)
 	GS.spawn_current_army()

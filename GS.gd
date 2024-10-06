@@ -5,6 +5,8 @@ extends Node
 
 #var Game = preload("res://Game.tscn")
 
+var has_won = false
+
 var levels = [
 	preload("res://levels/level1.tscn")
 ]
@@ -88,7 +90,7 @@ var valid_imps = [
 	[Class.Brawler, Item.Club, "Brawler wielding Club:\n- Attacks at 50% speed for 3 Melee damage."],
 	[Class.Brawler, Item.Dagger, "Brawler wielding Dagger:\n- Attacks at 200% speed for 1 Melee damage."],
 	[Class.Brawler, Item.Mace, "Brawler wielding Mace:\n- Attacks at 100% speed for 5 Melee damage.\n- Can only attack when enemies are below half health."],
-	[Class.Mage, Item.Staff, "Mage wielding Staff:\n- Attacks at 100% speed for 1 Melee damage."],
+	[Class.Mage, Item.Staff, "Mage wielding Staff:\n- Attacks at 100% speed for 1 Ranged damage."],
 	[Class.Mage, Item.Dagger, "Mage wielding Dagger:\n- Applies Strength buff to other imps.\n- Strength adds 1 damage to the next attack."],
 	[Class.Mage, Item.Club, "Mage wielding Club:\n- Attacks at 100% speed for 0-4 Ranged damage.\n- Damage is rolled randomly."],
 	[Class.Mage, Item.Scythe, "Mage wielding Scythe:\n- Attacks at 100% speed for 1 Ranged damage.\n- Shoots 5 shots in random directions."],

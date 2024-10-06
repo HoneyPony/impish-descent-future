@@ -29,6 +29,7 @@ window/stretch/aspect="expand"
 Players=""
 DeadPlayers=""
 ImpStartPos=""
+Enemy=""
 
 [gui]
 

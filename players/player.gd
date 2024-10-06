@@ -246,6 +246,11 @@ func finalize_properties():
 	$Item.slowness = 1.0 / action_speed
 	
 	#print(action_cooldown)
+	
+	
+	# DEBUG DEBUG DEBUG
+	melee_base_damage *= 10
+	ranged_base_damage *= 10
 
 func target_meets_goals(enemy) -> bool:
 	if $Item.only_half_health:
@@ -276,6 +281,9 @@ func fire_generic_action():
 				player.resurrect()
 
 func _physics_process(delta):
+	if GS.has_won:
+		return
+	
 	if is_dead:
 		return
 		
@@ -569,6 +577,9 @@ func on_death(body) -> bool:
 	return false	
 
 func _on_hazard_body_entered(body):
+	if GS.has_won:
+		return
+	
 	if is_dead:
 		return
 	
@@ -603,10 +614,14 @@ func resurrect():
 	# Undo other changes
 	$Item/Look.show()
 	$Body.modulate = Color(1, 1, 1)
-	# Bacc to life
+	# Back to life
 	is_dead = false
 	
 func die(killer_projectile):
+	if GS.has_won:
+		print("Warning: Somehow died after we won")
+		return
+	
 	# note that on death happens before we die, so we can't e.g. resurrect ourselves
 	# on death.
 	var perma = on_death(killer_projectile)

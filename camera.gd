@@ -1,6 +1,12 @@
 extends Camera2D
 
+# let the win screen freeze the camera so we don't get motion sickness
+var frozen = false
+
 func _physics_process(delta):
+	if frozen:
+		return
+	
 	var target = Vector2.ZERO
 	
 	var players = get_tree().get_nodes_in_group("Players")

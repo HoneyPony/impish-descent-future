@@ -36,7 +36,7 @@ func _physics_process(delta):
 	
 	if asleep:
 		var dist = (to_pos - global_position).length_squared()
-		if dist < 512 * 512:
+		if dist < 768 * 768:
 			asleep = false
 		else:
 			return
