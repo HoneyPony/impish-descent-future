@@ -25,9 +25,9 @@ func killed_target(target):
 	
 func _ready():
 	theta = randf_range(0, TAU)
-	radius = randf_range(64, 256)
+	radius = randf_range(64, 384)
 	$CollisionShape2D.disabled = true
-	scale = Vector2(0.0, 0.0)
+	scale = Vector2(0.2, 0.2)
 
 func die():
 	var particle = GS.EnemyProjectile1Particle.instantiate()
@@ -45,7 +45,7 @@ func _physics_process(delta):
 	
 	var to_pos = Vector2.from_angle(theta) * radius
 	to_pos -= Vector2(0, 128)
-	var impulse = (to_pos - position)
+	var impulse = (to_pos - position) * s
 	
 	theta += TAU * delta * 0.25
 	

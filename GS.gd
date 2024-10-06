@@ -14,6 +14,8 @@ var current_level = 0
 @onready var levels = [
 	load("res://levels/level1.tscn"),
 	load("res://levels/level2.tscn"),
+	load("res://levels/level3.tscn"),
+	load("res://ui/win_screen.tscn")
 ]
 	
 

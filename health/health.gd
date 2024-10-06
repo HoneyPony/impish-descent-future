@@ -15,7 +15,7 @@ var current_val: int = 0
 var real_total_width = 0
 
 func _ready():
-	call_deferred("render_amount", int(get_parent().health))
+	call_deferred("render_amount", int(get_parent().max_health))
 
 func render_amount(health: int):
 	current_val = health

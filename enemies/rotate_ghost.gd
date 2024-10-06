@@ -7,7 +7,7 @@ extends GhostBase
 var theta = 0
 const RADIUS = 80
 
-var shoot_timer = 1.0
+var shoot_timer =  0.75
 
 func animate(delta):
 	theta += delta
@@ -36,7 +36,7 @@ func _physics_process(delta):
 	
 	shoot_timer -= delta
 	if shoot_timer <= 0:
-		shoot_timer = 1.0
+		shoot_timer = 0.75
 		var bullet = GS.EnemyProjectile2.instantiate()
 		add_child(bullet)
 
