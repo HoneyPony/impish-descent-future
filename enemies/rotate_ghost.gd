@@ -7,6 +7,8 @@ extends GhostBase
 var theta = 0
 const RADIUS = 80
 
+var shoot_timer = 1.0
+
 func animate(delta):
 	theta += delta
 	theta = fmod(theta, TAU)
@@ -31,6 +33,12 @@ func _physics_process(delta):
 	velocity = vel_dir * 32
 	
 	move_and_slide()
+	
+	shoot_timer -= delta
+	if shoot_timer <= 0:
+		shoot_timer = 1.0
+		var bullet = GS.EnemyProjectile2.instantiate()
+		add_child(bullet)
 
 
 func on_death(body):
