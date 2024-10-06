@@ -145,6 +145,9 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: b
 		imp.add_buff(GS.Buff.Split)
 	if ethereal:
 		imp.add_buff(GS.Buff.Ethereal)
+		
+	if relic_spawn_shield:
+		imp.add_buff(GS.Buff.Shield)
 
 func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = false, ethereal: bool = false):
 	call_deferred("finish_spawn_imp", parent, config, global_pos, split, ethereal)
@@ -249,8 +252,8 @@ func an_enemy_died():
 var relic_always_split = false
 var relic_3_enemies_spawn_brawler = false
 var relic_mages_melee = false
-var relic_spawn_shield = true
-var relic_shields_are_damage = false
+var relic_spawn_shield = false
+var relic_shields_are_damage = true
 var relic_daggers_150_speed = false
 var relic_attacks_1dmg_no_resurrect = false
 var relic_kill_equals_eth_resurrecter = false
