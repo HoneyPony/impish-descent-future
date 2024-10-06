@@ -15,6 +15,9 @@ func _ready():
 	for cell in get_used_cells():
 		#print(cell)
 		grid.set_point_solid(cell)
+		
+		if get_cell_source_id(cell) == 4:
+			set_cell(cell, 5, Vector2i(0, 0))
 	#print("---------------")
 	#print(grid)
 		

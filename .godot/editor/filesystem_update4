@@ -20,3 +20,4 @@ res://enemies/enemy_projectile1.tscn
 res://hazard/player_projectile1.tscn
 res://buffs/player_buff.tscn
 res://enemies/simple_ghost.gd
+res://tiles/create_navigation.gd
