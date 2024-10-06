@@ -31,10 +31,17 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("retry"):
 		_on_retry_pressed()
+		
+	$ColorRect/Retry.disabled = GS.flag_in_upgrade_menu
 
 
 func _on_retry_pressed():
+	# Can't retry until we select an ugprade
+	if GS.flag_in_upgrade_menu:
+		return
+	
 	GS.flag_retry_this_level = true
+	get_tree().paused = false
 	GS.reset_inter_level_state()
 	if GS.current_level < GS.levels_size():
 		SceneTransition.change_scene(GS.levels(GS.current_level))

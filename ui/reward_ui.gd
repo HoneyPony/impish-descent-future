@@ -68,6 +68,7 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 	$Relics.visible = relic
 	
 func _ready():
+	
 	# Make sure we haven't won yet
 	GS.has_won = false
 	
@@ -77,6 +78,7 @@ func _ready():
 		GS.spawn_current_army()
 		%DefeatMenu.going = true
 		return
+	GS.flag_in_upgrade_menu = true
 	
 	# This menu begins each level. Note that the camera won't move until enemies
 	# are spawned in, which is perfect.
@@ -105,4 +107,5 @@ func _on_confirm_button_pressed():
 	if do_choose_relic and current_new_relic >= 0:
 		GS.accept_relic(current_new_relic)
 	GS.spawn_current_army()
+	GS.flag_in_upgrade_menu = false
 	%DefeatMenu.going = true
