@@ -20,6 +20,6 @@ func _physics_process(delta):
 	var c_offset = target - global_position
 	
 	var lerp_strength = (c_offset.length() - 512.0) / 1024.0
-	lerp_strength = clamp(lerp_strength, 0.05, 0.3)
+	lerp_strength = clamp(lerp_strength, 0.05, 0.2)
 	
 	global_position += c_offset * lerp_strength

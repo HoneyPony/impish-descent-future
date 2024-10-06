@@ -6,6 +6,8 @@ var fired = false
 
 var targetted_player = null
 
+var goal_position = Vector2.ZERO
+
 var projectile_source = null
 
 const SPEED = 512
@@ -26,6 +28,10 @@ func die():
 	queue_free()
 
 func _physics_process(delta):
+	if not fired:
+		var to_goal = (goal_position - global_position)
+		move_and_collide(to_goal * 0.1)
+	
 	if velocity != Vector2.ZERO:
 		var collide = move_and_collide(velocity * delta)
 		

@@ -16,6 +16,12 @@ var real_total_width = 0
 
 func _ready():
 	call_deferred("render_amount", int(get_parent().max_health))
+	
+	var color = Color(1, 0, 0)
+	if get_parent().regen:
+		color = Color("#ff09ff")
+		
+	$Init.modulate = color
 
 func render_amount(health: int):
 	current_val = health

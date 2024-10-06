@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://bo3i8bnp1hb3u"]
+
+[ext_resource type="Script" path="res://enemies/simple_ghost.gd" id="1_pl24i"]
+[ext_resource type="Texture2D" uid="uid://ws5gduar7c47" path="res://enemies/enemy1.png" id="2_bpn2t"]
+[ext_resource type="PackedScene" uid="uid://c28o3vm70ky5b" path="res://health/health.tscn" id="3_fui7f"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ol7kp"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bfjq"]
+radius = 13.0
+height = 74.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jveu2"]
+size = Vector2(160, 218)
+
+[node name="SimpleGhost" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 4
+script = ExtResource("1_pl24i")
+big = true
+max_health = 18
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.788235)
+y_sort_enabled = true
+material = SubResource("CanvasItemMaterial_ol7kp")
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_bpn2t")
+offset = Vector2(0, -256)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.57079
+shape = SubResource("CapsuleShape2D_1bfjq")
+
+[node name="Health" parent="." instance=ExtResource("3_fui7f")]
+position = Vector2(0, 14)
+
+[node name="Hazard" type="Area2D" parent="."]
+position = Vector2(0, -54)
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard"]
+position = Vector2(0, -44)
+shape = SubResource("RectangleShape2D_jveu2")
+
+[node name="FireFrom" type="Marker2D" parent="."]
+position = Vector2(0, -209)
+
+[connection signal="body_entered" from="Hazard" to="." method="_on_hazard_body_entered"]

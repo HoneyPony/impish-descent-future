@@ -1,22 +1,21 @@
 [gd_scene load_steps=5 format=3 uid="uid://cqi40qv1ffeuu"]
 
-[ext_resource type="Script" path="res://enemies/enemy_projectile_1.gd" id="1_7deex"]
+[ext_resource type="Script" path="res://enemies/enemy_projectile_rotating.gd" id="1_t1cal"]
 [ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="2_yfmsg"]
-[ext_resource type="Texture2D" uid="uid://dgria8gxiwta8" path="res://enemies/enemy_projectile1.png" id="3_pct05"]
+[ext_resource type="Texture2D" uid="uid://76jhxxxxp87n" path="res://enemies/enemy_projectile2.png" id="3_bsna5"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_g7pqy"]
-radius = 17.0294
+[sub_resource type="CircleShape2D" id="CircleShape2D_hf0v2"]
+radius = 11.0454
 
 [node name="EnemyProjectile2" type="AnimatableBody2D"]
 collision_layer = 8
 sync_to_physics = false
-script = ExtResource("1_7deex")
+script = ExtResource("1_t1cal")
 
 [node name="EnemyProjectile1" type="Sprite2D" parent="."]
 material = ExtResource("2_yfmsg")
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_pct05")
+texture = ExtResource("3_bsna5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -2)
-shape = SubResource("CircleShape2D_g7pqy")
+shape = SubResource("CircleShape2D_hf0v2")

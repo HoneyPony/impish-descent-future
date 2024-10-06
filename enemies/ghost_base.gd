@@ -3,6 +3,9 @@ class_name GhostBase
 
 var health: int = 6
 @export var max_health: int = 6
+@export var regen: bool = false
+
+var regen_timer = 1
 
 var asleep = true
 
@@ -42,6 +45,14 @@ func handle_sleep() -> Vector2:
 	return to_pos
 
 func update_collision_timeouts(delta):
+	# Just do regen here too, cause we have to callthis fun...
+	if regen:
+		regen_timer -= delta
+		if regen_timer <= 0:
+			regen_timer = 1
+			if health < max_health:
+				health += 1
+	
 	var to_delete = []
 	
 	var new_timeouts = {}

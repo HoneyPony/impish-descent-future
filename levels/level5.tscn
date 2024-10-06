@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=4 uid="uid://c8oysabfscn0v"]
+
+[ext_resource type="PackedScene" uid="uid://b7h6g17gdadaw" path="res://level_base.tscn" id="1_mipgy"]
+[ext_resource type="PackedScene" uid="uid://bo3i8bnp1hb3u" path="res://enemies/simple_ghost_big.tscn" id="2_lh5va"]
+[ext_resource type="PackedScene" uid="uid://cg7yjl75y7x12" path="res://enemies/rotate_ghost.tscn" id="3_o0hco"]
+
+[node name="Level" instance=ExtResource("1_mipgy")]
+
+[node name="Floors" parent="." index="2"]
+tile_map_data = PackedByteArray("AAD9////AgAAAAAAAAD9/wAAAgAAAAAAAAD9/wEAAgAAAAAAAAD9/wIAAgAAAAAAAAD+/wIAAgAAAAAAAAD//wEAAgAAAAAAAAAAAAIAAgAAAAAAAAABAAIAAgAAAAAAAAACAAIAAgAAAAAAAAD//wIAAgAAAAAAAAACAAAAAgAAAAAAAAACAP//AgAAAAAAAAD+////AgAAAAAAAAD+/wAAAgAAAAAAAAD+/wEAAgAAAAAAAAABAAAAAgAAAAAAAAABAP//AgAAAAAAAAD/////AgAAAAAAAAD//wAAAgAAAAAAAAAAAP//AgAAAAAAAAAAAAEAAgAAAAAAAAABAAEAAgAAAAAAAAACAAEAAgAAAAAAAAAAAAAAAgAAAAAAAAD9//3/AgAAAAAAAAD9//7/AgAAAAAAAAD+//3/AgAAAAAAAAD+//7/AgAAAAAAAAD///3/AgAAAAAAAAD///7/AgAAAAAAAAAAAP3/AgAAAAAAAAAAAP7/AgAAAAAAAAABAP7/AgAAAAAAAAACAP3/AgAAAAAAAAACAP7/AgAAAAAAAAABAP3/AgAAAAAAAAA=")
+
+[node name="Walls" parent="." index="3"]
+tile_map_data = PackedByteArray()
+
+[node name="ImpStartPos" parent="." index="6"]
+position = Vector2(-1, 317)
+
+[node name="SimpleGhost" parent="." index="7" instance=ExtResource("2_lh5va")]
+position = Vector2(0, -154)
+regen = true
+
+[node name="SimpleGhost2" parent="." index="8" instance=ExtResource("2_lh5va")]
+position = Vector2(-393, -1433)
+regen = true
+
+[node name="SimpleGhost3" parent="." index="9" instance=ExtResource("2_lh5va")]
+position = Vector2(-3, -1524)
+regen = true
+
+[node name="SimpleGhost4" parent="." index="10" instance=ExtResource("2_lh5va")]
+position = Vector2(405, -1397)
+regen = true
+
+[node name="RotateGhost" parent="." index="11" instance=ExtResource("3_o0hco")]
+position = Vector2(-1, 93)
+regen = true

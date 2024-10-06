@@ -15,6 +15,9 @@ var current_level = 0
 	load("res://levels/level1.tscn"),
 	load("res://levels/level2.tscn"),
 	load("res://levels/level3.tscn"),
+	load("res://levels/level4.tscn"),
+	load("res://levels/level5.tscn"),
+	
 	load("res://ui/win_screen.tscn")
 ]
 	
@@ -108,11 +111,15 @@ var valid_imps = [
 	[Class.Mage, Item.Club, "Mage wielding Club:\n- Attacks at 100% speed for 0-4 Ranged damage.\n- Damage is rolled randomly."],
 	[Class.Mage, Item.Scythe, "Mage wielding Scythe:\n- Attacks at 100% speed for 1 Ranged damage.\n- Shoots 5 shots in random directions."],
 	[Class.Cleric, Item.Staff, "Cleric wielding Staff:\n- Applies Shield buff to nearby imps.\n- Shield buff blocks 1 hit from enemies."],
-	[Class.Cleric, Item.Sword, "Cleric wielding Sword:\n- Attacks at 75% speed for 1 damage.\n- On kill, increase damage by 1 (resets next level)"],
-	[Class.Cleric, Item.Scythe, "Cleric wielding Scythe:\n- Applies Split buff to nearby imps\n- Split imps do 1 fewer damage and cannot be further split."],
+	[Class.Cleric, Item.Sword, "Cleric wielding Sword:\n- Attacks at 100% speed for 1 damage.\n- On kill, increase damage by 1 (resets next level)"],
+	[Class.Cleric, Item.Scythe, "Cleric wielding Scythe:\n- Applies Split buff to nearby imps\n- Split imps randomly do 1 fewer damage."],
 	[Class.Summoner, Item.Staff, "Summoner wielding Staff:\n- Summons random Ethereal imps.\n- Ethereal imps disappear after 4 seconds."],
 	[Class.Summoner, Item.Scythe, "Summoner wielding Scythe:\n- Resurrects dead imps."],
 ]
+
+var nonbreaking_imps = [0, 1, 2, 3,
+4, 5, 6, # no 7, because it splits
+8, 9, 10, 11, 12]
 
 var combat_imps = [
 	0, # All brawlers
@@ -134,6 +141,9 @@ var combat_imps = [
 ]
 
 var current_army = []
+
+func pick_nonbreaking_imp():
+	return valid_imps[nonbreaking_imps.pick_random()]
 
 func spawn_current_army():
 	var pos = get_tree().get_first_node_in_group("ImpStartPos")
@@ -201,7 +211,7 @@ func get_body_tex(klass: Class):
 var relics = [
 "Essence of Slime
 When your imps would die, they Split instead.
-Split imps do -1 damage and cannot themselves split.",
+Split imps randomly do -1 damage and cannot split.",
 
 "Battle Cry
 Every 3rd time you kill an enemy, spawn a random Brawler.",
@@ -221,7 +231,7 @@ to the next attack.",
 All daggers gain an additional x1.5 speed.",
 
 "Cursed Sword
-All attacks gain +1 damage. Your imps can no longer resurrect.",
+Melee attacks gain +1 damage. Your imps can no longer resurrect.",
 
 "Mystical Necromancer
 When you kill an enemy, summon an Ethereal imp that will
@@ -261,7 +271,8 @@ func reset_game_state():
 	has_won = false
 	flag_retry_this_level = false
 	
-	current_army = []
+	current_army = [12]
+	relic_tripledmg_killself = true
 
 func get_imp_spawn_info():
 	var to_pos = Vector2.ZERO
@@ -294,7 +305,7 @@ func an_enemy_died():
 		var info = get_imp_spawn_info()
 		spawn_imp(info[0], valid_imps[12], info[1], false, true)
 		var info2 = get_imp_spawn_info()
-		spawn_imp(info2[0], valid_imps.pick_random(), info[1], false, true)
+		spawn_imp(info2[0], pick_nonbreaking_imp(), info[1], false, true)
 
 var relic_always_split = false
 var relic_3_enemies_spawn_brawler = false

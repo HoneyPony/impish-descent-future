@@ -38,14 +38,14 @@ func die():
 func _physics_process(delta):
 	var s = scale.x
 	if s < 1.0:
-		s += delta
+		s += delta * 0.6
 		scale = Vector2(s, s)
 		if s >= 1.0:
 			$CollisionShape2D.disabled = false
 	
 	var to_pos = Vector2.from_angle(theta) * radius
 	to_pos -= Vector2(0, 128)
-	var impulse = (to_pos - position) * s
+	var impulse = (to_pos - position) * s * s * s
 	
 	theta += TAU * delta * 0.25
 	

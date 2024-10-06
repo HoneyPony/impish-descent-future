@@ -44,6 +44,8 @@ var buff_target_buff: GS.Buff = GS.Buff.None
 
 var projectile_scene: PackedScene = GS.PlayerProjectile1
 
+var invulnerability = 0
+
 enum State {
 	NO_ACTION,
 	MELEE_ATTACK,
@@ -170,8 +172,9 @@ func compute_basic_properties():
 					action_speed *= 0.5
 				GS.Item.Sword:
 					melee_base_damage = 1
-					# This enemy doesn't get the buff.
-					action_speed *= 0.75 / MELEE_GENERAL_BUFF
+					# This enemy doesn't get the buff. Yes it does
+					action_speed = 1
+					#action_speed *= 0.75 / MELEE_GENERAL_BUFF
 					goal = Goals.GOAL_MELEE
 					$Item.upgrades_on_kill = true
 		GS.Class.Summoner:
@@ -284,7 +287,7 @@ func fire_generic_action():
 	# Summoner with staff: summons new imp on hit
 	if current_class == GS.Class.Summoner:
 		if current_item == GS.Item.Staff:
-			GS.spawn_imp(get_parent(), GS.valid_imps.pick_random(), global_position,
+			GS.spawn_imp(get_parent(), GS.pick_nonbreaking_imp(), global_position,
 				false, true)
 		# WIth sycthe: resurrect a random imp
 		if current_item == GS.Item.Scythe:
@@ -299,6 +302,9 @@ func _physics_process(delta):
 	
 	if is_dead:
 		return
+		
+	if invulnerability > 0:
+		invulnerability -= delta
 		
 	if ethereal_lifetime > 0.0:
 		ethereal_lifetime -= delta
@@ -355,13 +361,19 @@ func _physics_process(delta):
 		new_tform.origin = lerp(item_rest.global_position, melee_attack_target_pos, to_t)
 		item.global_transform = new_tform
 		
+		if state_timer >= 0.6:
+			if GS.relic_tripledmg_killself and not self.is_ethereal():
+				die(null)
+				item.global_transform = item_rest.global_transform
+				state = State.NO_ACTION
+				state_timer = 0.0
+		
 		if state_timer >= 1.0:
 			item.global_transform = item_rest.global_transform
 			state = State.NO_ACTION
 			state_timer = 0.0
 			
-			if GS.relic_tripledmg_killself and not self.is_ethereal():
-				die(null)
+		
 	elif state == State.RANGED_ATTACK:
 		var may_fire = state_timer < 0.5
 		state_timer += delta * action_speed
@@ -588,18 +600,19 @@ func set_own_damage(amount: int):
 
 # Return whether to outright delete the palyer (prevent it from resurrecting)
 func on_death(body) -> bool:
-	# Splitters can't themselves be split.
-	if body != null and is_instance_of(body, SplitBuff) and self.goal != Goals.GOAL_ATTACK_OWN:
-		split()
-		split()
-		# Don't let us resurrect after we split
-		return true
-	# In order to ensure that the relic doesn't change the bevhaivor of whether we can resurrect
-	# on split, we add this second part of the condition.
-	elif GS.relic_always_split and not self.is_split():
-		split()
-		split()
-		return true
+	if not self.is_split():
+		# Splitters can't themselves be split.
+		if body != null and is_instance_of(body, SplitBuff) and self.goal != Goals.GOAL_ATTACK_OWN:
+			split()
+			split()
+			# Don't let us resurrect after we split
+			return true
+		# In order to ensure that the relic doesn't change the bevhaivor of whether we can resurrect
+		# on split, we add this second part of the condition.
+		elif GS.relic_always_split:
+			split()
+			split()
+			return true
 	return false	
 
 func _on_hazard_body_entered(body):
@@ -621,10 +634,15 @@ func _on_hazard_body_entered(body):
 			# Die to splitbuffs in general.
 			die(body)
 			return
+			
+	# Ignore attacks while invulnverable
+	if invulnerability > 0:
+		return
 	
 	body.hit_target(self)
 	# TODO: Check shields, etc
 	on_hit(body)
+	invulnerability = 1.0
 	
 	for i in range(0, 3):
 		if buffs[i] == GS.Buff.Shield:
@@ -646,6 +664,10 @@ func resurrect():
 	$Body.modulate = Color(1, 1, 1)
 	# Back to life
 	is_dead = false
+	
+	# Resurrected imps spawn with one shield?
+	#add_buff(GS.Buff.Shield)
+	invulnerability = 1.0
 	
 func die(killer_projectile):
 	if GS.has_won:
@@ -725,13 +747,13 @@ func get_buffed_damage(damage: int) -> int:
 	if damage_mode == DamageMode.Random:
 		damage = randi_range(0, damage)
 		
-	if GS.relic_attacks_1dmg_no_resurrect:
+	if GS.relic_attacks_1dmg_no_resurrect and goal == Goals.GOAL_MELEE:
 		damage += 1
 	
 	for i in range(0, 3):
 		# Split buff/debuff is never consumed
 		if buffs[i] == GS.Buff.Split:
-			damage -= 1
+			damage -= randi_range(0, 1)
 			if damage < 0:
 				damage = 0
 		
