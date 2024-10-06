@@ -114,6 +114,11 @@ const MELEE_GENERAL_BUFF = 1.2
 # Computes intrinsic class-based properties before we get to the effects of
 # relics.
 func compute_basic_properties():
+	if GS.relic_daggers_150_speed and current_item == GS.Item.Dagger:
+		action_speed *= 1.5
+		# Also change the cooldown.
+		action_cooldown /= 1.5
+	
 	damage_mode = DamageMode.Fixed
 	match current_class:
 		GS.Class.Brawler:
