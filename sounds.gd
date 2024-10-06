@@ -9,6 +9,8 @@ var game_vol_adjust = -9
 @onready var hit_ghost = $HitGhost
 @onready var kill_ghost = $KillGhost
 @onready var imp_act_crunchy = $ImpActCrunchy
+@onready var ghost_bullet_shoot = $GhostBulletShoot
+@onready var ghost_bullet_spawn = $GhostBulletSpawn
 
 func _ready():
 	$MenuMusic.volume_db = linear_to_db(0)

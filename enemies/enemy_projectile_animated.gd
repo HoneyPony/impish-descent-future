@@ -20,6 +20,9 @@ func hit_target(target):
 	die()
 func killed_target(target):
 	pass
+	
+func _ready():
+	$CollisionShape2D.disabled = true
 
 func die():
 	var particle = GS.EnemyProjectile1Particle.instantiate()
@@ -47,6 +50,9 @@ func _physics_process(delta):
 			
 # Called by animation
 func fire_now():
+	$CollisionShape2D.disabled = false
+	Sounds.ghost_bullet_shoot.play_rand()
+	
 	var dir = Vector2.DOWN
 	
 	var tree = get_tree()
