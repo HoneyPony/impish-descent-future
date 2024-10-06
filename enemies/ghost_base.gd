@@ -88,7 +88,7 @@ func update_collision_timeouts(delta):
 
 func do_explode():
 	var explode = GS.GhostExplode.instantiate()
-	explode.global_position = global_position
+	explode.global_position = global_position + Vector2(0, -64)
 	add_sibling(explode)
 
 func on_death(body):
