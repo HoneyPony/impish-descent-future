@@ -222,6 +222,28 @@ Attacks made this way kill that imp.",
 
 var avail_relics: Array = []
 
+var relic_always_split = false
+var relic_3_enemies_spawn_brawler = false
+var relic_mages_melee = false
+var relic_spawn_shield = false
+var relic_shields_are_damage = false
+var relic_daggers_150_speed = false
+var relic_attacks_1dmg_no_resurrect = false
+var relic_kill_equals_eth_resurrecter = false
+var relic_tripledmg_killself = false
+
+func accept_relic(id: int):
+	match id:
+		0: relic_always_split = true
+		1: relic_3_enemies_spawn_brawler = true
+		2: relic_mages_melee = true
+		3: relic_spawn_shield = true
+		4: relic_shields_are_damage = true
+		5: relic_daggers_150_speed = true
+		6: relic_attacks_1dmg_no_resurrect = true
+		7: relic_kill_equals_eth_resurrecter = true
+		8: relic_tripledmg_killself = true
+
 func _ready():
 	for i in range(0, relics.size()):
 		avail_relics.push_back(i)
