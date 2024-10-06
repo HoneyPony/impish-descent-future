@@ -19,6 +19,7 @@ config/icon="res://icon.png"
 
 GS="*res://GS.gd"
 SceneTransition="*res://scene_transition.tscn"
+Sounds="*res://sounds.tscn"
 
 [display]
 

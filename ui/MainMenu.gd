@@ -1,4 +1,5 @@
 extends Control
+class_name MainMenu
 
 func _ready():
 	# Each time we load the main menu, reset all of the state.
