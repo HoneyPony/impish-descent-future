@@ -10,5 +10,5 @@ func _on_PlayButton_pressed():
 	GS.reset_game_state()
 	# Restart msuic
 	Sounds.get_node("GameMusic").seek(0)
-	print(Sounds.get_node("GameMusic").playing)
+	#print(Sounds.get_node("GameMusic").playing)
 	SceneTransition.change_scene(GS.levels[0])
