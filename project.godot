@@ -10,9 +10,10 @@ config_version=5
 
 [application]
 
-config/name="LD56"
+config/name="Impish Descent"
 run/main_scene="res://MainMenu.tscn"
 config/features=PackedStringArray("4.3")
+boot_splash/image="res://title.png"
 config/icon="res://icon.png"
 
 [autoload]
