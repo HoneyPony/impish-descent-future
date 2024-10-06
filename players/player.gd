@@ -356,6 +356,9 @@ func _physics_process(delta):
 			item.global_transform = item_rest.global_transform
 			state = State.NO_ACTION
 			state_timer = 0.0
+			
+			if GS.relic_tripledmg_killself and not self.is_ethereal():
+				die(null)
 	elif state == State.RANGED_ATTACK:
 		var may_fire = state_timer < 0.5
 		state_timer += delta * action_speed
@@ -729,12 +732,18 @@ func get_buffed_damage(damage: int) -> int:
 				buffs[i] = GS.Buff.None
 				render_buffs()
 				damage += 2
+				break
 	
 	# Consume dagger buff and return separately
 	for i in range(0, 3):
 		if buffs[i] == GS.Buff.Dagger:
 			buffs[i] = GS.Buff.None
 			render_buffs()
-			return damage + 1
+			damage += 1
+			break
+			
+	if GS.relic_tripledmg_killself:
+		if not self.is_ethereal() and goal == Goals.GOAL_MELEE:
+			damage *= 3
 			
 	return damage
