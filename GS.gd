@@ -61,7 +61,10 @@ func get_nav_move_target(global_pos: Vector2, move_target: Vector2) -> Vector2:
 			var d0 = (good_move_target - global_pos).normalized()
 			var d1 = (move_target - global_pos).normalized()
 			# Exaggerate the nav weight to some degree.
-			var good_weight = (1.0 - d0.dot(d1)) * 5.0
+			var facing = d0.dot(d1)
+			facing = facing * facing
+			var good_weight = 1.0 - facing
+			#var good_weight = (1.0 - d0.dot(d1)) * 5.0
 			good_weight = clamp(good_weight, 0, 1)
 			move_target = lerp(move_target, good_move_target, good_weight)
 
