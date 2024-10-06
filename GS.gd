@@ -9,10 +9,11 @@ var has_won = false
 
 var current_level = 0
 
-var levels = [
-	preload("res://levels/level1.tscn"),
-	preload("res://levels/level2.tscn"),
+@onready var levels = [
+	load("res://levels/level1.tscn"),
+	load("res://levels/level2.tscn"),
 ]
+	
 
 var MainMenu = preload("res://MainMenu.tscn")
 
