@@ -81,4 +81,5 @@ func _on_hazard_body_entered(body):
 		if current_projectile != null and not current_projectile.fired:
 			current_projectile.die()
 		body.killed_target(self)
+		GS.an_enemy_died()
 		queue_free()

@@ -222,6 +222,30 @@ Attacks made this way kill that imp.",
 
 var avail_relics: Array = []
 
+var enemy_killed_mod3 = 0
+
+func spawn_random_brawler():
+	var to_pos = Vector2.ZERO
+	var players = get_tree().get_nodes_in_group("Players")
+	var original_spawner = get_tree().get_first_node_in_group("ImpStartPos")
+	assert(original_spawner != null)
+	
+	if players.is_empty():
+		to_pos = original_spawner.global_position
+	
+	else:
+		to_pos = players.pick_random().global_position
+
+	var brawler = randi_range(0, 3);
+	spawn_imp(original_spawner.get_parent(), valid_imps[brawler], to_pos)
+
+func an_enemy_died():
+	if relic_3_enemies_spawn_brawler:
+		enemy_killed_mod3 += 1
+		if enemy_killed_mod3 >= 3:
+			spawn_random_brawler()
+			enemy_killed_mod3 = 0
+
 var relic_always_split = false
 var relic_3_enemies_spawn_brawler = false
 var relic_mages_melee = false
