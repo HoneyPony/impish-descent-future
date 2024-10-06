@@ -84,7 +84,7 @@ func _ready():
 	if GS.current_level == 1 or GS.current_level == 3 or GS.current_level == 5:
 		relics = true
 		
-	relics = true
+	#relics = true
 		
 	setup_rewards(relics, require_combat)
 

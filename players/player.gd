@@ -161,6 +161,9 @@ func compute_basic_properties():
 			buff_target_buff = GS.Buff.Shield
 			
 			match current_item:
+				GS.Item.Staff:
+					# The shield is very very strong at 100% speed. Make it a bit slower.
+					action_speed *= 0.5
 				GS.Item.Scythe:
 					goal = Goals.GOAL_ATTACK_OWN
 					projectile_scene = GS.SplitProjectile
@@ -611,6 +614,10 @@ func _on_hazard_body_entered(body):
 	# This includes ethereal players.
 	if body != null and is_instance_of(body, SplitBuff):
 		if self.is_split(true):
+			return
+		else:
+			# Die to splitbuffs in general.
+			die(body)
 			return
 	
 	body.hit_target(self)
