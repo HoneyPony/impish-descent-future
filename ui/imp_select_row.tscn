@@ -19,9 +19,9 @@ offset_left = 99.0
 offset_top = 5.0
 offset_right = 556.0
 offset_bottom = 78.0
-text = "Mage wielding Dagger:
-- Applies Split buff to nearby imps
-- Split imps do 1 less damage and cannot be further split."
+text = "Cleric wielding Scythe:
+- Splits nearby imps into two imps.
+- Split imps randomly do 1 fewer damage."
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
