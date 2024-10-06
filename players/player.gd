@@ -645,7 +645,7 @@ func die(killer_projectile):
 	var perma = on_death(killer_projectile)
 	
 	# Ethereal imps can't be resurrected
-	if is_ethereal() or perma:
+	if is_ethereal() or perma or GS.relic_attacks_1dmg_no_resurrect:
 		queue_free()
 		return
 	
@@ -712,6 +712,9 @@ func get_buffed_damage(damage: int) -> int:
 	# Randomize damage if it's random.
 	if damage_mode == DamageMode.Random:
 		damage = randi_range(0, damage)
+		
+	if GS.relic_attacks_1dmg_no_resurrect:
+		damage += 1
 	
 	for i in range(0, 3):
 		# Split buff/debuff is never consumed

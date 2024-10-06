@@ -61,6 +61,8 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 		relic_rows[0].setup(first)
 		relic_rows[1].setup(second)
 		
+		relic_rows[0].select_this()
+		
 	$Relics.visible = relic
 	
 func _ready():
