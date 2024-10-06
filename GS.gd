@@ -213,7 +213,7 @@ var relics = [
 When your imps would die, they Split instead.
 Split imps randomly do -1 damage and cannot split.",
 
-"Battle Cry
+"Conch Horn
 Every 3rd time you kill an enemy, spawn a random Brawler.",
 
 "Quarterstaff
@@ -240,6 +240,18 @@ Resurrect a random dead imp, and one random Ethereal imp.",
 "Holy Scepter
 Non-Ethereal imps deal triple melee damage.
 Attacks made this way kill that imp.",
+]
+
+var relic_sprite = [
+	preload("res://relics/relic0.png"),
+	preload("res://relics/relic1.png"),
+	preload("res://relics/relic2.png"),
+	preload("res://relics/relic3.png"),
+	preload("res://relics/relic4.png"),
+	preload("res://relics/relic_5.png"),
+	preload("res://relics/relic6.png"),
+	preload("res://relics/relic7.png"),
+	preload("res://relics/relic8.png"),
 ]
 
 var avail_relics: Array = []

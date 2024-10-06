@@ -11,6 +11,7 @@ func setup(id):
 	if id >= 0:
 	#$Body.texture = GS.get_body_tex(klass)
 		$Label.text = GS.relics[id]
+		$Icon.texture = GS.relic_sprite[id]
 	
 func _ready():
 	$Button.pressed.connect(self.select_this)

@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="1_jgw28"]
 [ext_resource type="Script" path="res://ui/relic_select_row.gd" id="2_0oprs"]
 [ext_resource type="ButtonGroup" uid="uid://lq50bv1gopsh" path="res://ui/button_select_group.tres" id="3_stasi"]
-[ext_resource type="Texture2D" uid="uid://so31a8iyooat" path="res://players/body0.png" id="4_4x5ct"]
+[ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="4_vlf31"]
 
 [node name="RelicSelectRow" type="ColorRect"]
 offset_right = 683.0
@@ -33,6 +33,6 @@ button_group = ExtResource("3_stasi")
 text = "Choose"
 
 [node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(38.5, 29.2501)
+position = Vector2(38.5, 41)
 scale = Vector2(0.183594, 0.183594)
-texture = ExtResource("4_4x5ct")
+texture = ExtResource("4_vlf31")
