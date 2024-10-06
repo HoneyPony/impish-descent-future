@@ -15,3 +15,4 @@ res://ui/reward_ui.gd
 res://level_base.tscn
 res://levels/level1.tscn
 res://ui/MainMenu.gd
+res://decoration/torch.tscn

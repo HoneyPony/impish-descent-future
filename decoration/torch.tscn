@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://bwbn040oj10n2"]
+
+[ext_resource type="Texture2D" uid="uid://d27e0qp8r3gre" path="res://decoration/simple_point_light.png" id="1_nrcs1"]
+[ext_resource type="Texture2D" uid="uid://b7whhymoopnao" path="res://decoration/torch0000.png" id="2_g8ouh"]
+[ext_resource type="Texture2D" uid="uid://dhqreu4o2vx0u" path="res://decoration/torch0001.png" id="3_p22ei"]
+[ext_resource type="Texture2D" uid="uid://bvqrqhlfil68o" path="res://decoration/torch0002.png" id="4_2h4a0"]
+[ext_resource type="Texture2D" uid="uid://b7rsevxxjhqha" path="res://decoration/torch0003.png" id="5_5thvi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_27iow"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_g8ouh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_p22ei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2h4a0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_5thvi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="torch" type="PointLight2D"]
+color = Color(1, 0.883333, 0.72, 1)
+energy = 0.38
+texture = ExtResource("1_nrcs1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, 104)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_27iow")
+autoplay = "default"
+frame = 2
+frame_progress = 0.446493
+offset = Vector2(0, -128)

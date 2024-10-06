@@ -1,0 +1,16 @@
+/usr/bin/ffmpeg -hide_banner -y -y -r 24 -start_number 0 -start_number_range 1 -i /home/emdash/Documents/godot/ld56/decoration/frame%04d.png -f apng -pred none -plays 0 /home/emdash/Documents/godot/ld56/decoration/torch.apng
+=====================================================
+Input #0, image2, from '/home/emdash/Documents/godot/ld56/decoration/frame%04d.png':
+  Duration: 00:00:00.32, start: 0.000000, bitrate: N/A
+  Stream #0:0: Video: png, rgba(pc, gbr/unknown/unknown), 256x256 [SAR 3937:3937 DAR 1:1], 25 fps, 25 tbr, 25 tbn
+Stream mapping:
+  Stream #0:0 -> #0:0 (png (native) -> apng (native))
+Press [q] to stop, [?] for help
+Output #0, apng, to '/home/emdash/Documents/godot/ld56/decoration/torch.apng':
+  Metadata:
+    encoder         : Lavf60.16.100
+  Stream #0:0: Video: apng, rgba(pc, gbr/unknown/unknown, progressive), 256x256 [SAR 3937:3937 DAR 1:1], q=2-31, 200 kb/s, 24 fps, 24 tbn
+    Metadata:
+      encoder         : Lavc60.31.102 apng
+frame=    0 fps=0.0 q=0.0 size=       0kB time=N/A bitrate=N/A speed=N/A    [out#0/apng @ 0x5619f62ec6c0] video:11kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.791168%
+frame=    8 fps=0.0 q=-0.0 Lsize=      11kB time=00:00:00.29 bitrate= 300.5kbits/s speed=7.38x    
