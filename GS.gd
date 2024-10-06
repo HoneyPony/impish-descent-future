@@ -7,8 +7,11 @@ extends Node
 
 var has_won = false
 
+var current_level = 0
+
 var levels = [
-	preload("res://levels/level1.tscn")
+	preload("res://levels/level1.tscn"),
+	preload("res://levels/level2.tscn"),
 ]
 
 var MainMenu = preload("res://MainMenu.tscn")

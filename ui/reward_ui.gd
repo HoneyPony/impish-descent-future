@@ -49,7 +49,11 @@ func _ready():
 	# Nonetheless, reset the camera to point at the ImpStartPos.
 	%GameCamera.global_position = get_tree().get_first_node_in_group("ImpStartPos").global_position
 	
-	setup_rewards(false, true)
+	var require_combat = false
+	# We always get an imp capable of dealing damage on the first level.
+	if GS.current_level == 0:
+		require_combat = true
+	setup_rewards(false, require_combat)
 
 # This is basically the entry point into the gameplay for now.
 func _on_confirm_button_pressed():

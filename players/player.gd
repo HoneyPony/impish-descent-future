@@ -249,8 +249,8 @@ func finalize_properties():
 	
 	
 	# DEBUG DEBUG DEBUG
-	melee_base_damage *= 10
-	ranged_base_damage *= 10
+	#melee_base_damage *= 10
+	#ranged_base_damage *= 10
 
 func target_meets_goals(enemy) -> bool:
 	if $Item.only_half_health:
@@ -455,7 +455,8 @@ func _physics_process(delta):
 			#target_noise_nosmooth -= move_target
 			
 			if dir_to.length_squared() < melee_attack_range * melee_attack_range:
-				melee_attack(closest.global_position)
+				# Target the center of enemies (averaging 2 tiles large)
+				melee_attack(closest.global_position + Vector2(0, -64))
 	elif stay_away_enemies: # NOTE: THIS MUST BE TRUE FOR RANGED FOR THE ATTACKS TO WORK.
 		# If we're ranged, we want to avoid damage, so back away from nearby enemies
 		# TODO: I guess we want a larger ranged here..?

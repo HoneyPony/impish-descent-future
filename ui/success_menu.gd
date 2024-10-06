@@ -15,4 +15,6 @@ func _process(delta):
 
 
 func _on_confirm_button_pressed():
-	print("go to next level")
+	GS.current_level += 1
+	if GS.current_level < GS.levels.size():
+		SceneTransition.change_scene(GS.levels[GS.current_level])
