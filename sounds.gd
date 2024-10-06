@@ -11,6 +11,7 @@ var game_vol_adjust = -9
 @onready var imp_act_crunchy = $ImpActCrunchy
 @onready var ghost_bullet_shoot = $GhostBulletShoot
 @onready var ghost_bullet_spawn = $GhostBulletSpawn
+@onready var ghost_short_spawn = $GhostShortSpawn
 @onready var buffed = $Buffed
 @onready var imp_hit = $ImpHit
 @onready var imp_kill = $ImpKill

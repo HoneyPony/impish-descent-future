@@ -39,6 +39,7 @@ func _physics_process(delta):
 		shoot_timer = 1.25
 		var bullet = GS.EnemyProjectile2.instantiate()
 		add_child(bullet)
+		Sounds.ghost_short_spawn.play_rand()
 
 
 func on_death(body):
