@@ -7,6 +7,8 @@ extends Node
 
 var has_won = false
 
+var flag_retry_this_level = false
+
 var current_level = 0
 
 @onready var levels = [
@@ -227,6 +229,33 @@ var avail_relics: Array = []
 
 var enemy_killed_mod3 = 0
 
+# Called when we retry a level, to ensure that inter-level state is always consistent in that
+# case.
+func reset_inter_level_state():
+	enemy_killed_mod3 = 0
+	
+func reset_game_state():
+	reset_inter_level_state()
+	avail_relics.clear()
+	for i in range(0, relics.size()):
+		avail_relics.push_back(i)
+		
+	relic_always_split = false
+	relic_3_enemies_spawn_brawler = false
+	relic_mages_melee = false
+	relic_spawn_shield = false
+	relic_shields_are_damage = false
+	relic_daggers_150_speed = false
+	relic_attacks_1dmg_no_resurrect = false
+	relic_kill_equals_eth_resurrecter = false
+	relic_tripledmg_killself = false
+	
+	current_level = 0
+	has_won = false
+	flag_retry_this_level = false
+	
+	current_army = []
+
 func get_imp_spawn_info():
 	var to_pos = Vector2.ZERO
 	var players = get_tree().get_nodes_in_group("Players")
@@ -283,5 +312,4 @@ func accept_relic(id: int):
 		8: relic_tripledmg_killself = true
 
 func _ready():
-	for i in range(0, relics.size()):
-		avail_relics.push_back(i)
+	reset_game_state()

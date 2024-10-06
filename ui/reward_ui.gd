@@ -68,6 +68,14 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 func _ready():
 	# Make sure we haven't won yet
 	GS.has_won = false
+	
+	if GS.flag_retry_this_level:
+		GS.flag_retry_this_level = false
+		hide()
+		GS.spawn_current_army()
+		%DefeatMenu.going = true
+		return
+	
 	# This menu begins each level. Note that the camera won't move until enemies
 	# are spawned in, which is perfect.
 	show()
@@ -95,3 +103,4 @@ func _on_confirm_button_pressed():
 	if do_choose_relic:
 		GS.accept_relic(current_new_relic)
 	GS.spawn_current_army()
+	%DefeatMenu.going = true

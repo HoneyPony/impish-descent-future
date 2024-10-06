@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=11 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="Script" path="res://camera.gd" id="1_qvjw2"]
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="2_f1kks"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dv7eaeqintp14" path="res://ui/imp_select_row.tscn" id="8_2b3rg"]
 [ext_resource type="Script" path="res://ui/success_menu.gd" id="8_a0vcg"]
 [ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="8_k35jv"]
+[ext_resource type="Script" path="res://ui/defeat_menu.gd" id="10_reeg6"]
 
 [node name="Level" type="Node2D"]
 
@@ -47,6 +48,7 @@ grow_vertical = 2
 theme = ExtResource("6_jm28w")
 
 [node name="UpgradeMenu" type="ColorRect" parent="UpgradeMenu/Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -233,6 +235,67 @@ text = "Success!
 Ghosts Vanquished..."
 horizontal_alignment = 1
 
+[node name="DefeatMenu" type="ColorRect" parent="UpgradeMenu/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -137.0
+offset_top = -76.0
+offset_right = 149.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.348043, 0.196363, 0.191862, 1)
+script = ExtResource("10_reeg6")
+
+[node name="MainMenu" type="Button" parent="UpgradeMenu/Control/DefeatMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -94.5
+offset_top = -46.0
+offset_right = 94.5
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Main Menu"
+
+[node name="Retry" type="Button" parent="UpgradeMenu/Control/DefeatMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -94.5
+offset_top = -91.0
+offset_right = 94.5
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Retry Level"
+
+[node name="ImpTitle" type="Label" parent="UpgradeMenu/Control/DefeatMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -136.5
+offset_top = 11.0
+offset_right = 136.5
+offset_bottom = 34.0
+grow_horizontal = 2
+text = "Defeat!
+What now...?"
+horizontal_alignment = 1
+
 [node name="Button" type="Button" parent="UpgradeMenu/Control"]
 visible = false
 layout_mode = 0
@@ -269,3 +332,5 @@ position = Vector2(2, 124)
 [connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu/ConfirmButton" to="UpgradeMenu/Control/UpgradeMenu" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu/Relics/ConfirmButton2" to="UpgradeMenu/Control/UpgradeMenu" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/SuccessMenu/ConfirmButton" to="UpgradeMenu/Control/SuccessMenu" method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="UpgradeMenu/Control/DefeatMenu/MainMenu" to="UpgradeMenu/Control/DefeatMenu" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="UpgradeMenu/Control/DefeatMenu/Retry" to="UpgradeMenu/Control/DefeatMenu" method="_on_retry_pressed"]
