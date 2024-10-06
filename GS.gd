@@ -216,7 +216,7 @@ All attacks gain +1 damage. Your imps can no longer resurrect.",
 
 "Mystical Necromancer
 When you kill an enemy, summon an Ethereal imp that will
-Resurrect a random dead imp.",
+Resurrect a random dead imp, and one random Ethereal imp.",
 
 "Holy Scepter
 Non-Ethereal imps deal triple melee damage.
@@ -227,7 +227,7 @@ var avail_relics: Array = []
 
 var enemy_killed_mod3 = 0
 
-func spawn_random_brawler():
+func get_imp_spawn_info():
 	var to_pos = Vector2.ZERO
 	var players = get_tree().get_nodes_in_group("Players")
 	var original_spawner = get_tree().get_first_node_in_group("ImpStartPos")
@@ -238,9 +238,14 @@ func spawn_random_brawler():
 	
 	else:
 		to_pos = players.pick_random().global_position
+		
+	return [original_spawner.get_parent(), to_pos]
+
+func spawn_random_brawler():
+	var info = get_imp_spawn_info()
 
 	var brawler = randi_range(0, 3);
-	spawn_imp(original_spawner.get_parent(), valid_imps[brawler], to_pos)
+	spawn_imp(info[0], valid_imps[brawler], info[1])
 
 func an_enemy_died():
 	if relic_3_enemies_spawn_brawler:
@@ -248,6 +253,12 @@ func an_enemy_died():
 		if enemy_killed_mod3 >= 3:
 			spawn_random_brawler()
 			enemy_killed_mod3 = 0
+			
+	if relic_kill_equals_eth_resurrecter:
+		var info = get_imp_spawn_info()
+		spawn_imp(info[0], valid_imps[12], info[1], false, true)
+		var info2 = get_imp_spawn_info()
+		spawn_imp(info2[0], valid_imps.pick_random(), info[1], false, true)
 
 var relic_always_split = false
 var relic_3_enemies_spawn_brawler = false
@@ -255,7 +266,7 @@ var relic_mages_melee = false
 var relic_spawn_shield = false
 var relic_shields_are_damage = false
 var relic_daggers_150_speed = false
-var relic_attacks_1dmg_no_resurrect = true
+var relic_attacks_1dmg_no_resurrect = false
 var relic_kill_equals_eth_resurrecter = false
 var relic_tripledmg_killself = false
 
