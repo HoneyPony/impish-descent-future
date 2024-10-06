@@ -712,6 +712,7 @@ func die(killer_projectile):
 func add_buff(buff: GS.Buff):
 	for i in range(0, 3):
 		if buffs[i] == GS.Buff.None:
+			# Sounds.buffed.play_rand()
 			buffs[i] = buff
 			if buff == GS.Buff.Ethereal:
 				ethereal_lifetime = 4.0
@@ -729,6 +730,7 @@ func _on_buff_body_entered(body):
 		# Don't consume buffs if we already have 3.
 		if buffs[i] == GS.Buff.None and body.buff != GS.Buff.None:
 			buffs[i] = body.buff
+			Sounds.buffed.play_rand()
 			render_buffs()
 			body.hit_target(self)
 			return

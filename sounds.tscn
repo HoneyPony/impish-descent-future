@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://djminn0neh2kc"]
+[gd_scene load_steps=12 format=3 uid="uid://djminn0neh2kc"]
 
 [ext_resource type="Script" path="res://sounds.gd" id="1_8eu58"]
 [ext_resource type="AudioStream" uid="uid://nxgqc7nkp8oo" path="res://sounds/menu_music.ogg" id="2_ess2a"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://bpdxbwa3pfgm" path="res://sounds/ghost_kill.wav" id="7_i2vjd"]
 [ext_resource type="AudioStream" uid="uid://bft55j3f78sal" path="res://sounds/ghost_bullet_shoot.wav" id="9_gm4am"]
 [ext_resource type="AudioStream" uid="uid://wa45l58k8agr" path="res://sounds/ghost_bullet_spawn.wav" id="10_quyck"]
+[ext_resource type="AudioStream" uid="uid://pvigtv13etsf" path="res://sounds/imp_buff.wav" id="11_mi2oy"]
 
 [node name="Sounds" type="Node"]
 script = ExtResource("1_8eu58")
@@ -49,5 +50,10 @@ script = ExtResource("5_i5see")
 
 [node name="GhostBulletSpawn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_quyck")
+bus = &"SFX"
+script = ExtResource("5_i5see")
+
+[node name="Buffed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_mi2oy")
 bus = &"SFX"
 script = ExtResource("5_i5see")
