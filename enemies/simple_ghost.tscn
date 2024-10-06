@@ -20,6 +20,7 @@ collision_layer = 4
 script = ExtResource("1_n6c1y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.788235)
 y_sort_enabled = true
 material = SubResource("CanvasItemMaterial_ol7kp")
 scale = Vector2(0.25, 0.25)

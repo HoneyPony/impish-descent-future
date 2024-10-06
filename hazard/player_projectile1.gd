@@ -9,6 +9,9 @@ var damage: int = 1
 # Projectiles can't hit twice.
 var slowness = 10.0
 
+var lifetime = 10.0
+var died = false
+
 @onready var sprite = $Sprite
 
 # IMPORTANT: ALL  PROJECTILES MUST IMPLEMENT THIS
@@ -19,10 +22,13 @@ func killed_target(target):
 	pass
 
 func die():
+	if died:
+		return
 	var particle = GS.PlayerProjectile1Particle.instantiate()
 	particle.position = position
 	add_sibling(particle)
 	queue_free()
+	died = true
 
 func _physics_process(delta):
 	# Animate sprite
@@ -38,4 +44,8 @@ func _physics_process(delta):
 
 	# Die when we hit a wall
 	if collide != null:
+		die()
+		
+	lifetime -= delta
+	if lifetime <= 0:
 		die()
