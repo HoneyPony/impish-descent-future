@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjb3frbgcl2g4"]
+[gd_scene load_steps=6 format=3 uid="uid://bjb3frbgcl2g4"]
 
 [ext_resource type="PackedScene" uid="uid://cj7vywxbe73c1" path="res://ui/VolumeBars.tscn" id="1"]
 [ext_resource type="Script" path="res://ui/MainMenu.gd" id="2"]
 [ext_resource type="Theme" uid="uid://briaychot8p50" path="res://ui/MainUITheme.tres" id="3"]
 [ext_resource type="Texture2D" uid="uid://35ijtefuy8ks" path="res://title.png" id="3_8whl5"]
+[ext_resource type="Script" path="res://ascension_checkbox.gd" id="5_83eal"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -41,18 +42,92 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Play"
 
-[node name="VolumeBars" parent="." instance=ExtResource("1")]
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 340.0
+offset_right = 427.0
+offset_bottom = 637.0
+color = Color(0.172833, 0.172833, 0.172833, 0.854902)
+
+[node name="VolumeBars" parent="ColorRect" instance=ExtResource("1")]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -1136.0
-offset_top = -4.0
-offset_right = -865.0
-offset_bottom = 76.0
+offset_left = -361.0
+offset_top = -137.5
+offset_right = -90.0
+offset_bottom = -57.5
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 150.0
+offset_right = 402.0
+offset_bottom = 271.0
+
+[node name="Label" type="Label" parent="ColorRect/HBoxContainer"]
+layout_mode = 2
+text = "Ascension 1: Include level 6"
+
+[node name="CheckBox" type="CheckBox" parent="ColorRect/HBoxContainer/Label"]
+layout_mode = 0
+offset_left = -30.0
+offset_right = -6.0
+offset_bottom = 24.0
+script = ExtResource("5_83eal")
+
+[node name="Label2" type="Label" parent="ColorRect/HBoxContainer"]
+layout_mode = 2
+text = "Ascension 2: All enemies regenerate health"
+
+[node name="CheckBox" type="CheckBox" parent="ColorRect/HBoxContainer/Label2"]
+layout_mode = 0
+offset_left = -30.0
+offset_right = -6.0
+offset_bottom = 24.0
+script = ExtResource("5_83eal")
+index = 1
+
+[node name="Label4" type="Label" parent="ColorRect/HBoxContainer"]
+layout_mode = 2
+text = "Ascension 3: Enemies have 50% more health"
+
+[node name="CheckBox" type="CheckBox" parent="ColorRect/HBoxContainer/Label4"]
+layout_mode = 0
+offset_left = -30.0
+offset_right = -6.0
+offset_bottom = 24.0
+script = ExtResource("5_83eal")
+index = 2
+
+[node name="Label5" type="Label" parent="ColorRect/HBoxContainer"]
+layout_mode = 2
+text = "Ascension 4: Enemies attack 40% faster"
+
+[node name="CheckBox" type="CheckBox" parent="ColorRect/HBoxContainer/Label5"]
+layout_mode = 0
+offset_left = -30.0
+offset_right = -6.0
+offset_bottom = 24.0
+script = ExtResource("5_83eal")
+index = 3
+
+[node name="Label3" type="Label" parent="ColorRect/HBoxContainer"]
+layout_mode = 2
+text = "Ascension 5: Enemies regenerate health much faster"
+
+[node name="CheckBox" type="CheckBox" parent="ColorRect/HBoxContainer/Label3"]
+layout_mode = 0
+offset_left = -30.0
+offset_right = -6.0
+offset_bottom = 24.0
+script = ExtResource("5_83eal")
+index = 4
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]

@@ -20,8 +20,8 @@ func _on_retry_pressed():
 	# Flag to the upgrade menu that we are retrying, i.e. we don't get an upgrade
 	GS.flag_retry_this_level = true
 	GS.reset_inter_level_state()
-	if GS.current_level < GS.levels.size():
-		SceneTransition.change_scene(GS.levels[GS.current_level])
+	if GS.current_level < GS.levels_size():
+		SceneTransition.change_scene(GS.levels(GS.current_level))
 
 
 func _on_main_menu_pressed():

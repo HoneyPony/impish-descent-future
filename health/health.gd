@@ -14,7 +14,7 @@ var current_val: int = 0
 # Initialized by the first call to render_amount, which decides where the bar will be centered.
 var real_total_width = 0
 
-func _ready():
+func parent_ready():
 	call_deferred("render_amount", int(get_parent().max_health))
 	
 	var color = Color(1, 0, 0)

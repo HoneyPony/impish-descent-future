@@ -5,6 +5,7 @@ var fire_timer = 2.3
 @export var big = false
 
 func _ready():
+	init_ghost_base()
 	health = max_health
 	fire_timer = randf_range(0, 2.3)
 
@@ -18,6 +19,8 @@ func handle_simple_projectile(delta):
 	fire_timer -= delta
 	if fire_timer <= 0:
 		fire_timer = 2.3
+		if GS.ascensions[3]:
+			fire_timer /= 1.4
 	
 		var count = 1
 		var sound_count = 1

@@ -11,7 +11,9 @@ var flag_retry_this_level = false
 
 var current_level = 0
 
-@onready var levels = [
+var ascensions = [true, false, false, false, false]
+
+@onready var levels_all = [
 	load("res://levels/level1.tscn"),
 	load("res://levels/level2.tscn"),
 	load("res://levels/level3.tscn"),
@@ -21,6 +23,19 @@ var current_level = 0
 	
 	load("res://ui/win_screen.tscn")
 ]
+	
+func levels(index: int) -> PackedScene:
+	if not ascensions[0]:
+		if index >= 5:
+			return levels_all[6]
+		return levels_all[index]
+	else:
+		return levels_all[index]
+		
+func levels_size():
+	if not ascensions[0]:
+		return levels_all.size() - 1
+	return levels_all.size()
 	
 
 var MainMenu = preload("res://MainMenu.tscn")

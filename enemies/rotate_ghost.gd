@@ -9,6 +9,9 @@ const RADIUS = 80
 
 var shoot_timer =  0.75
 
+func _ready():
+	init_ghost_base()
+
 func animate(delta):
 	theta += delta
 	theta = fmod(theta, TAU)
@@ -37,6 +40,8 @@ func _physics_process(delta):
 	shoot_timer -= delta
 	if shoot_timer <= 0:
 		shoot_timer = 1.25
+		if GS.ascensions[3]:
+			shoot_timer /= 1.4
 		var bullet = GS.EnemyProjectile2.instantiate()
 		add_child(bullet)
 		Sounds.ghost_short_spawn.play_rand()

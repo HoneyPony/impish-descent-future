@@ -6,13 +6,32 @@ var health: int = 6
 @export var regen: bool = false
 
 var regen_timer = 1
+var my_regen_rate = 1
 
 var asleep = true
 
 var collision_timeouts = {}
 
-func _ready():
+func init_ghost_base():
+	if GS.ascensions[2]:
+		max_health = int(max_health * 1.5)
+		
+	get_node("Health").parent_ready()
+	
 	health = max_health
+	if GS.ascensions[1]:
+		if not regen:
+			regen = true
+			# Make normal enemies still regnerate slower.
+			my_regen_rate *= 3
+			# Hack: The health bar is still pink for fast-rgenerating
+			# and red for slow, which is helpful info.
+	if GS.ascensions[4]:
+		# This is scary ish.
+		my_regen_rate *= 0.5
+
+func _ready():
+	init_ghost_base()
 
 func compute_random_weighted_player_average():
 	var players = get_tree().get_nodes_in_group("Players")
@@ -49,7 +68,7 @@ func update_collision_timeouts(delta):
 	if regen:
 		regen_timer -= delta
 		if regen_timer <= 0:
-			regen_timer = 1
+			regen_timer = my_regen_rate
 			if health < max_health:
 				health += 1
 	

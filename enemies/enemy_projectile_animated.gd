@@ -23,6 +23,8 @@ func killed_target(target):
 	
 func _ready():
 	$CollisionShape2D.disabled = true
+	if GS.ascensions[3]:
+		$AnimationPlayer.speed_scale = 1.4
 
 func die():
 	var particle = GS.EnemyProjectile1Particle.instantiate()
