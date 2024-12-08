@@ -132,7 +132,7 @@ var valid_imps = [
 	[Class.Mage, Item.Club, "Mage wielding Club:\n- Attacks at 100% speed for 0-4 Ranged damage.\n- Damage is rolled randomly."],
 	[Class.Mage, Item.Scythe, "Mage wielding Scythe:\n- Attacks at 100% speed for 1 Ranged damage.\n- Shoots 9 shots in random directions."],
 	[Class.Cleric, Item.Staff, "Cleric wielding Staff:\n- Applies Shield buff to nearby imps.\n- Shield buff blocks 1 hit from enemies."],
-	[Class.Cleric, Item.Sword, "Cleric wielding Sword:\n- Attacks at 100% speed for 1 damage.\n- On kill, increase damage by 1 (resets next level)"],
+	[Class.Cleric, Item.Dagger, "Cleric wielding Dagger:\n- Attacks at 100% speed for 1 damage.\n- On kill, increase damage by 1 (resets next level)"],
 	[Class.Cleric, Item.Scythe, "Cleric wielding Scythe:\n- Splits nearby imps into two imps.\n- Split imps randomize their damage."],
 	[Class.Summoner, Item.Staff, "Summoner wielding Staff:\n- Summons random Ethereal imps.\n- Ethereal imps disappear after 4 seconds."],
 	[Class.Summoner, Item.Scythe, "Summoner wielding Scythe:\n- Resurrects dead imps."],

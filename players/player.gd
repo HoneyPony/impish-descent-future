@@ -171,7 +171,7 @@ func compute_basic_properties():
 					projectile_scene = GS.SplitProjectile
 					# Split-resurrect is VERY strong. Make these guys act very slowly.
 					action_speed *= 0.25
-				GS.Item.Sword:
+				GS.Item.Dagger:
 					melee_base_damage = 1
 					# This enemy doesn't get the buff. Yes it does
 					action_speed = 1
