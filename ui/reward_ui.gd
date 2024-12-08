@@ -17,6 +17,8 @@ var current_new_relic = 0
 
 var do_choose_relic = false
 
+@export var double_upgrade: ColorRect = null
+
 func unselect_imps():
 	for row in rows:
 		row.unselect()
@@ -106,6 +108,12 @@ func _on_confirm_button_pressed():
 	GS.current_army.push_back(current_new_imp)
 	if do_choose_relic and current_new_relic >= 0:
 		GS.accept_relic(current_new_relic)
+	
+	if double_upgrade != null:
+		# Just defer to the other one to do the rest of the work.
+		double_upgrade._on_confirm_button_pressed()
+		return
+		
 	GS.spawn_current_army()
 	GS.flag_in_upgrade_menu = false
 	%DefeatMenu.going = true
