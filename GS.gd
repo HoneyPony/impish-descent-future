@@ -242,8 +242,8 @@ func _process(delta):
 
 var relics = [
 "Essence of Slime
-When your imps would die, they Split instead.
-Split imps randomize their damage and cannot split.",
+When your imps die, summon 3 Ethereal copies of them.
+Your imps can no longer resurrect.",
 
 "Conch Horn
 Every 3rd time you kill an enemy, spawn a random Brawler.",

@@ -20,8 +20,8 @@ offset_top = 5.0
 offset_right = 558.0
 offset_bottom = 78.0
 text = "Essence of Slime
-When your imps would die, they Split instead.
-Split imps randomly do -1 damage and cannot split."
+When your imps die, summon 3 Ethereal copies of them.
+Your imps can no longer resurrect."
 
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(38.5, 41)

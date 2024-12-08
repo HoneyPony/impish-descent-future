@@ -169,7 +169,8 @@ func compute_basic_properties():
 				GS.Item.Scythe:
 					goal = Goals.GOAL_ATTACK_OWN
 					projectile_scene = GS.SplitProjectile
-					action_speed *= 0.5
+					# Split-resurrect is VERY strong. Make these guys act very slowly.
+					action_speed *= 0.25
 				GS.Item.Sword:
 					melee_base_damage = 1
 					# This enemy doesn't get the buff. Yes it does
@@ -694,7 +695,7 @@ func die(killer_projectile):
 	var perma = on_death(killer_projectile)
 	
 	# Ethereal imps can't be resurrected
-	if is_ethereal() or is_split() or perma or GS.relic_attacks_1dmg_no_resurrect:
+	if is_ethereal() or perma or GS.relic_attacks_1dmg_no_resurrect:
 		var explode = GS.PlayerExplode.instantiate()
 		explode.global_position = global_position
 		add_sibling(explode)
