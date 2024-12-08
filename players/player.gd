@@ -399,7 +399,7 @@ func _physics_process(delta):
 			if ranged_attack_is_nova:
 				# Buffs are very vvery good on nova.
 				var damage: int = get_buffed_damage(ranged_base_damage)
-				for i in range(0, 9):
+				for i in range(0, 5):
 					var projectile = projectile_scene.instantiate()
 					projectile.global_position = item.global_position
 					projectile.velocity = Vector2.from_angle(randf_range(0, TAU)) * 512.0
@@ -504,11 +504,11 @@ func _physics_process(delta):
 		# If we're ranged, we want to avoid damage, so back away from nearby enemies
 		# TODO: I guess we want a larger ranged here..?
 		var bodies: Array = melee_range.get_overlapping_bodies()
-		for body in bodies:
-			var to_vec = global_position - body.global_position
-			var IMPULSE = 20000
-			var goal_shift = IMPULSE * to_vec / (to_vec.length_squared() + 512)
-			target_noise_nosmooth += goal_shift
+		#for body in bodies:
+			#var to_vec = global_position - body.global_position
+			#var IMPULSE = 20000
+			#var goal_shift = IMPULSE * to_vec / (to_vec.length_squared() + 512)
+			#target_noise_nosmooth += goal_shift
 			
 		# Ranged characters actually try to attack the enemies
 		if not bodies.is_empty() and goal == Goals.GOAL_RANGED:
