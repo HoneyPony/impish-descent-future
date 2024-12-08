@@ -593,7 +593,8 @@ func on_hit(body):
 			
 
 func split_into_eth():
-	if self.is_ethereal():
+	# Cannot split if already eth or split.
+	if self.is_split(true):
 		return
 		
 	var pos = self.global_position
