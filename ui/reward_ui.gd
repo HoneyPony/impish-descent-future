@@ -18,6 +18,8 @@ var current_new_relic = 0
 var do_choose_relic = false
 
 @export var double_upgrade: ColorRect = null
+@export var double_upgrade_child: ColorRect = null
+var flag_own_hide = false
 
 func unselect_imps():
 	for row in rows:
@@ -71,16 +73,26 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 	
 func _ready():
 	
-	# Make sure we haven't won yet
-	GS.has_won = false
+	# If we're the double upgrader, defer to the other one
+	if double_upgrade == null:
+		# Make sure we haven't won yet
+		GS.has_won = false
 	
-	if GS.flag_retry_this_level:
-		GS.flag_retry_this_level = false
+		if GS.flag_retry_this_level:
+			GS.flag_retry_this_level = false
+			hide()
+			GS.spawn_current_army()
+			%DefeatMenu.going = true
+			if double_upgrade_child != null:
+				double_upgrade_child.hide()
+				double_upgrade_child.flag_own_hide = true
+			return
+		GS.flag_in_upgrade_menu = true
+		
+	if flag_own_hide:
 		hide()
-		GS.spawn_current_army()
-		%DefeatMenu.going = true
 		return
-	GS.flag_in_upgrade_menu = true
+			
 	
 	# This menu begins each level. Note that the camera won't move until enemies
 	# are spawned in, which is perfect.
