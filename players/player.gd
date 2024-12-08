@@ -592,6 +592,13 @@ func on_hit(body):
 			body.projectile_source.other_players_hit += 1
 			
 
+func split_into_eth():
+	if self.is_ethereal():
+		return
+		
+	var pos = self.global_position
+	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, false, true)
+
 func split():
 	if self.is_split(true):
 		return
@@ -621,10 +628,18 @@ func on_death(body) -> bool:
 			return true
 		# In order to ensure that the relic doesn't change the bevhaivor of whether we can resurrect
 		# on split, we add this second part of the condition.
-		elif GS.relic_always_split:
-			split()
-			split()
-			return true
+		#elif GS.relic_always_split:
+			#split()
+			#split()
+			#return true
+			
+	if not is_ethereal() and GS.relic_always_split:
+		# Non-ethereal imps get essenced-of-slime'd.
+		split_into_eth()
+		split_into_eth()
+		split_into_eth()
+		# And we're perma-dead. But, we also checkc this below.
+		return true
 	return false	
 
 func _on_hazard_body_entered(body):
@@ -695,7 +710,7 @@ func die(killer_projectile):
 	var perma = on_death(killer_projectile)
 	
 	# Ethereal imps can't be resurrected
-	if is_ethereal() or perma or GS.relic_attacks_1dmg_no_resurrect:
+	if is_ethereal() or perma or GS.relic_attacks_1dmg_no_resurrect or GS.relic_always_split:
 		var explode = GS.PlayerExplode.instantiate()
 		explode.global_position = global_position
 		add_sibling(explode)
