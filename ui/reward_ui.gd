@@ -101,6 +101,9 @@ func _ready():
 	#relics = true
 		
 	setup_rewards(relics, require_combat)
+	
+	if double_upgrade != null:
+		double_upgrade.get_node("ImpTitle").text = "Choose two Imps to add to your army"
 
 # This is basically the entry point into the gameplay for now.
 func _on_confirm_button_pressed():
