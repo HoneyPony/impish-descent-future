@@ -9,6 +9,7 @@ var regen_timer = 1
 var my_regen_rate = 1
 
 var asleep = true
+var dead = false
 
 var collision_timeouts = {}
 
@@ -106,10 +107,13 @@ func _on_hazard_body_entered(body):
 	collision_timeouts[body] = body.slowness
 	
 	if health <= 0:
-		Sounds.kill_ghost.play_rand()
-		on_death(body)
-		body.killed_target(self)
-		GS.an_enemy_died()
-		queue_free()
+		if not dead:
+			# Only do this stuff the first time we're hit.
+			dead = true
+			Sounds.kill_ghost.play_rand()
+			on_death(body)
+			body.killed_target(self)
+			GS.an_enemy_died()
+			queue_free()
 	else:
 		Sounds.hit_ghost.play_rand()
