@@ -173,7 +173,7 @@ func spawn_current_army():
 	for imp in current_army:
 		spawn_imp(pos.get_parent(), valid_imps[imp], pos.global_position, false, false, false)
 
-func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool, play_sound: bool):
+func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool, play_sound: bool, invuln: bool):
 	var imp = Player.instantiate()
 	parent.add_child(imp)
 	imp.global_position = global_pos
@@ -185,6 +185,8 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: b
 		imp.add_buff(GS.Buff.Split)
 	if ethereal:
 		imp.add_buff(GS.Buff.Ethereal)
+	if invuln:
+		imp.invulnerability = 0.5
 		
 	if relic_spawn_shield:
 		imp.add_buff(GS.Buff.Shield)
@@ -192,8 +194,8 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: b
 	if play_sound:	
 		Sounds.imp_spawn.play_rand()
 
-func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = false, ethereal: bool = false, play_sound: bool = true):
-	call_deferred("finish_spawn_imp", parent, config, global_pos, split, ethereal, play_sound)
+func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = false, ethereal: bool = false, play_sound: bool = true, invuln: bool = false):
+	call_deferred("finish_spawn_imp", parent, config, global_pos, split, ethereal, play_sound, invuln)
 	
 func get_item_tex(item: Item):
 	var tex = null

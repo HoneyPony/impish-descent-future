@@ -597,7 +597,7 @@ func split_into_eth():
 		return
 		
 	var pos = self.global_position
-	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, false, true)
+	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, false, true, true, true)
 
 func split():
 	if self.is_split(true):
