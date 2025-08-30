@@ -3,7 +3,7 @@
 [ext_resource type="ButtonGroup" uid="uid://b5k4vtr4d3gne" path="res://ui/imp_select_group.tres" id="1_crth6"]
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="1_gddnt"]
 [ext_resource type="Texture2D" uid="uid://so31a8iyooat" path="res://players/body0.png" id="2_eas8s"]
-[ext_resource type="Script" path="res://ui/imp_select_row.gd" id="2_sjpuu"]
+[ext_resource type="Script" uid="uid://cnmvw8fegiyh" path="res://ui/imp_select_row.gd" id="2_sjpuu"]
 [ext_resource type="Texture2D" uid="uid://bq4fctqe3aplh" path="res://players/club.png" id="3_f2vnn"]
 
 [node name="ImpSelectRow" type="ColorRect"]

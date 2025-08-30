@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bl4pr73om53qr"]
 
-[ext_resource type="Script" path="res://hazard/player_projectile1.gd" id="1_jvgln"]
+[ext_resource type="Script" uid="uid://3xvypig4k8sq" path="res://hazard/player_projectile1.gd" id="1_jvgln"]
 [ext_resource type="Texture2D" uid="uid://dijkoha64w0hv" path="res://hazard/player_projectile1.png" id="2_q3sjp"]
 [ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="2_q74gu"]
 

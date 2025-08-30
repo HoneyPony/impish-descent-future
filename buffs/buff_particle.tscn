@@ -2,7 +2,7 @@
 
 [ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="1_nijes"]
 [ext_resource type="Texture2D" uid="uid://cr0eb4vumm75o" path="res://buffs/buff_particle.png" id="2_ote5j"]
-[ext_resource type="Script" path="res://temporary_particles.gd" id="3_jfdab"]
+[ext_resource type="Script" uid="uid://cw0xptx38cv0g" path="res://temporary_particles.gd" id="3_jfdab"]
 
 [sub_resource type="Curve" id="Curve_x8n7n"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.84516, 0.0, 0, 0]

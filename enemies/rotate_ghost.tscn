@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cg7yjl75y7x12"]
 
-[ext_resource type="Script" path="res://enemies/rotate_ghost.gd" id="1_00ark"]
+[ext_resource type="Script" uid="uid://dmyvw6bp64cn8" path="res://enemies/rotate_ghost.gd" id="1_00ark"]
 [ext_resource type="Texture2D" uid="uid://bshxlw27xk6pf" path="res://enemies/enemy2.png" id="2_7frud"]
 [ext_resource type="Texture2D" uid="uid://878ab3ne4skx" path="res://enemies/enemy2_eyes.png" id="3_cwcr1"]
 [ext_resource type="PackedScene" uid="uid://c28o3vm70ky5b" path="res://health/health.tscn" id="3_u7fig"]

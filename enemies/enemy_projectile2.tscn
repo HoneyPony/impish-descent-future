@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cqi40qv1ffeuu"]
 
-[ext_resource type="Script" path="res://enemies/enemy_projectile_rotating.gd" id="1_t1cal"]
+[ext_resource type="Script" uid="uid://cj8nyqxww1vrw" path="res://enemies/enemy_projectile_rotating.gd" id="1_t1cal"]
 [ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="2_yfmsg"]
 [ext_resource type="Texture2D" uid="uid://76jhxxxxp87n" path="res://enemies/enemy_projectile2.png" id="3_bsna5"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfc8ruw1t8dcu"]
 
-[ext_resource type="Script" path="res://buffs/buff_projectile.gd" id="1_srmc8"]
+[ext_resource type="Script" uid="uid://b308m1hdsy1pj" path="res://buffs/buff_projectile.gd" id="1_srmc8"]
 [ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="2_gnd4u"]
 [ext_resource type="Texture2D" uid="uid://dijkoha64w0hv" path="res://hazard/player_projectile1.png" id="2_os0vr"]
 

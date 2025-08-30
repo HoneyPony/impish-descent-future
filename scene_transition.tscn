@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dngbiqshnqewd"]
 
-[ext_resource type="Script" path="res://scene_transition.gd" id="1_1o34w"]
-[ext_resource type="Shader" path="res://ui/transition.gdshader" id="1_dokxo"]
+[ext_resource type="Script" uid="uid://bfblky1uqfjvc" path="res://scene_transition.gd" id="1_1o34w"]
+[ext_resource type="Shader" uid="uid://wj2nfbip13ej" path="res://ui/transition.gdshader" id="1_dokxo"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_g4gjh"]
 frequency = 0.0331
@@ -16,8 +16,8 @@ noise = SubResource("FastNoiseLite_g4gjh")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m7la0"]
 shader = ExtResource("1_dokxo")
 shader_parameter/t = -10.0
-shader_parameter/flip = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_4y08x")
+shader_parameter/flip = 1.0
 
 [sub_resource type="Animation" id="Animation_ti05q"]
 resource_name = "FadeIn"
@@ -130,9 +130,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_q5jpa"]
 _data = {
-"FadeIn": SubResource("Animation_ti05q"),
-"FadeOut": SubResource("Animation_w3iwd"),
-"RESET": SubResource("Animation_s1j52")
+&"FadeIn": SubResource("Animation_ti05q"),
+&"FadeOut": SubResource("Animation_w3iwd"),
+&"RESET": SubResource("Animation_s1j52")
 }
 
 [node name="SceneTransition" type="CanvasLayer"]

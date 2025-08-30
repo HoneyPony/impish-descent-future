@@ -1,10 +1,10 @@
 [gd_scene load_steps=17 format=3 uid="uid://djminn0neh2kc"]
 
-[ext_resource type="Script" path="res://sounds.gd" id="1_8eu58"]
+[ext_resource type="Script" uid="uid://csbibmc0mq1yj" path="res://sounds.gd" id="1_8eu58"]
 [ext_resource type="AudioStream" uid="uid://nxgqc7nkp8oo" path="res://sounds/menu_music.ogg" id="2_ess2a"]
 [ext_resource type="AudioStream" uid="uid://85apnld1asmc" path="res://sounds/game_music.ogg" id="3_piuys"]
 [ext_resource type="AudioStream" uid="uid://0kuh4qfwwdp7" path="res://sounds/imp_act.wav" id="4_jrno4"]
-[ext_resource type="Script" path="res://sfx_rand.gd" id="5_i5see"]
+[ext_resource type="Script" uid="uid://c7dl6moxnr6n8" path="res://sfx_rand.gd" id="5_i5see"]
 [ext_resource type="AudioStream" uid="uid://dfgkemmotbd0n" path="res://sounds/ghost_hit.wav" id="6_kfwq1"]
 [ext_resource type="AudioStream" uid="uid://bwt0k3rsgp385" path="res://sounds/imp_act_crunchy.wav" id="6_xe87s"]
 [ext_resource type="AudioStream" uid="uid://bpdxbwa3pfgm" path="res://sounds/ghost_kill.wav" id="7_i2vjd"]

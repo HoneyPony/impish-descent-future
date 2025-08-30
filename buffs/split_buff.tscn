@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://fl28nh08smls"]
 
-[ext_resource type="Script" path="res://buffs/split_buff.gd" id="1_sio8h"]
+[ext_resource type="Script" uid="uid://3w2mbrmcmp0w" path="res://buffs/split_buff.gd" id="1_sio8h"]
 [ext_resource type="Texture2D" uid="uid://nb81vx2gdnis" path="res://players/buff_split.png" id="2_bu3vk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qerqv"]

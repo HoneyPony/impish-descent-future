@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://elnke01qqw1d"]
 
 [ext_resource type="Texture2D" uid="uid://cle2wu5o5rctb" path="res://buffs/ghost_explode.png" id="1_ac5pb"]
-[ext_resource type="Script" path="res://temporary_particles.gd" id="3_0txy2"]
+[ext_resource type="Script" uid="uid://cw0xptx38cv0g" path="res://temporary_particles.gd" id="3_0txy2"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_oh5y7"]
 blend_mode = 1

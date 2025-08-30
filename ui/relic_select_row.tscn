@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bsyfpp8d5s708"]
 
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="1_jgw28"]
-[ext_resource type="Script" path="res://ui/relic_select_row.gd" id="2_0oprs"]
+[ext_resource type="Script" uid="uid://csbordnjwk72b" path="res://ui/relic_select_row.gd" id="2_0oprs"]
 [ext_resource type="ButtonGroup" uid="uid://lq50bv1gopsh" path="res://ui/button_select_group.tres" id="3_stasi"]
 [ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="4_vlf31"]
 

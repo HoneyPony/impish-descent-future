@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bp3ojbyx4exs5"]
 
-[ext_resource type="Script" path="res://enemies/enemy_projectile_animated.gd" id="1_lw1gm"]
+[ext_resource type="Script" uid="uid://dxj4stk8xg0au" path="res://enemies/enemy_projectile_animated.gd" id="1_lw1gm"]
 [ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="2_ru7eh"]
 [ext_resource type="Texture2D" uid="uid://dgria8gxiwta8" path="res://enemies/enemy_projectile1.png" id="2_skhln"]
 
@@ -78,8 +78,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lnosb"]
 _data = {
-"RESET": SubResource("Animation_t0c52"),
-"Spawn": SubResource("Animation_7ple2")
+&"RESET": SubResource("Animation_t0c52"),
+&"Spawn": SubResource("Animation_7ple2")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g7pqy"]

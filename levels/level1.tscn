@@ -2,12 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://b7h6g17gdadaw" path="res://level_base.tscn" id="1_67r6w"]
 [ext_resource type="PackedScene" uid="uid://bwbn040oj10n2" path="res://decoration/torch.tscn" id="2_a0v2d"]
-[ext_resource type="Script" path="res://ui/reward_ui.gd" id="2_y2w5b"]
+[ext_resource type="Script" uid="uid://yr0b2ntqtqs3" path="res://ui/reward_ui.gd" id="2_y2w5b"]
 [ext_resource type="PackedScene" uid="uid://dv7eaeqintp14" path="res://ui/imp_select_row.tscn" id="3_ccud7"]
 [ext_resource type="PackedScene" uid="uid://rl585tjhmod7" path="res://enemies/simple_ghost.tscn" id="3_hv7g1"]
 [ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="4_5cnak"]
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="5_yfsgk"]
-[ext_resource type="Script" path="res://ui/relic_select_row.gd" id="6_q27w3"]
+[ext_resource type="Script" uid="uid://csbordnjwk72b" path="res://ui/relic_select_row.gd" id="6_q27w3"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_fv3oe"]
 
