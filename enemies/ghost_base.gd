@@ -94,6 +94,9 @@ func do_explode():
 
 func on_death(body):
 	pass
+	
+func on_hit(body):
+	pass
 
 func _on_hazard_body_entered(body):
 	if collision_timeouts.get(body, -1.0) > 0.0:
@@ -102,6 +105,7 @@ func _on_hazard_body_entered(body):
 	# Call hit_target() first in case the damage gets buffed.
 	body.hit_target(self)
 	health -= body.damage
+	on_hit(body)
 	
 	# Time out collision
 	collision_timeouts[body] = body.slowness

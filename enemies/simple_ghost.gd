@@ -8,6 +8,10 @@ func _ready():
 	init_ghost_base()
 	health = max_health
 	fire_timer = randf_range(0, 2.3)
+	
+func on_hit(body):
+	%AnimationPlayer.stop()
+	%AnimationPlayer.play("hit")
 
 func handle_simple_projectile(delta):
 	#if current_projectile != null:
