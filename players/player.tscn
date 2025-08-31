@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://feyduuodmg3a"]
+[gd_scene load_steps=16 format=3 uid="uid://feyduuodmg3a"]
 
 [ext_resource type="Script" uid="uid://cdgoe17p3e6bv" path="res://players/player.gd" id="1_w5dbm"]
 [ext_resource type="Script" uid="uid://dkgls3jhr2vih" path="res://hazard/player_melee_hazard.gd" id="2_ot2ip"]
-[ext_resource type="Texture2D" uid="uid://bmyr52b8dwvrw" path="res://players/staff.png" id="3_gmg4u"]
-[ext_resource type="Texture2D" uid="uid://b4rijupf75hec" path="res://players/body2.png" id="4_pg1ny"]
+[ext_resource type="Texture2D" uid="uid://bg4756tpljutm" path="res://players/imp-hand-bot.png" id="3_l1fvc"]
+[ext_resource type="Texture2D" uid="uid://dlefoohwcy7vf" path="res://players/sword.png" id="4_5illy"]
+[ext_resource type="Texture2D" uid="uid://bbfvhrjeioqfj" path="res://players/imp-new.png" id="4_g8xtg"]
+[ext_resource type="Texture2D" uid="uid://fjy2iqwuprvx" path="res://players/imp-hand-top.png" id="5_0yn0j"]
 [ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="5_x2dhf"]
 
 [sub_resource type="Animation" id="Animation_h8hu0"]
@@ -67,31 +69,44 @@ script = ExtResource("1_w5dbm")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_to8dl")
+&"": SubResource("AnimationLibrary_to8dl")
 }
 autoplay = "Bob"
 speed_scale = 5.0
 
 [node name="Item" type="AnimatableBody2D" parent="."]
-position = Vector2(39, -2)
+position = Vector2(17, -24)
 collision_layer = 16
 collision_mask = 0
 sync_to_physics = false
 script = ExtResource("2_ot2ip")
 
+[node name="Sprite2D" type="Sprite2D" parent="Item"]
+z_index = 5
+position = Vector2(-8.28975, -23.5795)
+scale = Vector2(0.239924, 0.239924)
+texture = ExtResource("3_l1fvc")
+
 [node name="Look" type="Sprite2D" parent="Item"]
 z_index = 5
 y_sort_enabled = true
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_gmg4u")
+texture = ExtResource("4_5illy")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Item"]
+z_index = 5
+position = Vector2(-8.28975, -23.5795)
+scale = Vector2(0.239924, 0.239924)
+texture = ExtResource("5_0yn0j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Item"]
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_cigoc")
 
 [node name="Body" type="Sprite2D" parent="."]
+z_index = 5
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("4_pg1ny")
+texture = ExtResource("4_g8xtg")
 centered = false
 offset = Vector2(-128, -384)
 
@@ -100,7 +115,7 @@ rotation = -1.57079
 shape = SubResource("CapsuleShape2D_u0yco")
 
 [node name="ItemRest" type="Node2D" parent="."]
-position = Vector2(39, 0)
+position = Vector2(17, -24)
 
 [node name="EnemyRange" type="Area2D" parent="."]
 collision_layer = 0

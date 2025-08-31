@@ -107,7 +107,7 @@ func set_item(item: GS.Item):
 	current_item = item
 	
 func set_class(klass: GS.Class):
-	body_sprite.texture = GS.get_body_tex(klass)
+	# body_sprite.texture = GS.get_body_tex(klass)
 	current_class = klass
 
 # general buff to melee speed
