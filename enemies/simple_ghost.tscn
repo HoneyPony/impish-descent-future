@@ -1,12 +1,43 @@
-[gd_scene load_steps=7 format=3 uid="uid://rl585tjhmod7"]
+[gd_scene load_steps=10 format=3 uid="uid://rl585tjhmod7"]
 
 [ext_resource type="Texture2D" uid="uid://ws5gduar7c47" path="res://enemies/enemy1.png" id="1_4xqsb"]
 [ext_resource type="Script" uid="uid://ysaxhowl7k7j" path="res://enemies/simple_ghost.gd" id="1_n6c1y"]
 [ext_resource type="PackedScene" uid="uid://c28o3vm70ky5b" path="res://health/health.tscn" id="3_kq0l4"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ol7kp"]
-blend_mode = 1
-light_mode = 1
+[sub_resource type="Shader" id="Shader_q0ajj"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.4.1.stable's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_add,unshaded;
+
+uniform sampler2D noise;
+
+void fragment() {
+	vec2 uv = UV;
+	float uv_wiggle_scale = 0.3 + sin(TIME) * 0.05;
+	vec2 n_uv = UV * uv_wiggle_scale + vec2(TIME * 0.03, TIME * 0.05);
+	n_uv = mod(n_uv, vec2(1.0));
+	vec2 n = textureLod(noise, n_uv, 0.0).xy;
+	uv += (n - 0.5) * 0.2;
+	COLOR = texture(TEXTURE, uv);
+
+	//COLOR.rgb = vec3(n.x);
+	//COLOR.a = 1.0;
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q0ajj"]
+frequency = 0.0218
+fractal_lacunarity = 0.98
+fractal_gain = 2.745
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q0ajj"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_q0ajj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v5knm"]
+shader = SubResource("Shader_q0ajj")
+shader_parameter/noise = SubResource("NoiseTexture2D_q0ajj")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m148u"]
 radius = 8.0
@@ -22,7 +53,8 @@ script = ExtResource("1_n6c1y")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.788235)
 y_sort_enabled = true
-material = SubResource("CanvasItemMaterial_ol7kp")
+texture_repeat = 2
+material = SubResource("ShaderMaterial_v5knm")
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_4xqsb")
 offset = Vector2(0, -256)
