@@ -23,6 +23,7 @@ color = Color(0.385492, 0.385493, 0.385492, 1)
 
 [node name="GameCamera" type="Camera2D" parent="."]
 unique_name_in_owner = true
+zoom = Vector2(0.8, 0.8)
 script = ExtResource("1_qvjw2")
 
 [node name="Floors" type="TileMapLayer" parent="."]
