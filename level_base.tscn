@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=16 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="Script" uid="uid://77reaige6ecr" path="res://camera.gd" id="1_qvjw2"]
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="2_f1kks"]
+[ext_resource type="Texture2D" uid="uid://d27e0qp8r3gre" path="res://decoration/simple_point_light.png" id="2_pvn8g"]
 [ext_resource type="TileSet" uid="uid://d3qyn64c7iut5" path="res://tileset.tres" id="3_d6f8o"]
 [ext_resource type="Script" uid="uid://bgf8itwj57v1g" path="res://tiles/create_navigation.gd" id="4_3fmo5"]
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="6_jm28w"]
@@ -20,12 +21,19 @@
 y_sort_enabled = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.385492, 0.385493, 0.385492, 1)
+color = Color(0.384, 0.384, 0.384, 1)
 
 [node name="GameCamera" type="Camera2D" parent="."]
 unique_name_in_owner = true
 zoom = Vector2(0.8, 0.8)
 script = ExtResource("1_qvjw2")
+
+[node name="player_light" type="PointLight2D" parent="GameCamera"]
+visible = false
+y_sort_enabled = true
+scale = Vector2(1.32978, 0.798629)
+energy = 0.3
+texture = ExtResource("2_pvn8g")
 
 [node name="Floors" type="TileMapLayer" parent="."]
 z_index = -1024

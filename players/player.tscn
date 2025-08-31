@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://feyduuodmg3a"]
+[gd_scene load_steps=14 format=3 uid="uid://feyduuodmg3a"]
 
 [ext_resource type="Script" uid="uid://cdgoe17p3e6bv" path="res://players/player.gd" id="1_w5dbm"]
 [ext_resource type="Script" uid="uid://dkgls3jhr2vih" path="res://hazard/player_melee_hazard.gd" id="2_ot2ip"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://fjy2iqwuprvx" path="res://players/imp-hand-top.png" id="5_0yn0j"]
 [ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="5_x2dhf"]
 [ext_resource type="PackedScene" uid="uid://d068px3eu3we3" path="res://players/player_anim.tscn" id="6_l1fvc"]
+[ext_resource type="Texture2D" uid="uid://d27e0qp8r3gre" path="res://decoration/simple_point_light.png" id="8_5illy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cigoc"]
 size = Vector2(18, 46)
@@ -68,6 +69,7 @@ shape = SubResource("CapsuleShape2D_u0yco")
 position = Vector2(17, -54)
 
 [node name="EnemyRange" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, -30)
 collision_layer = 0
 collision_mask = 4
@@ -105,6 +107,13 @@ scale = Vector2(0.188, 0.188)
 material = ExtResource("5_x2dhf")
 position = Vector2(28, 10)
 scale = Vector2(0.188, 0.188)
+
+[node name="player_light" type="PointLight2D" parent="."]
+visible = false
+y_sort_enabled = true
+position = Vector2(1, -55)
+energy = 0.2
+texture = ExtResource("8_5illy")
 
 [connection signal="body_entered" from="Hazard" to="." method="_on_hazard_body_entered"]
 [connection signal="body_entered" from="Buff" to="." method="_on_buff_body_entered"]
