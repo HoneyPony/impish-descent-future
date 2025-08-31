@@ -17,6 +17,7 @@
 [sub_resource type="ButtonGroup" id="ButtonGroup_mprjm"]
 
 [node name="Level" type="Node2D"]
+y_sort_enabled = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.385492, 0.385493, 0.385492, 1)

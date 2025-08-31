@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://feyduuodmg3a"]
+[gd_scene load_steps=13 format=3 uid="uid://feyduuodmg3a"]
 
 [ext_resource type="Script" uid="uid://cdgoe17p3e6bv" path="res://players/player.gd" id="1_w5dbm"]
 [ext_resource type="Script" uid="uid://dkgls3jhr2vih" path="res://hazard/player_melee_hazard.gd" id="2_ot2ip"]
@@ -7,43 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://fjy2iqwuprvx" path="res://players/imp-hand-top.png" id="5_0yn0j"]
 [ext_resource type="Material" uid="uid://b6cjs6hb2imyq" path="res://projectile_unshaded_material.tres" id="5_x2dhf"]
 [ext_resource type="PackedScene" uid="uid://d068px3eu3we3" path="res://players/player_anim.tscn" id="6_l1fvc"]
-
-[sub_resource type="Animation" id="Animation_h8hu0"]
-resource_name = "Bob"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerAnim:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.75, 1.33333),
-"update": 0,
-"values": [Vector2(0, 32), Vector2(0, 32)]
-}
-
-[sub_resource type="Animation" id="Animation_cwyuw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerAnim:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_to8dl"]
-_data = {
-&"Bob": SubResource("Animation_h8hu0"),
-&"RESET": SubResource("Animation_cwyuw")
-}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cigoc"]
 size = Vector2(18, 46)
@@ -67,34 +30,23 @@ y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_w5dbm")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_to8dl")
-}
-autoplay = "Bob"
-speed_scale = 5.0
-
 [node name="Item" type="AnimatableBody2D" parent="."]
-position = Vector2(17, -24)
+position = Vector2(17, -54)
 collision_layer = 16
 collision_mask = 0
 sync_to_physics = false
 script = ExtResource("2_ot2ip")
 
 [node name="Sprite2D" type="Sprite2D" parent="Item"]
-z_index = 5
 position = Vector2(-8.28975, -23.5795)
 scale = Vector2(0.239924, 0.239924)
 texture = ExtResource("3_l1fvc")
 
 [node name="Look" type="Sprite2D" parent="Item"]
-z_index = 5
-y_sort_enabled = true
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("4_5illy")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Item"]
-z_index = 5
 position = Vector2(-8.28975, -23.5795)
 scale = Vector2(0.239924, 0.239924)
 texture = ExtResource("5_0yn0j")
@@ -108,13 +60,15 @@ unique_name_in_owner = true
 scale = Vector2(0.25, 0.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -30)
 rotation = -1.57079
 shape = SubResource("CapsuleShape2D_u0yco")
 
 [node name="ItemRest" type="Node2D" parent="."]
-position = Vector2(17, -24)
+position = Vector2(17, -54)
 
 [node name="EnemyRange" type="Area2D" parent="."]
+position = Vector2(0, -30)
 collision_layer = 0
 collision_mask = 4
 
@@ -122,6 +76,7 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_kpg5o")
 
 [node name="Hazard" type="Area2D" parent="."]
+position = Vector2(0, -30)
 collision_layer = 0
 collision_mask = 8
 
@@ -129,6 +84,7 @@ collision_mask = 8
 shape = SubResource("CircleShape2D_woakh")
 
 [node name="Buff" type="Area2D" parent="."]
+position = Vector2(0, -30)
 collision_layer = 0
 collision_mask = 32
 
@@ -137,17 +93,17 @@ shape = SubResource("CircleShape2D_g6wt4")
 
 [node name="Buff0" type="Sprite2D" parent="."]
 material = ExtResource("5_x2dhf")
-position = Vector2(-25, 41)
+position = Vector2(-25, 11)
 scale = Vector2(0.188, 0.188)
 
 [node name="Buff1" type="Sprite2D" parent="."]
 material = ExtResource("5_x2dhf")
-position = Vector2(1, 46)
+position = Vector2(1, 16)
 scale = Vector2(0.188, 0.188)
 
 [node name="Buff2" type="Sprite2D" parent="."]
 material = ExtResource("5_x2dhf")
-position = Vector2(28, 40)
+position = Vector2(28, 10)
 scale = Vector2(0.188, 0.188)
 
 [connection signal="body_entered" from="Hazard" to="." method="_on_hazard_body_entered"]

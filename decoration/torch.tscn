@@ -27,6 +27,7 @@ animations = [{
 }]
 
 [node name="torch" type="PointLight2D"]
+y_sort_enabled = true
 color = Color(1, 0.883333, 0.72, 1)
 energy = 0.38
 texture = ExtResource("1_nrcs1")
