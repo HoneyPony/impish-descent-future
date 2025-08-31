@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cy7h3fabcfink" path="res://players/red/head.png" id="5_hnwh0"]
 
 [sub_resource type="SkeletonModification2DTwoBoneIK" id="SkeletonModification2DTwoBoneIK_hnwh0"]
+resource_local_to_scene = true
 target_nodepath = NodePath("ik_l")
 flip_bend_direction = true
 joint_one_bone_idx = 3
@@ -15,6 +16,7 @@ joint_two_bone_idx = 4
 joint_two_bone2d_node = NodePath("root/hipl/kneel")
 
 [sub_resource type="SkeletonModification2DTwoBoneIK" id="SkeletonModification2DTwoBoneIK_p40c8"]
+resource_local_to_scene = true
 target_nodepath = NodePath("ik_r")
 flip_bend_direction = true
 joint_one_bone_idx = 6
@@ -23,6 +25,7 @@ joint_two_bone_idx = 7
 joint_two_bone2d_node = NodePath("root/hipr/knee_r")
 
 [sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_hnwh0"]
+resource_local_to_scene = true
 enabled = true
 modification_count = 3
 modifications/0 = SubResource("SkeletonModification2DTwoBoneIK_hnwh0")
