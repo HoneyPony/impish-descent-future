@@ -3,13 +3,14 @@ class_name Player
 
 @onready var item = $Item
 @onready var item_rest = $ItemRest
-@onready var body_sprite = $Body
 
 @onready var melee_range = $EnemyRange
 
 @onready var item_tex = $Item/Look
 
 @onready var melee_collision_shape = $Item/CollisionShape2D
+
+@onready var player_anim: PlayerAnimation = %PlayerAnim
 
 @export var melee_attack_range = 150
 #@export var melee_cooldown = 0.3
@@ -300,6 +301,8 @@ func fire_generic_action():
 				var player = dead.pick_random()
 				player.resurrect()
 
+const MAX_VEL = 512
+
 func _physics_process(delta):
 	if GS.has_won:
 		return
@@ -329,8 +332,8 @@ func _physics_process(delta):
 		#item.sync_to_physics = true
 	
 	
-	if abs(velocity.x) > 128 and sign(velocity.x) != sign(body_sprite.scale.x):
-		body_sprite.scale.x *= -1
+	if abs(velocity.x) > 128 and sign(velocity.x) != sign(player_anim.scale.x):
+		player_anim.scale.x *= -1
 		# Uncomment to have the items flip when stuff...
 		# I guess for now we'll just leave ItemRest not under Body??
 		#item.global_position.x = item_rest.global_position.x
@@ -529,7 +532,7 @@ func _physics_process(delta):
 	
 	move_target = GS.get_nav_move_target(global_position, move_target)
 	var vel = (move_target - global_position) * 5.0
-	var target_vel = vel.limit_length(512)
+	var target_vel = vel.limit_length(MAX_VEL)
 	
 	velocity += (target_vel - velocity) * 0.5
 	
@@ -577,12 +580,14 @@ func _physics_process(delta):
 			ranged_attack(target_player)
 
 	move_and_slide()
+	player_anim.update_tree(get_real_velocity().length() / MAX_VEL)
 	
 	#if goal == Goals.GOAL_ATTACK_OWN:
 		#if other_players_hit >= 5:
 			#on_death(null)
 			#queue_free()
 		
+
 
 func on_hit(body):
 	
@@ -732,7 +737,7 @@ func die(killer_projectile):
 	
 	# Hide our item when we die
 	$Item/Look.hide()
-	$Body.modulate = Color(0.5, 0.5, 0.5)
+	player_anim.modulate = Color(0.5, 0.5, 0.5)
 	# We will stop doing stuff till we're resurrected
 	is_dead = true
 	# TODO Show a "dead" sprite

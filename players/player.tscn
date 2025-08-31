@@ -14,7 +14,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Body:position")
+tracks/0/path = NodePath("PlayerAnim:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -29,7 +29,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Body:position")
+tracks/0/path = NodePath("PlayerAnim:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -103,7 +103,8 @@ texture = ExtResource("5_0yn0j")
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_cigoc")
 
-[node name="Body" parent="." instance=ExtResource("6_l1fvc")]
+[node name="PlayerAnim" parent="." instance=ExtResource("6_l1fvc")]
+unique_name_in_owner = true
 scale = Vector2(0.25, 0.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

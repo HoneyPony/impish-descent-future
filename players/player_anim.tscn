@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://d068px3eu3we3"]
+[gd_scene load_steps=19 format=3 uid="uid://d068px3eu3we3"]
 
 [ext_resource type="Texture2D" uid="uid://bbfvhrjeioqfj" path="res://players/imp-new.png" id="1_fsvyr"]
+[ext_resource type="Script" uid="uid://uxnx18rts4ln" path="res://players/player_anim.gd" id="1_p40c8"]
 [ext_resource type="Texture2D" uid="uid://cd4vah3nxiw7f" path="res://players/red/lleg.png" id="2_vxdfl"]
 [ext_resource type="Texture2D" uid="uid://erbivihveymh" path="res://players/red/rleg.png" id="3_7pcy7"]
 [ext_resource type="Texture2D" uid="uid://da3lgcyu0ciub" path="res://players/red/body-f.png" id="4_gdfwm"]
@@ -315,7 +316,30 @@ _data = {
 &"walk": SubResource("Animation_ddne5")
 }
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hnwh0"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p40c8"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_ddne5"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_udhlv"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_hnwh0"]
+graph_offset = Vector2(-575, 84)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_p40c8")
+nodes/Animation/position = Vector2(-160, 200)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_hnwh0")
+"nodes/Animation 2/position" = Vector2(-340, 460)
+nodes/walk_blend/node = SubResource("AnimationNodeBlend2_ddne5")
+nodes/walk_blend/position = Vector2(160, 331)
+nodes/walk_speed/node = SubResource("AnimationNodeTimeScale_udhlv")
+nodes/walk_speed/position = Vector2(-60, 500)
+node_connections = [&"output", 0, &"walk_blend", &"walk_blend", 0, &"Animation", &"walk_blend", 1, &"walk_speed", &"walk_speed", 0, &"Animation 2"]
+
+[node name="PlayerAnim" type="Node2D"]
+script = ExtResource("1_p40c8")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -361,19 +385,19 @@ modification_stack = SubResource("SkeletonModificationStack2D_hnwh0")
 [node name="root" type="Bone2D" parent="Node2D/Skeleton2D"]
 position = Vector2(-15, -100)
 rotation = -1.62684
-scale = Vector2(0.999984, 0.999984)
+scale = Vector2(0.999862, 0.999862)
 rest = Transform2D(2.22127e-06, -1, 1, 2.22127e-06, -12, -100)
 
 [node name="chest" type="Bone2D" parent="Node2D/Skeleton2D/root"]
 position = Vector2(40, -8.88744e-05)
 rotation = 1.51629
-scale = Vector2(0.999986, 0.999986)
+scale = Vector2(0.999823, 0.999823)
 rest = Transform2D(-0.0165629, 0.999863, -0.999863, -0.0165629, 40, -8.88744e-05)
 
 [node name="head" type="Bone2D" parent="Node2D/Skeleton2D/root/chest"]
 position = Vector2(-16.7929, -47.7284)
 rotation = -1.51252
-scale = Vector2(0.999984, 0.999984)
+scale = Vector2(0.999857, 0.999857)
 rest = Transform2D(0.058242, -0.998303, 0.998303, 0.058242, -16.7929, -47.7284)
 auto_calculate_length_and_angle = false
 length = 29.06
@@ -421,18 +445,25 @@ bone_angle = 119.489
 [node name="ik_l" type="Bone2D" parent="Node2D/Skeleton2D"]
 position = Vector2(-29, -32)
 rotation = 0.183964
-scale = Vector2(0.999988, 0.999988)
+scale = Vector2(0.999879, 0.999879)
 rest = Transform2D(1, 0, 0, 1, -29, -32)
 
 [node name="ik_r" type="Bone2D" parent="Node2D/Skeleton2D"]
 position = Vector2(5, -32)
 rotation = -0.21276
-scale = Vector2(0.999989, 0.999989)
+scale = Vector2(0.999887, 0.999887)
 rest = Transform2D(1, 0, 0, 1, 5, -32)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_ddne5")
 }
-autoplay = "walk"
-speed_scale = 4.0
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+unique_name_in_owner = true
+root_node = NodePath("%AnimationTree/..")
+tree_root = SubResource("AnimationNodeBlendTree_hnwh0")
+anim_player = NodePath("../AnimationPlayer")
+parameters/walk_blend/blend_amount = 1.0
+parameters/walk_speed/scale = 4.0
