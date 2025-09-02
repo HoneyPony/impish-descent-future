@@ -10,8 +10,9 @@ func _ready():
 	fire_timer = randf_range(0, 2.3)
 	
 func on_hit(body):
-	%AnimationPlayer.stop()
-	%AnimationPlayer.play("hit")
+	if %AnimationPlayer:
+		%AnimationPlayer.stop()
+		%AnimationPlayer.play("hit")
 
 func handle_simple_projectile(delta):
 	#if current_projectile != null:

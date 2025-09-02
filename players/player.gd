@@ -697,7 +697,7 @@ func resurrect():
 	
 	# Undo other changes
 	$Item/Look.show()
-	$Body.modulate = Color(1, 1, 1)
+	player_anim.modulate = Color(1, 1, 1)
 	# Back to life
 	is_dead = false
 	
