@@ -3,6 +3,12 @@ class_name PlayerAnimation
 
 @onready var tree: AnimationTree = %AnimationTree
 
+func fill_textures(base_path: String) -> void:
+	%head.texture = load(base_path + "/head.png")
+	%body.texture = load(base_path + "/body-m.png")
+	%lleg.texture = load(base_path + "/lleg.png")
+	%rleg.texture = load(base_path + "/rleg.png")
+
 func update_tree(player_speed_fac: float) -> void:
 	player_speed_fac = clamp(player_speed_fac, 0.0, 1.0)
 	var speed := 4.0 * player_speed_fac

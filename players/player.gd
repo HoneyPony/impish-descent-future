@@ -114,6 +114,7 @@ func set_item(item: GS.Item):
 	current_item = item
 	
 func set_class(klass: GS.Class):
+	player_anim.fill_textures(GS.get_body_tex_path(klass))
 	# body_sprite.texture = GS.get_body_tex(klass)
 	current_class = klass
 

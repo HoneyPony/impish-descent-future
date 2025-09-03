@@ -217,6 +217,16 @@ func get_item_tex(item: Item):
 			print("Oops, we don't support that item yet")
 	return tex
 	
+func get_body_tex_path(klass: Class) -> String:
+	match klass:
+		GS.Class.Brawler:
+			return "res://players/red"
+		GS.Class.Mage:
+			return "res://players/green"
+		_:
+			print("oops, we don't have specific textures yet.")
+			return "res://players/red"
+	
 func get_body_tex(klass: Class):
 	var tex = null
 	match klass:

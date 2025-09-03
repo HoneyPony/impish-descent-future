@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://erbivihveymh"
-path="res://.godot/imported/lleg.png-182e0060432ad2a882685f3c1fa88f49.ctex"
+uid="uid://dr5rh11vr8dyo"
+path="res://.godot/imported/head.png-fcfc9962283a91559561ffdf8f3b0a61.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/red/lleg.png"
-dest_files=["res://.godot/imported/lleg.png-182e0060432ad2a882685f3c1fa88f49.ctex"]
+source_file="res://players/green/head.png"
+dest_files=["res://.godot/imported/head.png-fcfc9962283a91559561ffdf8f3b0a61.ctex"]
 
 [params]
 
