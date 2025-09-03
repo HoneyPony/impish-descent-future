@@ -129,6 +129,5 @@ func _on_confirm_button_pressed():
 		double_upgrade._on_confirm_button_pressed()
 		return
 		
-	GS.spawn_current_army()
 	GS.flag_in_upgrade_menu = false
-	%DefeatMenu.going = true
+	%FormationMenu.show_menu()

@@ -9,6 +9,7 @@ var has_won = false
 
 var flag_retry_this_level = false
 var flag_in_upgrade_menu = false
+var flag_in_formation_menu = false
 
 var current_level = 0
 

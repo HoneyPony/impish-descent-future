@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=17 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="Script" uid="uid://77reaige6ecr" path="res://camera.gd" id="1_qvjw2"]
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="2_f1kks"]
@@ -11,8 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="8_k35jv"]
 [ext_resource type="Script" uid="uid://csbordnjwk72b" path="res://ui/relic_select_row.gd" id="9_p0a2q"]
 [ext_resource type="Script" uid="uid://dyt83d0a52416" path="res://ui/defeat_menu.gd" id="10_reeg6"]
+[ext_resource type="Script" uid="uid://bj7vvgyka0aft" path="res://ui/formation_menu.gd" id="10_t5hyg"]
 [ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="12_w2t3q"]
 [ext_resource type="Script" uid="uid://cejur8ehkbc8c" path="res://relic_icon.gd" id="13_50h4x"]
+[ext_resource type="Script" uid="uid://dsl5sdm752l86" path="res://players/imp_formation.gd" id="14_pvn8g"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_mprjm"]
 
@@ -51,6 +53,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("6_jm28w")
 
 [node name="UpgradeMenu" type="ColorRect" parent="UpgradeMenu/Control"]
@@ -225,6 +228,45 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Confirm"
 
+[node name="FormationMenu" type="Control" parent="UpgradeMenu/Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("10_t5hyg")
+
+[node name="Label" type="Label" parent="UpgradeMenu/Control/FormationMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -88.0
+offset_top = 12.0
+offset_right = 88.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "Set Up Your Formation"
+
+[node name="ConfirmButton" type="Button" parent="UpgradeMenu/Control/FormationMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -55.0
+offset_right = 52.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Confirm"
+
 [node name="SuccessMenu" type="ColorRect" parent="UpgradeMenu/Control"]
 unique_name_in_owner = true
 visible = false
@@ -386,6 +428,9 @@ index = 2
 
 [node name="ImpStartPos" type="Marker2D" parent="." groups=["ImpStartPos"]]
 position = Vector2(2, 124)
+
+[node name="ImpFormation" type="Node2D" parent="ImpStartPos" groups=["ImpFormation"]]
+script = ExtResource("14_pvn8g")
 
 [connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu/ConfirmButton" to="UpgradeMenu/Control/UpgradeMenu" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu/Relics/ConfirmButton2" to="UpgradeMenu/Control/UpgradeMenu" method="_on_confirm_button_pressed"]

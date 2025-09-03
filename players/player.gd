@@ -16,6 +16,10 @@ class_name Player
 #@export var melee_cooldown = 0.3
 @export var action_cooldown = 0.3
 
+var formation: ImpFormation = null
+
+var formation_position: Vector2 = Vector2.ZERO
+
 # NOTE: Only set this to positive if you've actually added an ethereal buff.
 var ethereal_lifetime = -1.0
 
@@ -37,6 +41,8 @@ var ranged_base_damage = 1
 var other_players_hit = 0
 
 var action_speed = 1.0
+# This should never be slower than action speed, but it should often be faster.
+var melee_speed = 1.0
 
 var ranged_attack_target: Node2D = null
 var ranged_attack_target_cached: Vector2 = Vector2.ZERO
@@ -198,6 +204,9 @@ var state_timer = 0.0
 
 var melee_attack_target_pos: Vector2
 var melee_attack_target_rot: float
+# The melee timer is separate from the state timer as it should usually tick
+# faster.
+var melee_timer = 0.0
 
 func parabola_one(t: float) -> float:
 	t = 2.0 * t - 1.0
@@ -220,6 +229,7 @@ func melee_attack(what: Vector2):
 		
 	state = State.MELEE_ATTACK
 	state_timer = 0.0
+	melee_timer = 0.0
 	
 	Sounds.imp_act_crunchy.play_rand()
 	
@@ -243,6 +253,19 @@ func _ready():
 	item.global_position = item_rest.global_position
 	add_to_group("Players")
 	
+	# For now, we just get our formation from the group.
+	formation = get_tree().get_first_node_in_group("ImpFormation")
+	assert(formation)
+	
+	# TODO: Just delete the FormationEdit once the formation is done being
+	# edited? Although I guess we might have the option to re-edit it dynamically...
+	%FormationEdit.input_event.connect(func(viewport: Node, event: InputEvent, shape_idx: int):
+		if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+				if formation.edited_player == null:
+					formation.edited_player = self
+	)
+	
 func finalize_properties():
 	
 	# TODO: Do we actually do this here? Probably not
@@ -263,6 +286,10 @@ func finalize_properties():
 	
 	# The melee collision is only on when we are attacking melee.
 	melee_collision_shape.disabled = true
+	
+	# Make the melee speed at least as good as the action speed
+	melee_speed = action_speed
+	melee_speed = max(melee_speed, 1.2)
 	
 	$Item.slowness = 1.0 / action_speed
 	
@@ -303,11 +330,28 @@ func fire_generic_action():
 
 const MAX_VEL = 512
 
-func _physics_process(delta):
+func _formation_physics_process(delta: float) -> void:
+	if formation.edited_player == self:
+		print(get_global_mouse_position())
+		print(formation.global_position)
+		formation_position = get_global_mouse_position() - formation.global_position
+		print(formation_position)
+		global_position = formation.global_position + formation_position
+		
+		if not Input.is_action_pressed("edit_player"):
+			formation.edited_player = null
+	else:
+		pass
+
+func _physics_process(delta: float) -> void:
 	if GS.has_won:
 		return
 	
 	if is_dead:
+		return
+		
+	if GS.flag_in_formation_menu:
+		_formation_physics_process(delta)
 		return
 		
 	if invulnerability > 0:
@@ -360,12 +404,13 @@ func _physics_process(delta):
 	if state == State.MELEE_ATTACK:
 
 		state_timer += delta * action_speed
-		
+		# the melee timer will finish before the action timer
+		melee_timer = clamp(melee_timer + delta * melee_speed, 0.0, 1.0)
 			
-		var to_t = parabola_one(state_timer)
+		var to_t = parabola_one(melee_timer)
 		# The cooldown is basically the remaining time in the animation.
 		# Because then, we can attack again.
-		$Item.slowness = (1.0 - to_t) / action_speed + action_cooldown
+		$Item.slowness = (1.0 - to_t) / melee_speed + action_cooldown
 		melee_collision_shape.disabled = not (to_t > 0.25 and to_t < 0.75)
 			
 		# To update both rotation and angle while sync_to_physics is on, we have to do it in
@@ -375,17 +420,19 @@ func _physics_process(delta):
 		new_tform.origin = lerp(item_rest.global_position, melee_attack_target_pos, to_t)
 		item.global_transform = new_tform
 		
-		if state_timer >= 0.6:
+		if melee_timer >= 0.6:
 			if GS.relic_tripledmg_killself and not self.is_ethereal():
 				die(null)
 				item.global_transform = item_rest.global_transform
 				state = State.NO_ACTION
 				state_timer = 0.0
+				melee_timer = 0.0
 		
 		if state_timer >= 1.0:
 			item.global_transform = item_rest.global_transform
 			state = State.NO_ACTION
 			state_timer = 0.0
+			melee_timer = 0.0
 			
 		
 	elif state == State.RANGED_ATTACK:
@@ -445,7 +492,7 @@ func _physics_process(delta):
 	if goal == Goals.GOAL_GENERIC:
 		start_generic()
 		
-	var move_target = get_global_mouse_position()
+	var move_target = formation.global_transform * formation_position
 		
 	var target_noise_nosmooth = Vector2.ZERO # Vector2.from_angle(randf_range(0, TAU)) * randf_range(256, 1024.0)
 	var smoothing = 0.05
@@ -532,6 +579,11 @@ func _physics_process(delta):
 	
 	move_target = GS.get_nav_move_target(global_position, move_target)
 	var vel = (move_target - global_position) * 5.0
+	
+	#vel.x = Input.get_axis("player_left", "player_right")
+	#vel.y = Input.get_axis("player_up", "player_down")
+	#vel = vel.normalized() * MAX_VEL
+	
 	var target_vel = vel.limit_length(MAX_VEL)
 	
 	velocity += (target_vel - velocity) * 0.5

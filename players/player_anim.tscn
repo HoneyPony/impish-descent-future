@@ -377,19 +377,19 @@ modification_stack = SubResource("SkeletonModificationStack2D_hnwh0")
 [node name="root" type="Bone2D" parent="Node2D/Skeleton2D"]
 position = Vector2(-15, -100)
 rotation = -1.62684
-scale = Vector2(0.999848, 0.999848)
+scale = Vector2(0.999847, 0.999847)
 rest = Transform2D(2.22127e-06, -1, 1, 2.22127e-06, -12, -100)
 
 [node name="chest" type="Bone2D" parent="Node2D/Skeleton2D/root"]
 position = Vector2(40, -8.88744e-05)
 rotation = 1.51629
-scale = Vector2(0.999812, 0.999812)
+scale = Vector2(0.999811, 0.999811)
 rest = Transform2D(-0.0165629, 0.999863, -0.999863, -0.0165629, 40, -8.88744e-05)
 
 [node name="head" type="Bone2D" parent="Node2D/Skeleton2D/root/chest"]
 position = Vector2(-16.7929, -47.7284)
 rotation = -1.51252
-scale = Vector2(0.999855, 0.999855)
+scale = Vector2(0.999854, 0.999854)
 rest = Transform2D(0.058242, -0.998303, 0.998303, 0.058242, -16.7929, -47.7284)
 auto_calculate_length_and_angle = false
 length = 29.06
@@ -437,13 +437,13 @@ bone_angle = 119.489
 [node name="ik_l" type="Bone2D" parent="Node2D/Skeleton2D"]
 position = Vector2(-29, -32)
 rotation = 0.183964
-scale = Vector2(0.999857, 0.999857)
+scale = Vector2(0.999856, 0.999856)
 rest = Transform2D(1, 0, 0, 1, -29, -32)
 
 [node name="ik_r" type="Bone2D" parent="Node2D/Skeleton2D"]
 position = Vector2(5, -32)
 rotation = -0.21276
-scale = Vector2(0.999868, 0.999868)
+scale = Vector2(0.999866, 0.999866)
 rest = Transform2D(1, 0, 0, 1, 5, -32)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
