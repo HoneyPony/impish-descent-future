@@ -209,6 +209,9 @@ offset_right = 708.0
 offset_bottom = 7.0
 color = Color(0.233236, 0.123145, 0.120394, 1)
 
+[node name="ImpStartPos" parent="." index="6"]
+position = Vector2(-3, 1134)
+
 [node name="torch" parent="." index="7" instance=ExtResource("2_a0v2d")]
 position = Vector2(89, 733)
 
@@ -238,9 +241,6 @@ position = Vector2(-2396, -649)
 
 [node name="SimpleGhost3" parent="." index="16" instance=ExtResource("3_hv7g1")]
 position = Vector2(-2387, -888)
-
-[node name="ImpStartPos" parent="." index="17"]
-position = Vector2(-3, 1134)
 
 [connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu2/ConfirmButton" to="UpgradeMenu/Control/UpgradeMenu2" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu2/Relics/ConfirmButton2" to="UpgradeMenu/Control/UpgradeMenu2" method="_on_confirm_button_pressed"]

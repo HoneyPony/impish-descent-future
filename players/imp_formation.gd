@@ -18,23 +18,29 @@ func _physics_process(delta: float) -> void:
 	var pos = Vector2.ZERO
 	var players = get_tree().get_nodes_in_group("Players")
 	for player in players:
-		pos += player.global_position
+		# Get the player's target position
+		var target = global_transform * player.formation_position
+		print("tar: ", target)
+		# Compute the player's 'where should we be for this to be neutral' target,
+		# which is our current position + the target formation - their position?
+		pos += player.global_position - (target - player.global_position)
 	pos /= players.size()
+	print(pos)
 	
-	#global_position = pos
+	global_position += (pos - global_position) * 0.05
 	
 	var vel = Vector2.ZERO
 	vel.x = Input.get_axis("player_left", "player_right")
 	vel.y = Input.get_axis("player_up", "player_down")
 	vel = vel.normalized() * Player.MAX_VEL
-	print(global_position)
+	# print(global_position)
 	
-	global_position += vel * delta
+	global_position += vel * delta * 4.0
 	
 	# We need to use the global mouse position versus our own position, because
 	# the local mouse position is affected by our own rotation.
 	
 	# Add an offset of 90 degrees because we want the user to configure their
 	# formation pointing 'up'.
-	var target_rot = (get_global_mouse_position() - global_position).angle() - TAU * 0.25
+	var target_rot = (get_global_mouse_position() - global_position).angle() + TAU * 0.25
 	rotation = rotate_toward(rotation, target_rot, TAU * 4.0 * delta)
