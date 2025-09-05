@@ -49,4 +49,4 @@ resource_local_to_scene = true
 shader = SubResource("Shader_q0ajj")
 shader_parameter/noise = SubResource("NoiseTexture2D_q0ajj")
 shader_parameter/uv_into_noise = 0.815
-shader_parameter/noise_amount = 0.065
+shader_parameter/noise_amount = 2.0
