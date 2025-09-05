@@ -11,8 +11,6 @@ uniform sampler2D noise;
 uniform float uv_into_noise = 0.3;
 uniform float noise_amount = 0.2;
 
-uniform sampler2D input_tex: hint_screen_texture;
-
 varying vec4 vertex_color;
 
 void vertex() {
@@ -21,16 +19,16 @@ void vertex() {
 
 
 void fragment() {
-	vec2 INPUT_UV = SCREEN_UV;
+	vec2 INPUT_UV = UV;
 	
 	vec2 uv = INPUT_UV;
 	float uv_wiggle_scale = uv_into_noise + sin(TIME) * 0.05;
-	vec2 n_uv = INPUT_UV * (SCREEN_PIXEL_SIZE * 400.0) * uv_wiggle_scale + vec2(TIME * 0.03, TIME * 0.05);
+	vec2 n_uv = INPUT_UV * uv_wiggle_scale + vec2(TIME * 0.03, TIME * 0.05);
 	n_uv = mod(n_uv, vec2(1.0));
 	vec2 n = textureLod(noise, n_uv, 0.0).xy;
-	uv += (n - 0.5) * noise_amount * (SCREEN_PIXEL_SIZE * 400.0);
+	uv += (n - 0.5) * noise_amount;
 	
-	COLOR = texture(input_tex, uv) * vertex_color;
+	COLOR = texture(TEXTURE, uv) * vertex_color;
 
 	//COLOR.rgb = vec3(n.x);
 	//COLOR.a = 1.0;

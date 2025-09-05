@@ -4,15 +4,19 @@ var fire_timer = 2.3
 
 @export var big = false
 
+# TODO: Make this cleaner. Maybe just move the animation back
+# into the scene?
+@onready var hit_player = get_node_or_null("SimpleGhostAnim/HitAnim")
+
 func _ready():
 	init_ghost_base()
 	health = max_health
 	fire_timer = randf_range(0, 2.3)
 	
 func on_hit(body):
-	if %AnimationPlayer:
-		%AnimationPlayer.stop()
-		%AnimationPlayer.play("hit")
+	if hit_player:
+		hit_player.stop()
+		hit_player.play("hit")
 
 func handle_simple_projectile(delta):
 	#if current_projectile != null:

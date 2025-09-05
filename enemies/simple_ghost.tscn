@@ -1,70 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://rl585tjhmod7"]
+[gd_scene load_steps=7 format=3 uid="uid://rl585tjhmod7"]
 
 [ext_resource type="Script" uid="uid://ysaxhowl7k7j" path="res://enemies/simple_ghost.gd" id="1_n6c1y"]
 [ext_resource type="PackedScene" uid="uid://btrafneliekux" path="res://enemies/simple_ghost_anim.tscn" id="2_q0ajj"]
 [ext_resource type="Material" uid="uid://bvrrm708icif1" path="res://enemies/ghost_material.tres" id="2_v5knm"]
 [ext_resource type="PackedScene" uid="uid://c28o3vm70ky5b" path="res://health/health.tscn" id="3_kq0l4"]
-
-[sub_resource type="Animation" id="Animation_v5knm"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Apperance:material:shader_parameter/noise_amount")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.065]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Apperance:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_q0ajj"]
-resource_name = "hit"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Apperance:material:shader_parameter/noise_amount")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [2.0, 0.065]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Apperance:modulate")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0.105882), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_6as8b"]
-_data = {
-&"RESET": SubResource("Animation_v5knm"),
-&"hit": SubResource("Animation_q0ajj")
-}
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m148u"]
 radius = 8.0
@@ -77,19 +16,15 @@ size = Vector2(104, 130)
 collision_layer = 4
 script = ExtResource("1_n6c1y")
 
+[node name="SimpleGhostAnim" parent="." instance=ExtResource("2_q0ajj")]
+position = Vector2(0, -41)
+scale = Vector2(0.25, 0.25)
+
 [node name="Apperance" type="CanvasGroup" parent="."]
+modulate = Color(1, 1, 1, 0.105882)
 material = ExtResource("2_v5knm")
 position = Vector2(0, -256)
 scale = Vector2(0.25, 0.25)
-
-[node name="SimpleGhostAnim" parent="Apperance" instance=ExtResource("2_q0ajj")]
-position = Vector2(0, 860)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_6as8b")
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = -1.57079
