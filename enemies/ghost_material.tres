@@ -1,0 +1,54 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://bvrrm708icif1"]
+
+[sub_resource type="Shader" id="Shader_q0ajj"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.4.1.stable's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_add,unshaded;
+
+uniform sampler2D noise;
+// amount that our own uv affects the UV that we sample the noise from.
+uniform float uv_into_noise = 0.3;
+uniform float noise_amount = 0.2;
+
+uniform sampler2D input_tex: hint_screen_texture;
+
+varying vec4 vertex_color;
+
+void vertex() {
+	vertex_color = COLOR;
+}
+
+
+void fragment() {
+	vec2 INPUT_UV = SCREEN_UV;
+	
+	vec2 uv = INPUT_UV;
+	float uv_wiggle_scale = uv_into_noise + sin(TIME) * 0.05;
+	vec2 n_uv = INPUT_UV * (SCREEN_PIXEL_SIZE * 400.0) * uv_wiggle_scale + vec2(TIME * 0.03, TIME * 0.05);
+	n_uv = mod(n_uv, vec2(1.0));
+	vec2 n = textureLod(noise, n_uv, 0.0).xy;
+	uv += (n - 0.5) * noise_amount * (SCREEN_PIXEL_SIZE * 400.0);
+	
+	COLOR = texture(input_tex, uv) * vertex_color;
+
+	//COLOR.rgb = vec3(n.x);
+	//COLOR.a = 1.0;
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q0ajj"]
+frequency = 0.028
+fractal_lacunarity = 0.98
+fractal_gain = 2.745
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q0ajj"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_q0ajj")
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource("Shader_q0ajj")
+shader_parameter/noise = SubResource("NoiseTexture2D_q0ajj")
+shader_parameter/uv_into_noise = 0.815
+shader_parameter/noise_amount = 0.065
