@@ -20,12 +20,10 @@ func _physics_process(delta: float) -> void:
 	for player in players:
 		# Get the player's target position
 		var target = global_transform * player.formation_position
-		print("tar: ", target)
 		# Compute the player's 'where should we be for this to be neutral' target,
 		# which is our current position + the target formation - their position?
 		pos += player.global_position - (target - player.global_position)
 	pos /= players.size()
-	print(pos)
 	
 	global_position += (pos - global_position) * 0.05
 	
