@@ -6,16 +6,15 @@ extends Control
 	%Card3
 ]
 
-@onready var relic_rows = [
-	$Relics/RelicSelectRow,
-	$Relics/RelicSelectRow2,
-	$Relics/NoRelic
+@onready var relics = [
+	%Relic1,
+	%Relic2,
 ]
-
-var current_new_relic = 0
 
 ## Which of the main row of cards will be picked.
 var current_main_card: UpgradeCard = null
+
+var current_relic: UpgradeCard = null
 
 var do_choose_relic = false
 
@@ -27,9 +26,15 @@ func unselect_main_cards() -> void:
 	for card in cards:
 		card.selected = false
 
-func unselect_relics():
-	for row in relic_rows:
-		row.unselect()
+func unselect_relics() -> void:
+	for relic in relics:
+		relic.selected = false
+	%NoRelic.button_pressed = true
+	
+func select_relic(card: UpgradeCard) -> void:
+	unselect_relics()
+	current_relic = card
+	%NoRelic.button_pressed = false
 
 func sample_imp(require_combat: bool) -> int:
 	if require_combat:
@@ -65,13 +70,10 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 		var second = GS.avail_relics.pick_random()
 		GS.avail_relics.remove_at(GS.avail_relics.find(second))
 		
-		relic_rows[0].setup(first)
-		relic_rows[1].setup(second)
-		relic_rows[2].setup(-1)
+		relics[0].setup_as_relic(first)
+		relics[1].setup_as_relic(second)
 		
-		relic_rows[0].select_this()
-		
-	$Relics.visible = relic
+		unselect_relics()
 	
 func _ready():
 	
@@ -112,27 +114,31 @@ func _ready():
 	if GS.current_level == 1 or GS.current_level == 3 or GS.current_level == 5:
 		relics = true
 		
-	#relics = true
+	# relics = true
 		
 	setup_rewards(relics, require_combat)
 	
 	if double_upgrade != null:
 		double_upgrade.get_node("ImpTitle").text = "Choose two Imps to add to your army"
 
+	%NoRelic.pressed.connect(func():
+		unselect_relics()
+	)
+
 func _earn_reward(card: UpgradeCard) -> void:
 	if card == null:
 		return
 	if card.kind == UpgradeCard.RewardKind.IMP:
 		GS.current_army.push_back(card.id)
+	if card.kind == UpgradeCard.RewardKind.RELIC:
+		GS.accept_relic(card.id)
 
 # This is basically the entry point into the gameplay for now.
 func _on_confirm_button_pressed():
 	hide()
 	
 	_earn_reward(current_main_card)
-	
-	if do_choose_relic and current_new_relic >= 0:
-		GS.accept_relic(current_new_relic)
+	_earn_reward(current_relic)
 	
 	if double_upgrade != null:
 		# Just defer to the other one to do the rest of the work.

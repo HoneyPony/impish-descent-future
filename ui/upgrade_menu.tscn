@@ -1,9 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://xx44173k4hig"]
+[gd_scene load_steps=6 format=3 uid="uid://xx44173k4hig"]
 
 [ext_resource type="Script" uid="uid://yr0b2ntqtqs3" path="res://ui/reward_ui.gd" id="1_0gvwy"]
-[ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="3_wl8nm"]
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="4_sf0oj"]
-[ext_resource type="Script" uid="uid://csbordnjwk72b" path="res://ui/relic_select_row.gd" id="5_m2nq5"]
 [ext_resource type="Texture2D" uid="uid://bwp1t744i5mcq" path="res://ui/panel_graygray.png" id="6_wl8nm"]
 [ext_resource type="PackedScene" uid="uid://c530bsw0pmjhi" path="res://ui/cards/card.tscn" id="7_sf0oj"]
 
@@ -13,8 +11,6 @@ texture_margin_left = 100.0
 texture_margin_top = 100.0
 texture_margin_right = 100.0
 texture_margin_bottom = 100.0
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_mprjm"]
 
 [node name="UpgradeMenu" type="Control"]
 layout_mode = 3
@@ -34,10 +30,10 @@ script = ExtResource("1_0gvwy")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 88.0
-offset_top = -1.0
-offset_right = 1116.0
-offset_bottom = 913.0
+offset_left = 23.0
+offset_top = -13.0
+offset_right = 1311.0
+offset_bottom = 1289.0
 scale = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxTexture_m2nq5")
 
@@ -47,11 +43,23 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -141.0
-offset_top = 27.0
+offset_top = 6.0
 offset_right = 132.0
-offset_bottom = 50.0
+offset_bottom = 29.0
 grow_horizontal = 2
 text = "Choose an Imp to add to your army"
+
+[node name="ImpTitle2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -171.5
+offset_top = 297.0
+offset_right = 162.5
+offset_bottom = 320.0
+grow_horizontal = 2
+text = "...and Choose a Relic to enhance your power"
 
 [node name="ConfirmButton" type="Button" parent="."]
 layout_mode = 1
@@ -61,121 +69,50 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -84.0
-offset_top = 36.0
+offset_top = 226.0
 offset_right = 79.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Confirm"
-
-[node name="Relics" type="ColorRect" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -354.0
-offset_top = -53.0
-offset_right = 354.0
-offset_bottom = 274.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0.34902, 0.196078, 0.192157, 1)
-
-[node name="RelicSelectRow" parent="Relics" instance=ExtResource("3_wl8nm")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 56.0
-offset_right = 341.5
-offset_bottom = 138.0
-grow_horizontal = 2
-
-[node name="RelicSelectRow2" parent="Relics" instance=ExtResource("3_wl8nm")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 142.0
-offset_right = 341.5
-offset_bottom = 224.0
-grow_horizontal = 2
-
-[node name="NoRelic" type="ColorRect" parent="Relics"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.0
-offset_top = 228.0
-offset_right = 342.0
-offset_bottom = 267.0
-grow_horizontal = 2
-theme = ExtResource("4_sf0oj")
-color = Color(0.266575, 0.266575, 0.266575, 1)
-script = ExtResource("5_m2nq5")
-
-[node name="Label" type="RichTextLabel" parent="Relics/NoRelic"]
-layout_mode = 0
-offset_left = 79.0
-offset_top = 7.0
-offset_right = 558.0
-offset_bottom = 33.0
-text = "Skip Relic"
-
-[node name="Button" type="Button" parent="Relics/NoRelic"]
-layout_mode = 0
-offset_left = 562.0
-offset_top = 4.0
-offset_right = 674.0
-offset_bottom = 35.0
-toggle_mode = true
-button_group = SubResource("ButtonGroup_mprjm")
-text = "Choose"
-
-[node name="Label2" type="Label" parent="Relics"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -172.5
-offset_top = 21.0
-offset_right = 172.5
-offset_bottom = 44.0
-grow_horizontal = 2
-text = "... and Choose a Relic to enhance your power"
-
-[node name="ConfirmButton2" type="Button" parent="Relics"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -81.5
-offset_top = -48.0
-offset_right = 81.5
-offset_bottom = -11.0
+offset_bottom = 263.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Confirm"
 
 [node name="Card1" parent="." instance=ExtResource("7_sf0oj")]
 unique_name_in_owner = true
-position = Vector2(81, 256)
+position = Vector2(134, 180)
 
 [node name="Card2" parent="." instance=ExtResource("7_sf0oj")]
 unique_name_in_owner = true
-position = Vector2(344, 256)
+position = Vector2(344, 180)
 
 [node name="Card3" parent="." instance=ExtResource("7_sf0oj")]
 unique_name_in_owner = true
-position = Vector2(608, 256)
+position = Vector2(553, 180)
+
+[node name="NoRelic" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = 73.0
+offset_right = 45.0
+offset_bottom = 146.0
+grow_horizontal = 2
+grow_vertical = 0
+toggle_mode = true
+text = "Skip Relic"
+
+[node name="Relic1" parent="." instance=ExtResource("7_sf0oj")]
+unique_name_in_owner = true
+position = Vector2(191, 475)
+row = 1
+
+[node name="Relic2" parent="." instance=ExtResource("7_sf0oj")]
+unique_name_in_owner = true
+position = Vector2(500, 475)
+row = 1
 
 [connection signal="pressed" from="ConfirmButton" to="." method="_on_confirm_button_pressed"]
-[connection signal="pressed" from="Relics/ConfirmButton2" to="." method="_on_confirm_button_pressed"]

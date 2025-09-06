@@ -12,6 +12,13 @@ enum RewardKind {
 	RELIC
 }
 
+enum Row {
+	MAIN_CARD,
+	RELIC
+}
+
+@export var row: Row = Row.MAIN_CARD
+
 ## The kind of reward this is.
 var kind: RewardKind = RewardKind.IMP
 
@@ -23,12 +30,33 @@ const BBCODE_MODIFIED := "[color=#a0ffc0]"
 
 var selected: bool = false
 
+func setup_as_relic(id: int) -> void:
+	self.kind = RewardKind.RELIC
+	self.id   = id
+	
+	%ImpBody.queue_free()
+	%ImpHead.queue_free()
+	%ImpItem.queue_free()
+	
+	# TODO: Consider making these separate pieces of data. Also we may eventually
+	# have relic descriptions as tooltips instead of like this
+	var text := GS.relics[id]
+	var pieces := text.split("\n", true, 1)
+	
+	%Title.text = pieces[0]
+	%Description.text = pieces[1]
+	
+	%Relic.texture = GS.relic_sprite[id]
+	
+	%ActionSpeed.queue_free()
+
 func setup_as_imp(data, id: int) -> void:
+	self.kind = RewardKind.IMP
+	self.id = id
+	
 	var klass       = data[0]
 	var item        = data[1]
 	var description = data[2]
-	
-	self.id = id
 	
 	var tex_path: String = GS.get_body_tex_path(klass)
 	
@@ -70,8 +98,12 @@ func _physics_process(delta: float) -> void:
 	select_tex.modulate.a += (select_tex_target - select_tex.modulate.a) * 0.2
 	
 func select_self() -> void:
-	get_parent().unselect_main_cards()
-	get_parent().current_main_card = self
+	match row:
+		Row.MAIN_CARD:
+			get_parent().unselect_main_cards()
+			get_parent().current_main_card = self
+		Row.RELIC:
+			get_parent().select_relic(self)
 	
 	selected = true
 	

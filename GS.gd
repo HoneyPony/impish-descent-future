@@ -261,7 +261,7 @@ func _process(delta):
 #func _process(delta):
 	#print(get_nav_point($"/root/Game".get_global_mouse_position()))
 
-var relics = [
+var relics: Array[String] = [
 "Essence of Slime
 When your imps die, summon 3 Ethereal copies of them.
 Your imps can no longer resurrect.",
@@ -294,7 +294,7 @@ Non-Ethereal imps deal triple melee damage.
 Attacks made this way kill that imp.",
 ]
 
-var relic_sprite = [
+var relic_sprite: Array[Texture2D] = [
 	preload("res://relics/relic0.png"),
 	preload("res://relics/relic1.png"),
 	preload("res://relics/relic2.png"),

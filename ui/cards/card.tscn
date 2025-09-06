@@ -15,23 +15,24 @@
 [node name="Card" type="Node2D"]
 script = ExtResource("3_fijmi")
 
-[node name="SelectTex" type="Sprite2D" parent="."]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0)
-position = Vector2(2, -19)
-scale = Vector2(0.33722, 0.375754)
-texture = ExtResource("2_fn7ga")
-
 [node name="Card" type="TextureRect" parent="."]
 unique_name_in_owner = true
 offset_left = -128.0
 offset_top = -175.0
 offset_right = 131.0
 offset_bottom = 126.0
+scale = Vector2(0.8, 0.8)
 pivot_offset = Vector2(128, 176)
 theme = ExtResource("1_j1wn2")
 texture = ExtResource("2_tts3a")
 expand_mode = 1
+
+[node name="SelectTex" type="Sprite2D" parent="Card"]
+unique_name_in_owner = true
+show_behind_parent = true
+position = Vector2(130, 156)
+scale = Vector2(0.33722, 0.375754)
+texture = ExtResource("2_fn7ga")
 
 [node name="HoverTex" type="TextureRect" parent="Card"]
 unique_name_in_owner = true
