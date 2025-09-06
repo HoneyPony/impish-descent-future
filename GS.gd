@@ -170,7 +170,8 @@ var combat_imps = [
 	# Right now summoners are 11, etc
 ]
 
-var current_army = []
+var current_army      = []
+var current_formation = []
 
 func pick_nonbreaking_imp():
 	return valid_imps[nonbreaking_imps.pick_random()]
@@ -179,13 +180,18 @@ func spawn_current_army():
 	var pos = get_tree().get_first_node_in_group("ImpStartPos")
 	assert(pos != null)
 	
+	var id: int = 0
 	for imp in current_army:
-		spawn_imp(pos.get_parent(), valid_imps[imp], pos.global_position, false, false, false)
+		spawn_imp(pos.get_parent(), valid_imps[imp], pos.global_position, false, false, false, false, id)
+		id += 1
 
-func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool, play_sound: bool, invuln: bool):
+func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool, play_sound: bool, invuln: bool, army_id: int):
 	var imp = Player.instantiate()
+	imp.army_id = army_id
+	print("army id -> ", army_id)
 	parent.add_child(imp)
 	imp.global_position = global_pos
+	
 	imp.set_class(config[0])
 	imp.set_item(config[1])
 	imp.compute_basic_properties()
@@ -203,8 +209,8 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: b
 	if play_sound:	
 		Sounds.imp_spawn.play_rand()
 
-func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = false, ethereal: bool = false, play_sound: bool = true, invuln: bool = false):
-	call_deferred("finish_spawn_imp", parent, config, global_pos, split, ethereal, play_sound, invuln)
+func spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool = false, ethereal: bool = false, play_sound: bool = true, invuln: bool = false, army_id: int = -1):
+	call_deferred("finish_spawn_imp", parent, config, global_pos, split, ethereal, play_sound, invuln, army_id)
 	
 func get_item_tex(item: Item):
 	var tex = null
@@ -339,6 +345,7 @@ func reset_game_state():
 	flag_retry_this_level = false
 	
 	current_army = []
+	current_formation = []
 	owned_relics = []
 	#relic_tripledmg_killself = true
 

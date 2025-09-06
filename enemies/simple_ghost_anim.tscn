@@ -364,7 +364,7 @@ rest = Transform2D(1, 0, 0, 1, 7, 36)
 
 [node name="tail" type="Bone2D" parent="skeleton/root/tail/tail"]
 position = Vector2(15, 36)
-scale = Vector2(0.999999, 0.999999)
+scale = Vector2(0.999998, 0.999998)
 rest = Transform2D(1, 0, 0, 1, 15, 36)
 
 [node name="tail" type="Bone2D" parent="skeleton/root/tail/tail/tail"]

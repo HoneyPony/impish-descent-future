@@ -55,6 +55,12 @@ var projectile_scene: PackedScene = GS.PlayerProjectile1
 
 var invulnerability = 0
 
+## Which slot this imp corresponds to in the army.
+##
+## Used for permanent effects, for now just formation edit. TODO: How does
+## this interact with split, if we have permanent scaling ever..?
+var army_id: int = -1
+
 enum State {
 	NO_ACTION,
 	MELEE_ATTACK,
@@ -273,12 +279,20 @@ func ranged_attack(target: Node2D):
 var target_noise = Vector2.ZERO
 
 func _ready():
+	
 	item.global_position = item_rest.global_position
 	add_to_group("Players")
 	
 	# For now, we just get our formation from the group.
 	formation = get_tree().get_first_node_in_group("ImpFormation")
 	assert(formation)
+	
+	if army_id >= 0:
+		formation_position = GS.current_formation[army_id]
+		# Reset to the formation position for editing if we're in the menu
+		if GS.flag_in_formation_menu:
+			global_position = formation.global_position + formation_position
+		print("my pos: ", formation_position)
 	
 	# TODO: Just delete the FormationEdit once the formation is done being
 	# edited? Although I guess we might have the option to re-edit it dynamically...
@@ -355,15 +369,18 @@ const MAX_VEL = 512
 
 func _formation_physics_process(delta: float) -> void:
 	if formation.edited_player == self:
-		print(get_global_mouse_position())
-		print(formation.global_position)
+		#print(get_global_mouse_position())
+		#print(formation.global_position)
 		formation_position = get_global_mouse_position() - formation.global_position
-		print(formation_position)
+		formation_position = round(formation_position / 64) * 64
+		GS.current_formation[army_id] = formation_position
+		#print(formation_position)
 		global_position = formation.global_position + formation_position
 		
 		if not Input.is_action_pressed("edit_player"):
 			formation.edited_player = null
 	else:
+		global_position = formation.global_position + formation_position
 		pass
 
 func _physics_process(delta: float) -> void:
