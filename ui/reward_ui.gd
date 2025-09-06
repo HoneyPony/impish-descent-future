@@ -11,19 +11,32 @@ extends Control
 	%Relic2,
 ]
 
+@onready var second_imp := [
+	%Second1,
+	%Second2,
+	%Second3
+]
+
 ## Which of the main row of cards will be picked.
 var current_main_card: UpgradeCard = null
+
+## Which of the second imp cards will be picked.
+var current_second_imp: UpgradeCard = null
 
 var current_relic: UpgradeCard = null
 
 var do_choose_relic = false
 
-@export var double_upgrade: ColorRect = null
-@export var double_upgrade_child: ColorRect = null
+@export var choose_second_imp = false
+
 var flag_own_hide = false
 
 func unselect_main_cards() -> void:
 	for card in cards:
+		card.selected = false
+		
+func unselect_second_imp() -> void:
+	for card in second_imp:
 		card.selected = false
 
 func unselect_relics() -> void:
@@ -42,9 +55,8 @@ func sample_imp(require_combat: bool) -> int:
 	else:
 		return randi_range(0, GS.valid_imps.size() - 1)
 
-func setup_rewards(relic: bool = false, require_combat: bool = false):
-	do_choose_relic = relic
-	var imps = []
+func choose_three_imps(require_combat: bool) -> Array[int]:
+	var imps: Array[int] = []
 	
 	# Sample imps
 	for i in range(0, 1000):
@@ -58,11 +70,22 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 	# If somehow we didn't get them all yet, force that here
 	while imps.size() < 3:
 		imps.push_back(sample_imp(true))
+		
+	return imps
+
+func setup_rewards(relic: bool = false, require_combat: bool = false):
+	do_choose_relic = relic
+	var imps = choose_three_imps(require_combat)
 			
 	for i in range(0, 3):
 		cards[i].setup_as_imp(GS.valid_imps[imps[i]], imps[i])
 		
 	cards[0].select_self()
+	
+	if choose_second_imp:
+		var second_set = choose_three_imps(require_combat)
+		for i in range(0, 3):
+			second_imp[i].setup_as_imp(GS.valid_imps[second_set[i]], second_set[i])
 	
 	if relic:
 		var first = GS.avail_relics.pick_random()
@@ -77,21 +100,16 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 	
 func _ready():
 	
-	# If we're the double upgrader, defer to the other one
-	if double_upgrade == null:
-		# Make sure we haven't won yet
-		GS.has_won = false
-	
-		if GS.flag_retry_this_level:
-			GS.flag_retry_this_level = false
-			hide()
-			GS.spawn_current_army()
-			%DefeatMenu.going = true
-			if double_upgrade_child != null:
-				double_upgrade_child.hide()
-				double_upgrade_child.flag_own_hide = true
-			return
-		GS.flag_in_upgrade_menu = true
+	# Make sure we haven't won yet
+	GS.has_won = false
+
+	if GS.flag_retry_this_level:
+		GS.flag_retry_this_level = false
+		hide()
+		GS.spawn_current_army()
+		%DefeatMenu.going = true
+		return
+	GS.flag_in_upgrade_menu = true
 		
 	if flag_own_hide:
 		hide()
@@ -118,12 +136,31 @@ func _ready():
 		
 	setup_rewards(relics, require_combat)
 	
-	if double_upgrade != null:
-		double_upgrade.get_node("ImpTitle").text = "Choose two Imps to add to your army"
+	if choose_second_imp:
+		#%ImpTitle.text = "Choose two Imps to add to your army"
+		%BigTitle.text = "... and Choose a second Imp as well"
 
 	%NoRelic.pressed.connect(func():
 		unselect_relics()
 	)
+	
+	if not do_choose_relic:
+		%NoRelic.hide()
+		%Relic1.hide()
+		%Relic2.hide()
+	if not choose_second_imp:
+		%Second1.hide()
+		%Second2.hide()
+		%Second3.hide()
+		
+	if choose_second_imp or do_choose_relic:
+		%PanelSmall.hide()
+		%ConfirmSmall.hide()
+	else:
+		%PanelBig.hide()
+		%ConfirmBig.hide()
+		%BigTitle.hide()
+	
 
 func _earn_reward(card: UpgradeCard) -> void:
 	if card == null:
@@ -139,11 +176,7 @@ func _on_confirm_button_pressed():
 	
 	_earn_reward(current_main_card)
 	_earn_reward(current_relic)
-	
-	if double_upgrade != null:
-		# Just defer to the other one to do the rest of the work.
-		double_upgrade._on_confirm_button_pressed()
-		return
+	_earn_reward(current_second_imp)
 		
 	GS.flag_in_upgrade_menu = false
 	%FormationMenu.show_menu()

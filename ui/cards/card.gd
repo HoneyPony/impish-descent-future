@@ -14,7 +14,8 @@ enum RewardKind {
 
 enum Row {
 	MAIN_CARD,
-	RELIC
+	RELIC,
+	SECOND_IMP,
 }
 
 @export var row: Row = Row.MAIN_CARD
@@ -104,6 +105,9 @@ func select_self() -> void:
 			get_parent().current_main_card = self
 		Row.RELIC:
 			get_parent().select_relic(self)
+		Row.SECOND_IMP:
+			get_parent().unselect_second_imp()
+			get_parent().current_second_imp = self
 	
 	selected = true
 	

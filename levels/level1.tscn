@@ -14,9 +14,10 @@ tile_map_data = PackedByteArray("AAD2//z/AAAAAAAAAAD2//3/AAAAAAAAAAD2//7/AAAAAAA
 
 [node name="UpgradeMenu" parent="UpgradeMenu/Control" index="0"]
 offset_left = 255.0
-offset_top = 16.0
+offset_top = 8.0
 offset_right = 963.0
-offset_bottom = 373.0
+offset_bottom = 365.0
+choose_second_imp = true
 
 [node name="ImpStartPos" parent="." index="6"]
 position = Vector2(-3, 1134)
