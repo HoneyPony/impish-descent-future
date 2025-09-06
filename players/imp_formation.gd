@@ -6,7 +6,7 @@ var edited_player: Player = null
 func _ready() -> void:
 	# Reparent ourselves off of the ImpStartPos. This makes sure our starting
 	# point is always synchronized
-	reparent(get_parent().get_parent())
+	reparent.call_deferred(get_parent().get_parent())
 
 func _physics_process(delta: float) -> void:
 	if GS.flag_in_formation_menu:

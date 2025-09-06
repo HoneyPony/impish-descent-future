@@ -7,6 +7,7 @@ var fire_timer = 2.3
 # TODO: Make this cleaner. Maybe just move the animation back
 # into the scene?
 @onready var hit_player = get_node_or_null("SimpleGhostAnim/HitAnim")
+@onready var anim = get_node_or_null("SimpleGhostAnim")
 
 func _ready():
 	init_ghost_base()
@@ -66,6 +67,10 @@ func _physics_process(delta):
 	
 	var vel_dir = (to_pos - global_position).normalized()
 	velocity = vel_dir * 32
+	
+	# weird hack for rotation
+	if abs(vel_dir.dot(Vector2.UP)) < 0.4:
+		anim.scale.x = abs(anim.scale.x) * sign(velocity.x)
 	
 	move_and_slide()
 	handle_simple_projectile(delta)

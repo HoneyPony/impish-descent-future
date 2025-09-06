@@ -14,6 +14,8 @@ class_name Player
 
 @export var melee_attack_range = 150
 #@export var melee_cooldown = 0.3
+
+# TODO: Get rid of this...?
 @export var action_cooldown = 0.3
 
 var formation: ImpFormation = null
@@ -120,12 +122,51 @@ func set_class(klass: GS.Class):
 
 # general buff to melee speed
 const MELEE_GENERAL_BUFF = 1.2
+
+## Computes the action speed for the given Class. Returns a Vector2 tuple:
+## - The x component is the actual speed
+## - The y component is 0 if no modifiers were applied; it is 1 if some
+##   modifier was applied.
+##
+## TODO: Consider putting the base speed value just in the big table of guys?
+static func compute_action_speed(klass: GS.Class, item: GS.Item) -> Vector2:
+	var speed    := 1.0
+	var modified := false
+	
+	match klass:
+		GS.Class.Brawler:
+			match item:
+				GS.Item.Dagger: speed = 2.0
+				GS.Item.Club:   speed = 0.5
+		GS.Class.Mage:
+			match item:
+				GS.Item.Club:   speed = 0.5
+				GS.Item.Scythe: speed = 0.5
+		GS.Class.Cleric:
+			match item:
+				# The shield is very very strong at 100% speed. Make it a bit slower.
+				GS.Item.Staff: speed = 0.5
+				# Split-resurrect is VERY strong. Make these guys act very slowly.
+				GS.Item.Scythe: speed = 0.25
+		GS.Class.Summoner:
+			match item:
+				# Make summoning eth guys very slow.
+				GS.Item.Staff: speed = 0.25
+				# resurrecting can actually be quite fast.
+				_: speed = 1.5
+				
+	if GS.relic_daggers_150_speed and item == GS.Item.Dagger:
+		speed *= 1.5
+		modified = true
+	
+	return Vector2(speed, 1.0 if modified else 0.0)
 	
 # Computes intrinsic class-based properties before we get to the effects of
 # relics.
 func compute_basic_properties():
+	action_speed = compute_action_speed(current_class, current_item)
+	
 	if GS.relic_daggers_150_speed and current_item == GS.Item.Dagger:
-		action_speed *= 1.5
 		# Also change the cooldown.
 		action_cooldown /= 1.5
 	
@@ -139,10 +180,8 @@ func compute_basic_properties():
 					melee_base_damage = 2
 				GS.Item.Dagger:
 					melee_base_damage = 1
-					action_speed *= 2.0
 				GS.Item.Club:
 					melee_base_damage = 3
-					action_speed *= 0.5
 				GS.Item.Mace:
 					melee_base_damage = 5
 					$Item.only_half_health = true
@@ -156,10 +195,8 @@ func compute_basic_properties():
 			if current_item == GS.Item.Club:
 				ranged_base_damage = 4
 				damage_mode = DamageMode.Random
-				action_speed *= 0.5
 			if current_item == GS.Item.Scythe:
 				ranged_base_damage = 1
-				action_speed *= 0.5
 				ranged_attack_is_nova = true
 				
 			# Relic can turn mages into melee fighters
@@ -171,32 +208,17 @@ func compute_basic_properties():
 			buff_target_buff = GS.Buff.Shield
 			
 			match current_item:
-				GS.Item.Staff:
-					# The shield is very very strong at 100% speed. Make it a bit slower.
-					action_speed *= 0.5
 				GS.Item.Scythe:
 					goal = Goals.GOAL_ATTACK_OWN
 					projectile_scene = GS.SplitProjectile
-					# Split-resurrect is VERY strong. Make these guys act very slowly.
-					action_speed *= 0.25
 				GS.Item.Dagger:
 					melee_base_damage = 1
-					# This enemy doesn't get the buff. Yes it does
-					action_speed = 1
-					#action_speed *= 0.75 / MELEE_GENERAL_BUFF
 					goal = Goals.GOAL_MELEE
 					$Item.upgrades_on_kill = true
 		GS.Class.Summoner:
 			# Summoner can't do anything but get hit by default.
 			goal = Goals.GOAL_GENERIC
 			# Summoner has powerful effects that are slow.
-			
-			if current_item == GS.Item.Staff:
-				# Make summoning eth guys very slow.
-				action_speed *= 0.25
-			else:
-				# resurrecting can actually be quite fast.
-				action_speed *= 1.5
 	
 var state: State = State.NO_ACTION
 var goal: Goals = Goals.GOAL_MELEE

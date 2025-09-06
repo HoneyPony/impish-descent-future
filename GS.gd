@@ -124,20 +124,28 @@ enum Buff {
 }
 
 var valid_imps = [
-	[Class.Brawler, Item.Sword, "Brawler wielding Sword:\n- Attacks at 100% speed for 2 Melee damage."],
-	[Class.Brawler, Item.Club, "Brawler wielding Club:\n- Attacks at 50% speed for 3 Melee damage."],
-	[Class.Brawler, Item.Dagger, "Brawler wielding Dagger:\n- Attacks at 200% speed for 1 Melee damage."],
-	[Class.Brawler, Item.Mace, "Brawler wielding Mace:\n- Attacks at 100% speed for 5 Melee damage.\n- Can only attack when enemies are below half health."],
-	[Class.Mage, Item.Staff, "Mage wielding Staff:\n- Attacks at 100% speed for 1 Ranged damage."],
-	[Class.Mage, Item.Dagger, "Mage wielding Dagger:\n- Applies Strength buff to other imps.\n- Strength adds 1 damage to the next attack."],
-	[Class.Mage, Item.Club, "Mage wielding Club:\n- Attacks at 100% speed for 0-4 Ranged damage.\n- Damage is rolled randomly."],
-	[Class.Mage, Item.Scythe, "Mage wielding Scythe:\n- Attacks at 100% speed for 1 Ranged damage.\n- Shoots 7 shots in random directions."],
-	[Class.Cleric, Item.Staff, "Cleric wielding Staff:\n- Applies Shield buff to nearby imps.\n- Shield buff blocks 1 hit from enemies."],
-	[Class.Cleric, Item.Dagger, "Cleric wielding Dagger:\n- Attacks at 100% speed for 1 damage.\n- On kill, increase damage by 1 (resets next level)"],
-	[Class.Cleric, Item.Scythe, "Cleric wielding Scythe:\n- Splits nearby imps into two imps.\n- Split imps randomize their damage."],
-	[Class.Summoner, Item.Staff, "Summoner wielding Staff:\n- Summons random Ethereal imps.\n- Ethereal imps disappear after 4 seconds."],
-	[Class.Summoner, Item.Scythe, "Summoner wielding Scythe:\n- Resurrects dead imps."],
+	[Class.Brawler, Item.Sword , "- Attacks for 2 Melee damage."],
+	[Class.Brawler, Item.Club  , "- Attacks for 3 Melee damage."],
+	[Class.Brawler, Item.Dagger, "- Attacks for 1 Melee damage."],
+	[Class.Brawler, Item.Mace  , "- Attacks for 5 Melee damage.\n- Can only attack when enemies are below half health."],
+	
+	[Class.Mage, Item.Staff , "- Attacks for 1 Ranged damage."],
+	[Class.Mage, Item.Dagger, "- Applies Strength buff to other imps.\n- Strength adds 1 damage to the next attack."],
+	[Class.Mage, Item.Club  , "- Attacks for 0-4 Ranged damage.\n- Damage is rolled randomly."],
+	[Class.Mage, Item.Scythe, "- Attacks for 1 Ranged damage.\n- Shoots 7 shots in random directions."],
+	
+	[Class.Cleric, Item.Staff , "- Applies Shield buff to nearby imps.\n- Shield buff blocks 1 hit from enemies."],
+	[Class.Cleric, Item.Dagger, "- Attacks for 1 Melee damage.\n- On kill, increase damage by 1 (resets next level)"],
+	[Class.Cleric, Item.Scythe, "- Splits nearby imps into two imps.\n- Split imps randomize their damage."],
+	
+	[Class.Summoner, Item.Staff , "- Summons random Ethereal imps.\n- Ethereal imps disappear after 4 seconds."],
+	[Class.Summoner, Item.Scythe, "- Resurrects dead imps."],
 ]
+
+func get_class_name(klass: Class) -> String:
+	return Class.keys()[klass]
+func get_item_name(item: Item) -> String:
+	return Item.keys()[item]
 
 var nonbreaking_imps = [0, 1, 2, 3,
 4, 5, 6, 7, 8, 9,  # no 10, because it splits

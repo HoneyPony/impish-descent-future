@@ -1,15 +1,8 @@
-[gd_scene load_steps=10 format=4 uid="uid://8l040d8q43q2"]
+[gd_scene load_steps=4 format=4 uid="uid://8l040d8q43q2"]
 
 [ext_resource type="PackedScene" uid="uid://b7h6g17gdadaw" path="res://level_base.tscn" id="1_67r6w"]
 [ext_resource type="PackedScene" uid="uid://bwbn040oj10n2" path="res://decoration/torch.tscn" id="2_a0v2d"]
-[ext_resource type="Script" uid="uid://yr0b2ntqtqs3" path="res://ui/reward_ui.gd" id="2_y2w5b"]
-[ext_resource type="PackedScene" uid="uid://dv7eaeqintp14" path="res://ui/imp_select_row.tscn" id="3_ccud7"]
 [ext_resource type="PackedScene" uid="uid://rl585tjhmod7" path="res://enemies/simple_ghost.tscn" id="3_hv7g1"]
-[ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="4_5cnak"]
-[ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="5_yfsgk"]
-[ext_resource type="Script" uid="uid://csbordnjwk72b" path="res://ui/relic_select_row.gd" id="6_q27w3"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_fv3oe"]
 
 [node name="Level" instance=ExtResource("1_67r6w")]
 
@@ -20,194 +13,17 @@ tile_map_data = PackedByteArray("AAD9////AgAAAAAAAAD9/wAAAgAAAAAAAAD9/wEAAgAAAAA
 tile_map_data = PackedByteArray("AAD2//z/AAAAAAAAAAD2//3/AAAAAAAAAAD2//7/AAAAAAAAAAD2////AAAAAAAAAAD1////AAAAAAAAAAD1/wAAAAAAAAAAAAD1/wEAAAAAAAAAAAD1/wIAAAAAAAAAAAD1/wMAAAAAAAAAAAD2/wMAAAAAAAAAAAD2/wQAAAAAAAAAAAD2/wIAAAAAAAAAAAD2/wEAAAAAAAAAAAD2/wAAAAAAAAAAAAD1//7/AAAAAAAAAAD1//3/AAAAAAAAAAD1//z/AAAAAAAAAAD1/wQAAAAAAAAAAAD1/wUAAAAAAAAAAAD1/wYAAAAAAAAAAAD2/wYAAAAAAAAAAAD3/wYAAAAAAAAAAAD4/wYAAAAAAAAAAAD5/wYAAAAAAAAAAAD6/wYAAAAAAAAAAAD7/wYAAAAAAAAAAAD8/wYAAAAAAAAAAAD9/wYAAAAAAAAAAAD+/wYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAAKAAUAAAAAAAAAAAAKAAQAAAAAAAAAAAAKAAMAAAAAAAAAAAAKAAIAAAAAAAAAAAAKAAEAAAAAAAAAAAAKAAAAAAAAAAAAAAAKAP//AAAAAAAAAAAKAP7/AAAAAAAAAAAKAP3/AAAAAAAAAAAKAPz/AAAAAAAAAAAKAPv/AAAAAAAAAAAJAPv/AAAAAAAAAAAJAPz/AAAAAAAAAAAJAP3/AAAAAAAAAAAJAP7/AAAAAAAAAAAJAP//AAAAAAAAAAAJAAAAAAAAAAAAAAAJAAEAAAAAAAAAAAAJAAIAAAAAAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAIAAUAAAAAAAAAAAAHAAUAAAAAAAAAAAAGAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAADAAUAAAAAAAAAAAACAAUAAAAAAAAAAAABAAUAAAAAAAAAAAD+/wUAAAAAAAAAAAD9/wUAAAAAAAAAAAD8/wUAAAAAAAAAAAD7/wUAAAAAAAAAAAD6/wUAAAAAAAAAAAD5/wUAAAAAAAAAAAD4/wUAAAAAAAAAAAD3/wUAAAAAAAAAAAD2/wUAAAAAAAAAAAADAAYAAAAAAAAAAAACAAYAAAAAAAAAAAABAAYAAAAAAAAAAAAJAPr/AAAAAAAAAAAJAPn/AAAAAAAAAAAJAPj/AAAAAAAAAAAJAPf/AAAAAAAAAAAKAPf/AAAAAAAAAAAKAPj/AAAAAAAAAAAKAPn/AAAAAAAAAAAKAPr/AAAAAAAAAAAJAPT/AAAAAAAAAAAJAPX/AAAAAAAAAAAJAPb/AAAAAAAAAAAKAPT/AAAAAAAAAAAKAPX/AAAAAAAAAAAKAPb/AAAAAAAAAAAJAPH/AAAAAAAAAAAJAPL/AAAAAAAAAAAJAPP/AAAAAAAAAAAKAPH/AAAAAAAAAAAKAPL/AAAAAAAAAAAKAPP/AAAAAAAAAADl//H/AAAAAAAAAADl//L/AAAAAAAAAADm//H/AAAAAAAAAADm//L/AAAAAAAAAADo//z/AAAAAAAAAADo//3/AAAAAAAAAADp//z/AAAAAAAAAADp//3/AAAAAAAAAADq//z/AAAAAAAAAADq//3/AAAAAAAAAADr//z/AAAAAAAAAADr//3/AAAAAAAAAADs//z/AAAAAAAAAADs//3/AAAAAAAAAADt//z/AAAAAAAAAADt//3/AAAAAAAAAADu//z/AAAAAAAAAADu//3/AAAAAAAAAADv//z/AAAAAAAAAADv//3/AAAAAAAAAADw//z/AAAAAAAAAADw//3/AAAAAAAAAADx//z/AAAAAAAAAADx//3/AAAAAAAAAADy//z/AAAAAAAAAADy//3/AAAAAAAAAADz//z/AAAAAAAAAADz//3/AAAAAAAAAAD0//z/AAAAAAAAAAD0//3/AAAAAAAAAAD6/wcABAAAAAAAAAD7/wgABAAAAAAAAAD8/wkABAAAAAAAAAD9/woABAAAAAAAAAD+/wsABAAAAAAAAAD//wsABAAAAAAAAAAAAAsABAAAAAAAAAABAAsABAAAAAAAAAACAAsABAAAAAAAAAACAAoABAAAAAAAAAADAAkABAAAAAAAAAAEAAgABAAAAAAAAAAFAAcABAAAAAAAAAAFAAgABAAAAAAAAAAEAAkABAAAAAAAAAADAAoABAAAAAAAAAD9/wsABAAAAAAAAAD8/woABAAAAAAAAAD7/wkABAAAAAAAAAD6/wgABAAAAAAAAAD5/wcABAAAAAAAAADk//L/BAAAAAAAAADj//L/BAAAAAAAAADi//L/BAAAAAAAAADh//L/BAAAAAAAAADg//L/BAAAAAAAAADf//L/BAAAAAAAAADe//L/BAAAAAAAAADf//P/BAAAAAAAAADe//P/BAAAAAAAAADe//T/BAAAAAAAAADf//T/BAAAAAAAAADg//T/BAAAAAAAAADg//X/BAAAAAAAAADh//X/BAAAAAAAAADh//b/BAAAAAAAAADi//b/BAAAAAAAAADi//f/BAAAAAAAAADj//f/BAAAAAAAAADj//j/BAAAAAAAAADk//j/BAAAAAAAAADk//n/BAAAAAAAAADl//n/BAAAAAAAAADl//r/BAAAAAAAAADm//r/BAAAAAAAAADm//v/BAAAAAAAAADn//v/BAAAAAAAAADm//z/BAAAAAAAAADn//z/BAAAAAAAAADk//H/BAAAAAAAAADj//H/BAAAAAAAAADi//H/BAAAAAAAAADh//H/BAAAAAAAAADg//H/BAAAAAAAAADf//H/BAAAAAAAAADe//H/BAAAAAAAAADn//L/AAAAAAAAAADo//L/AAAAAAAAAADp//L/AAAAAAAAAADq//L/AAAAAAAAAADr//L/AAAAAAAAAADs//L/AAAAAAAAAADt//L/AAAAAAAAAADu//L/AAAAAAAAAADv//L/AAAAAAAAAADw//L/AAAAAAAAAADx//L/AAAAAAAAAADy//L/AAAAAAAAAADz//L/AAAAAAAAAAD0//L/AAAAAAAAAAD1//L/AAAAAAAAAAD2//L/AAAAAAAAAAD3//L/AAAAAAAAAAD4//L/AAAAAAAAAAD5//L/AAAAAAAAAAD6//L/AAAAAAAAAAD7//L/AAAAAAAAAAD8//L/AAAAAAAAAAD9//L/AAAAAAAAAAD+//L/AAAAAAAAAAD///L/AAAAAAAAAAAAAPL/AAAAAAAAAAABAPL/AAAAAAAAAAACAPL/AAAAAAAAAAADAPL/AAAAAAAAAAAEAPL/AAAAAAAAAAAFAPL/AAAAAAAAAAAGAPL/AAAAAAAAAAAHAPL/AAAAAAAAAAAIAPL/AAAAAAAAAADn//H/AAAAAAAAAADo//H/AAAAAAAAAADp//H/AAAAAAAAAADq//H/AAAAAAAAAADr//H/AAAAAAAAAADs//H/AAAAAAAAAADt//H/AAAAAAAAAADu//H/AAAAAAAAAADv//H/AAAAAAAAAADw//H/AAAAAAAAAADx//H/AAAAAAAAAADy//H/AAAAAAAAAADz//H/AAAAAAAAAAD0//H/AAAAAAAAAAD1//H/AAAAAAAAAAD2//H/AAAAAAAAAAD3//H/AAAAAAAAAAD4//H/AAAAAAAAAAD5//H/AAAAAAAAAAD6//H/AAAAAAAAAAD7//H/AAAAAAAAAAD8//H/AAAAAAAAAAD9//H/AAAAAAAAAAD+//H/AAAAAAAAAAD///H/AAAAAAAAAAAAAPH/AAAAAAAAAAABAPH/AAAAAAAAAAACAPH/AAAAAAAAAAADAPH/AAAAAAAAAAAEAPH/AAAAAAAAAAAFAPH/AAAAAAAAAAAGAPH/AAAAAAAAAAAHAPH/AAAAAAAAAAAIAPH/AAAAAAAAAAD5//P/AAAAAAAAAAD5//T/AAAAAAAAAAD5//X/AAAAAAAAAAD6//P/AAAAAAAAAAD6//T/AAAAAAAAAAD6//X/AAAAAAAAAAD9//P/AAAAAAAAAAD9//T/AAAAAAAAAAD9//X/AAAAAAAAAAD+//P/AAAAAAAAAAD+//T/AAAAAAAAAAD+//X/AAAAAAAAAAABAPP/AAAAAAAAAAABAPT/AAAAAAAAAAABAPX/AAAAAAAAAAACAPP/AAAAAAAAAAACAPT/AAAAAAAAAAACAPX/AAAAAAAAAAAFAPP/AAAAAAAAAAAFAPT/AAAAAAAAAAAFAPX/AAAAAAAAAAAGAPP/AAAAAAAAAAAGAPT/AAAAAAAAAAAGAPX/AAAAAAAAAAA=")
 
 [node name="UpgradeMenu" parent="UpgradeMenu/Control" index="0" node_paths=PackedStringArray("double_upgrade_child")]
-double_upgrade_child = NodePath("../UpgradeMenu2")
-
-[node name="Relics" parent="UpgradeMenu/Control/UpgradeMenu" index="5"]
-visible = false
-
-[node name="Button" parent="UpgradeMenu/Control/UpgradeMenu/Relics/NoRelic" index="1"]
-button_group = SubResource("ButtonGroup_fv3oe")
-
-[node name="UpgradeMenu2" type="ColorRect" parent="UpgradeMenu/Control" index="1" node_paths=PackedStringArray("double_upgrade")]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -348.0
-offset_top = -7.0
-offset_right = 360.0
-offset_bottom = 314.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.348043, 0.196363, 0.191862, 1)
-script = ExtResource("2_y2w5b")
-double_upgrade = NodePath("../UpgradeMenu")
-
-[node name="ConfirmButton" type="Button" parent="UpgradeMenu/Control/UpgradeMenu2" index="0"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -81.5
-offset_top = -43.0
-offset_right = 81.5
-offset_bottom = -6.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Confirm"
-
-[node name="ImpTitle" type="Label" parent="UpgradeMenu/Control/UpgradeMenu2" index="1"]
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -136.5
-offset_top = 11.0
-offset_right = 136.5
-offset_bottom = 34.0
-grow_horizontal = 2
-text = "Choose an Imp to add to your army"
-
-[node name="ImpSelectRow" parent="UpgradeMenu/Control/UpgradeMenu2" index="2" instance=ExtResource("3_ccud7")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 15.0
-offset_right = 341.5
-offset_bottom = 97.0
-grow_horizontal = 2
-
-[node name="ImpSelectRow2" parent="UpgradeMenu/Control/UpgradeMenu2" index="3" instance=ExtResource("3_ccud7")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 101.0
-offset_right = 341.5
-offset_bottom = 183.0
-grow_horizontal = 2
-
-[node name="ImpSelectRow3" parent="UpgradeMenu/Control/UpgradeMenu2" index="4" instance=ExtResource("3_ccud7")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 187.0
-offset_right = 341.5
-offset_bottom = 269.0
-grow_horizontal = 2
-
-[node name="Relics" type="ColorRect" parent="UpgradeMenu/Control/UpgradeMenu2" index="5"]
-visible = false
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -354.0
-offset_top = -53.0
-offset_right = 354.0
-offset_bottom = 274.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0.34902, 0.196078, 0.192157, 1)
-
-[node name="RelicSelectRow" parent="UpgradeMenu/Control/UpgradeMenu2/Relics" index="0" instance=ExtResource("4_5cnak")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 56.0
-offset_right = 341.5
-offset_bottom = 138.0
-grow_horizontal = 2
-
-[node name="RelicSelectRow2" parent="UpgradeMenu/Control/UpgradeMenu2/Relics" index="1" instance=ExtResource("4_5cnak")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 142.0
-offset_right = 341.5
-offset_bottom = 224.0
-grow_horizontal = 2
-
-[node name="NoRelic" type="ColorRect" parent="UpgradeMenu/Control/UpgradeMenu2/Relics" index="2"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.0
-offset_top = 228.0
-offset_right = 342.0
-offset_bottom = 267.0
-grow_horizontal = 2
-theme = ExtResource("5_yfsgk")
-color = Color(0.266575, 0.266575, 0.266575, 1)
-script = ExtResource("6_q27w3")
-
-[node name="Label" type="RichTextLabel" parent="UpgradeMenu/Control/UpgradeMenu2/Relics/NoRelic" index="0"]
-layout_mode = 0
-offset_left = 79.0
-offset_top = 7.0
-offset_right = 558.0
-offset_bottom = 33.0
-text = "Skip Relic"
-
-[node name="Button" type="Button" parent="UpgradeMenu/Control/UpgradeMenu2/Relics/NoRelic" index="1"]
-layout_mode = 0
-offset_left = 562.0
-offset_top = 4.0
-offset_right = 674.0
-offset_bottom = 35.0
-toggle_mode = true
-button_group = SubResource("ButtonGroup_fv3oe")
-text = "Choose"
-
-[node name="Label2" type="Label" parent="UpgradeMenu/Control/UpgradeMenu2/Relics" index="3"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -172.5
-offset_top = 21.0
-offset_right = 172.5
-offset_bottom = 44.0
-grow_horizontal = 2
-text = "... and Choose a Relic to enhance your power"
-
-[node name="ConfirmButton2" type="Button" parent="UpgradeMenu/Control/UpgradeMenu2/Relics" index="4"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -81.5
-offset_top = -48.0
-offset_right = 81.5
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Confirm"
-
-[node name="ColorRect" type="ColorRect" parent="UpgradeMenu/Control/UpgradeMenu2" index="6"]
-layout_mode = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
 offset_right = 708.0
-offset_bottom = 7.0
-color = Color(0.233236, 0.123145, 0.120394, 1)
+offset_bottom = 357.0
+grow_horizontal = 1
+grow_vertical = 1
+double_upgrade_child = NodePath("")
 
 [node name="ImpStartPos" parent="." index="6"]
 position = Vector2(-3, 1134)
@@ -241,6 +57,3 @@ position = Vector2(-2396, -649)
 
 [node name="SimpleGhost3" parent="." index="16" instance=ExtResource("3_hv7g1")]
 position = Vector2(-2387, -888)
-
-[connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu2/ConfirmButton" to="UpgradeMenu/Control/UpgradeMenu2" method="_on_confirm_button_pressed"]
-[connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu2/Relics/ConfirmButton2" to="UpgradeMenu/Control/UpgradeMenu2" method="_on_confirm_button_pressed"]

@@ -1,22 +1,17 @@
-[gd_scene load_steps=17 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=13 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="Script" uid="uid://77reaige6ecr" path="res://camera.gd" id="1_qvjw2"]
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="2_f1kks"]
 [ext_resource type="TileSet" uid="uid://d3qyn64c7iut5" path="res://tileset.tres" id="3_d6f8o"]
 [ext_resource type="Script" uid="uid://bgf8itwj57v1g" path="res://tiles/create_navigation.gd" id="4_3fmo5"]
+[ext_resource type="PackedScene" uid="uid://xx44173k4hig" path="res://ui/upgrade_menu.tscn" id="6_fdc3t"]
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="6_jm28w"]
-[ext_resource type="Script" uid="uid://yr0b2ntqtqs3" path="res://ui/reward_ui.gd" id="7_jy4qv"]
-[ext_resource type="PackedScene" uid="uid://dv7eaeqintp14" path="res://ui/imp_select_row.tscn" id="8_2b3rg"]
 [ext_resource type="Script" uid="uid://bm1i70jjgq8hw" path="res://ui/success_menu.gd" id="8_a0vcg"]
-[ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="8_k35jv"]
-[ext_resource type="Script" uid="uid://csbordnjwk72b" path="res://ui/relic_select_row.gd" id="9_p0a2q"]
 [ext_resource type="Script" uid="uid://dyt83d0a52416" path="res://ui/defeat_menu.gd" id="10_reeg6"]
 [ext_resource type="Script" uid="uid://bj7vvgyka0aft" path="res://ui/formation_menu.gd" id="10_t5hyg"]
 [ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="12_w2t3q"]
 [ext_resource type="Script" uid="uid://cejur8ehkbc8c" path="res://relic_icon.gd" id="13_50h4x"]
 [ext_resource type="Script" uid="uid://dsl5sdm752l86" path="res://players/imp_formation.gd" id="14_pvn8g"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_mprjm"]
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -56,177 +51,9 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("6_jm28w")
 
-[node name="UpgradeMenu" type="ColorRect" parent="UpgradeMenu/Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -348.0
-offset_top = -314.0
-offset_right = 360.0
-offset_bottom = 43.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.348043, 0.196363, 0.191862, 1)
-script = ExtResource("7_jy4qv")
-
-[node name="ConfirmButton" type="Button" parent="UpgradeMenu/Control/UpgradeMenu"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -81.5
-offset_top = -50.0
-offset_right = 81.5
-offset_bottom = -13.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Confirm"
-
-[node name="ImpTitle" type="Label" parent="UpgradeMenu/Control/UpgradeMenu"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -136.5
-offset_top = 11.0
-offset_right = 136.5
-offset_bottom = 34.0
-grow_horizontal = 2
-text = "Choose an Imp to add to your army"
-
-[node name="ImpSelectRow" parent="UpgradeMenu/Control/UpgradeMenu" instance=ExtResource("8_2b3rg")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 44.0
-offset_right = 341.5
-offset_bottom = 126.0
-grow_horizontal = 2
-
-[node name="ImpSelectRow2" parent="UpgradeMenu/Control/UpgradeMenu" instance=ExtResource("8_2b3rg")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 130.0
-offset_right = 341.5
-offset_bottom = 212.0
-grow_horizontal = 2
-
-[node name="ImpSelectRow3" parent="UpgradeMenu/Control/UpgradeMenu" instance=ExtResource("8_2b3rg")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 216.0
-offset_right = 341.5
-offset_bottom = 298.0
-grow_horizontal = 2
-
-[node name="Relics" type="ColorRect" parent="UpgradeMenu/Control/UpgradeMenu"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -354.0
-offset_top = -53.0
-offset_right = 354.0
-offset_bottom = 274.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0.34902, 0.196078, 0.192157, 1)
-
-[node name="RelicSelectRow" parent="UpgradeMenu/Control/UpgradeMenu/Relics" instance=ExtResource("8_k35jv")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 56.0
-offset_right = 341.5
-offset_bottom = 138.0
-grow_horizontal = 2
-
-[node name="RelicSelectRow2" parent="UpgradeMenu/Control/UpgradeMenu/Relics" instance=ExtResource("8_k35jv")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 142.0
-offset_right = 341.5
-offset_bottom = 224.0
-grow_horizontal = 2
-
-[node name="NoRelic" type="ColorRect" parent="UpgradeMenu/Control/UpgradeMenu/Relics"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.0
-offset_top = 228.0
-offset_right = 342.0
-offset_bottom = 267.0
-grow_horizontal = 2
-theme = ExtResource("6_jm28w")
-color = Color(0.266575, 0.266575, 0.266575, 1)
-script = ExtResource("9_p0a2q")
-
-[node name="Label" type="RichTextLabel" parent="UpgradeMenu/Control/UpgradeMenu/Relics/NoRelic"]
+[node name="UpgradeMenu" parent="UpgradeMenu/Control" instance=ExtResource("6_fdc3t")]
 layout_mode = 0
-offset_left = 79.0
-offset_top = 7.0
-offset_right = 558.0
-offset_bottom = 33.0
-text = "Skip Relic"
-
-[node name="Button" type="Button" parent="UpgradeMenu/Control/UpgradeMenu/Relics/NoRelic"]
-layout_mode = 0
-offset_left = 562.0
-offset_top = 4.0
-offset_right = 674.0
-offset_bottom = 35.0
-toggle_mode = true
-button_group = SubResource("ButtonGroup_mprjm")
-text = "Choose"
-
-[node name="Label2" type="Label" parent="UpgradeMenu/Control/UpgradeMenu/Relics"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -172.5
-offset_top = 21.0
-offset_right = 172.5
-offset_bottom = 44.0
-grow_horizontal = 2
-text = "... and Choose a Relic to enhance your power"
-
-[node name="ConfirmButton2" type="Button" parent="UpgradeMenu/Control/UpgradeMenu/Relics"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -81.5
-offset_top = -48.0
-offset_right = 81.5
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Confirm"
+anchors_preset = 0
 
 [node name="FormationMenu" type="Control" parent="UpgradeMenu/Control"]
 unique_name_in_owner = true
@@ -432,8 +259,6 @@ position = Vector2(2, 124)
 [node name="ImpFormation" type="Node2D" parent="ImpStartPos" groups=["ImpFormation"]]
 script = ExtResource("14_pvn8g")
 
-[connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu/ConfirmButton" to="UpgradeMenu/Control/UpgradeMenu" method="_on_confirm_button_pressed"]
-[connection signal="pressed" from="UpgradeMenu/Control/UpgradeMenu/Relics/ConfirmButton2" to="UpgradeMenu/Control/UpgradeMenu" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/SuccessMenu/ConfirmButton" to="UpgradeMenu/Control/SuccessMenu" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/DefeatMenu/MainMenu" to="UpgradeMenu/Control/DefeatMenu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/DefeatMenu/Retry" to="UpgradeMenu/Control/DefeatMenu" method="_on_retry_pressed"]

@@ -6,6 +6,12 @@ extends ColorRect
 	$ImpSelectRow3
 ]
 
+@onready var cards = [
+	%Card1,
+	%Card2,
+	%Card3
+]
+
 @onready var relic_rows = [
 	$Relics/RelicSelectRow,
 	$Relics/RelicSelectRow2,
@@ -54,6 +60,7 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 			
 	for i in range(0, 3):
 		rows[i].setup(GS.valid_imps[imps[i]], imps[i])
+		cards[i].setup_as_imp(GS.valid_imps[imps[i]], imps[i])
 		
 	rows[0].select_this()
 	

@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://rl585tjhmod7"]
+[gd_scene load_steps=6 format=3 uid="uid://rl585tjhmod7"]
 
 [ext_resource type="Script" uid="uid://ysaxhowl7k7j" path="res://enemies/simple_ghost.gd" id="1_n6c1y"]
 [ext_resource type="PackedScene" uid="uid://btrafneliekux" path="res://enemies/simple_ghost_anim.tscn" id="2_q0ajj"]
-[ext_resource type="Material" uid="uid://bvrrm708icif1" path="res://enemies/ghost_material.tres" id="2_v5knm"]
 [ext_resource type="PackedScene" uid="uid://c28o3vm70ky5b" path="res://health/health.tscn" id="3_kq0l4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m148u"]
@@ -18,12 +17,6 @@ script = ExtResource("1_n6c1y")
 
 [node name="SimpleGhostAnim" parent="." instance=ExtResource("2_q0ajj")]
 position = Vector2(0, -41)
-scale = Vector2(0.25, 0.25)
-
-[node name="Apperance" type="CanvasGroup" parent="."]
-modulate = Color(1, 1, 1, 0.105882)
-material = ExtResource("2_v5knm")
-position = Vector2(0, -256)
 scale = Vector2(0.25, 0.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

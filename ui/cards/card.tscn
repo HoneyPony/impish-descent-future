@@ -1,14 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://c530bsw0pmjhi"]
+[gd_scene load_steps=10 format=3 uid="uid://c530bsw0pmjhi"]
 
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="1_j1wn2"]
 [ext_resource type="Texture2D" uid="uid://bau4fcmilhohm" path="res://ui/cards/portrait_bg.png" id="2_08k0w"]
 [ext_resource type="Texture2D" uid="uid://dygmsg5yp7rmk" path="res://ui/cards/card.png" id="2_tts3a"]
+[ext_resource type="Script" uid="uid://csg67rt3bras1" path="res://ui/cards/card.gd" id="3_fijmi"]
 [ext_resource type="Texture2D" uid="uid://da3lgcyu0ciub" path="res://players/red/body-f.png" id="3_tts3a"]
 [ext_resource type="Texture2D" uid="uid://cy7h3fabcfink" path="res://players/red/head.png" id="4_fijmi"]
 [ext_resource type="Texture2D" uid="uid://dr3r2hlhd06fe" path="res://ui/cards/portrait_circle.png" id="5_yfa6u"]
 [ext_resource type="Texture2D" uid="uid://bogo0wcmwdx6i" path="res://players/mace.png" id="6_fn7ga"]
+[ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="7_fijmi"]
 
-[node name="TextureRect" type="TextureRect"]
+[node name="Card" type="TextureRect"]
 offset_left = -38.0
 offset_top = -30.0
 offset_right = 221.0
@@ -16,11 +18,13 @@ offset_bottom = 271.0
 theme = ExtResource("1_j1wn2")
 texture = ExtResource("2_tts3a")
 expand_mode = 1
+script = ExtResource("3_fijmi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(38, 30)
 
-[node name="Label" type="RichTextLabel" parent="."]
+[node name="Title" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 37.0
 offset_top = 139.0
@@ -29,25 +33,41 @@ offset_bottom = 165.0
 text = "Cleric / Scythe"
 horizontal_alignment = 1
 
-[node name="Label3" type="RichTextLabel" parent="."]
+[node name="ActionSpeed" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 37.0
+offset_left = 38.0
 offset_top = 158.0
-offset_right = 223.0
+offset_right = 224.0
 offset_bottom = 184.0
 theme_override_font_sizes/normal_font_size = 16
-text = "200% speed"
+bbcode_enabled = true
+text = "[color=#a0ffc0]200% action speed"
 horizontal_alignment = 1
 
-[node name="Label2" type="RichTextLabel" parent="."]
+[node name="Damage" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+visible = false
 layout_mode = 0
-offset_left = 60.0
-offset_top = 186.0
-offset_right = 199.0
-offset_bottom = 269.0
+offset_left = 38.0
+offset_top = 178.0
+offset_right = 224.0
+offset_bottom = 204.0
 theme_override_font_sizes/normal_font_size = 16
-text = "Attacks for 0-4 Ranged damage (rolled randomly)."
-vertical_alignment = 2
+bbcode_enabled = true
+text = "4 Ranged Damage"
+horizontal_alignment = 1
+
+[node name="Description" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 55.0
+offset_top = 181.0
+offset_right = 207.0
+offset_bottom = 269.0
+theme_override_font_sizes/normal_font_size = 13
+text = "- Attacks for 5 Melee damage.
+- Can only attack when enemies are below half health."
 
 [node name="PortraitBg" type="Sprite2D" parent="."]
 clip_children = 2
@@ -55,23 +75,24 @@ position = Vector2(129.478, 61.4778)
 scale = Vector2(0.302648, 0.302648)
 texture = ExtResource("2_08k0w")
 
-[node name="body" type="Polygon2D" parent="PortraitBg"]
+[node name="ImpBody" type="Sprite2D" parent="PortraitBg"]
 unique_name_in_owner = true
-position = Vector2(-278.613, -289.426)
-scale = Vector2(2.02776, 2.02776)
+position = Vector2(-18.0999, 226.409)
+scale = Vector2(2.028, 2.028)
 texture = ExtResource("3_tts3a")
-skeleton = NodePath("../Skeleton2D")
-polygon = PackedVector2Array(83.9354, 166.527, 69.9064, 220.844, 69.187, 264.73, 84.475, 305.378, 146.346, 307.357, 161.814, 272.644, 161.814, 251.42, 155.159, 210.053, 146.346, 164.729, 99.0838, 253.047, 143.249, 251.264)
-uv = PackedVector2Array(83.9354, 166.527, 69.9064, 220.844, 69.187, 264.73, 84.475, 305.378, 146.346, 307.357, 161.814, 272.644, 161.814, 251.42, 155.159, 210.053, 146.346, 164.729, 99.0838, 253.047, 143.249, 251.264)
-polygons = [PackedInt32Array(2, 9, 10, 6, 5, 4, 3), PackedInt32Array(0, 1, 2, 9, 10, 6, 7, 8)]
-bones = ["root", PackedFloat32Array(0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1), "root/chest", PackedFloat32Array(1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0), "root/chest/head", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "root/hipl", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "root/hipl/kneel", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "root/hipl/kneel/footl", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "root/hipr", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "root/hipr/knee_r", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "root/hipr/knee_r/foot_r", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
-internal_vertex_count = 2
 
-[node name="head" type="Sprite2D" parent="PortraitBg"]
+[node name="ImpHead" type="Sprite2D" parent="PortraitBg"]
 unique_name_in_owner = true
 position = Vector2(-77.8645, 91.7935)
 scale = Vector2(2.02776, 2.02776)
 texture = ExtResource("4_fijmi")
+offset = Vector2(28, 60)
+
+[node name="Relic" type="Sprite2D" parent="PortraitBg"]
+unique_name_in_owner = true
+position = Vector2(-34.6207, -84.1829)
+scale = Vector2(1.30621, 1.30621)
+texture = ExtResource("7_fijmi")
 offset = Vector2(28, 60)
 
 [node name="PortraitCircle" type="Sprite2D" parent="."]
@@ -79,7 +100,8 @@ position = Vector2(129.478, 61.4778)
 scale = Vector2(0.302648, 0.302648)
 texture = ExtResource("5_yfa6u")
 
-[node name="Item" type="Sprite2D" parent="."]
+[node name="ImpItem" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(170.806, 102)
 rotation = 0.30058
 scale = Vector2(0.344041, 0.344041)

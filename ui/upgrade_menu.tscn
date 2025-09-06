@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="3_wl8nm"]
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="4_sf0oj"]
 [ext_resource type="Script" uid="uid://csbordnjwk72b" path="res://ui/relic_select_row.gd" id="5_m2nq5"]
-[ext_resource type="Texture2D" uid="uid://ogabbuhvpgq3" path="res://ui/panel_orangegray.png" id="6_wl8nm"]
+[ext_resource type="Texture2D" uid="uid://bwp1t744i5mcq" path="res://ui/panel_graygray.png" id="6_wl8nm"]
 [ext_resource type="PackedScene" uid="uid://c530bsw0pmjhi" path="res://ui/cards/card.tscn" id="7_sf0oj"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_mprjm"]
@@ -198,21 +198,24 @@ offset_bottom = -20.0
 grow_horizontal = 2
 text = "Choose an Imp to add to your army"
 
-[node name="ColorRect" parent="." instance=ExtResource("7_sf0oj")]
+[node name="Card1" parent="." instance=ExtResource("7_sf0oj")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = -28.0
 offset_top = 0.0
 offset_right = 231.0
 offset_bottom = 301.0
 
-[node name="ColorRect2" parent="." instance=ExtResource("7_sf0oj")]
+[node name="Card2" parent="." instance=ExtResource("7_sf0oj")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 231.0
 offset_top = 0.0
 offset_right = 490.0
 offset_bottom = 301.0
 
-[node name="ColorRect3" parent="." instance=ExtResource("7_sf0oj")]
+[node name="Card3" parent="." instance=ExtResource("7_sf0oj")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 498.0
 offset_top = 0.0
