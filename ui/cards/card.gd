@@ -78,6 +78,6 @@ func select_self() -> void:
 func _ready() -> void:
 	%Card.gui_input.connect(func(event: InputEvent) -> void:
 		if event is InputEventMouseButton:
-			if event.pressed:
+			if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 				select_self()
 	)

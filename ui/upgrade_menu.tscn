@@ -1,14 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://xx44173k4hig"]
+[gd_scene load_steps=9 format=3 uid="uid://xx44173k4hig"]
 
 [ext_resource type="Script" uid="uid://yr0b2ntqtqs3" path="res://ui/reward_ui.gd" id="1_0gvwy"]
-[ext_resource type="PackedScene" uid="uid://dv7eaeqintp14" path="res://ui/imp_select_row.tscn" id="2_1l4xg"]
 [ext_resource type="PackedScene" uid="uid://bsyfpp8d5s708" path="res://ui/relic_select_row.tscn" id="3_wl8nm"]
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="4_sf0oj"]
 [ext_resource type="Script" uid="uid://csbordnjwk72b" path="res://ui/relic_select_row.gd" id="5_m2nq5"]
 [ext_resource type="Texture2D" uid="uid://bwp1t744i5mcq" path="res://ui/panel_graygray.png" id="6_wl8nm"]
 [ext_resource type="PackedScene" uid="uid://c530bsw0pmjhi" path="res://ui/cards/card.tscn" id="7_sf0oj"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_mprjm"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m2nq5"]
 texture = ExtResource("6_wl8nm")
@@ -17,7 +14,10 @@ texture_margin_top = 100.0
 texture_margin_right = 100.0
 texture_margin_bottom = 100.0
 
-[node name="UpgradeMenu" type="ColorRect"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_mprjm"]
+
+[node name="UpgradeMenu" type="Control"]
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -30,8 +30,28 @@ offset_bottom = 43.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_sf0oj")
-color = Color(0.348043, 0.196363, 0.191862, 1)
 script = ExtResource("1_0gvwy")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = -1.0
+offset_right = 1116.0
+offset_bottom = 913.0
+scale = Vector2(0.5, 0.5)
+theme_override_styles/panel = SubResource("StyleBoxTexture_m2nq5")
+
+[node name="ImpTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -141.0
+offset_top = 27.0
+offset_right = 132.0
+offset_bottom = 50.0
+grow_horizontal = 2
+text = "Choose an Imp to add to your army"
 
 [node name="ConfirmButton" type="Button" parent="."]
 layout_mode = 1
@@ -40,48 +60,16 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -81.5
-offset_top = -50.0
-offset_right = 81.5
-offset_bottom = -13.0
+offset_left = -84.0
+offset_top = 36.0
+offset_right = 79.0
+offset_bottom = 73.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Confirm"
 
-[node name="ImpSelectRow" parent="." instance=ExtResource("2_1l4xg")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 44.0
-offset_right = 341.5
-offset_bottom = 126.0
-grow_horizontal = 2
-
-[node name="ImpSelectRow2" parent="." instance=ExtResource("2_1l4xg")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 130.0
-offset_right = 341.5
-offset_bottom = 212.0
-grow_horizontal = 2
-
-[node name="ImpSelectRow3" parent="." instance=ExtResource("2_1l4xg")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -341.5
-offset_top = 216.0
-offset_right = 341.5
-offset_bottom = 298.0
-grow_horizontal = 2
-
 [node name="Relics" type="ColorRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -177,38 +165,17 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Confirm"
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_left = -47.0
-offset_top = -62.0
-offset_right = 1633.0
-offset_bottom = 762.0
-scale = Vector2(0.5, 0.5)
-theme_override_styles/panel = SubResource("StyleBoxTexture_m2nq5")
-
-[node name="ImpTitle" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -124.0
-offset_top = -43.0
-offset_right = 149.0
-offset_bottom = -20.0
-grow_horizontal = 2
-text = "Choose an Imp to add to your army"
-
 [node name="Card1" parent="." instance=ExtResource("7_sf0oj")]
 unique_name_in_owner = true
-position = Vector2(101, 169)
+position = Vector2(81, 256)
 
 [node name="Card2" parent="." instance=ExtResource("7_sf0oj")]
 unique_name_in_owner = true
-position = Vector2(369, 165)
+position = Vector2(344, 256)
 
 [node name="Card3" parent="." instance=ExtResource("7_sf0oj")]
 unique_name_in_owner = true
-position = Vector2(628, 164)
+position = Vector2(608, 256)
 
 [connection signal="pressed" from="ConfirmButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="Relics/ConfirmButton2" to="." method="_on_confirm_button_pressed"]

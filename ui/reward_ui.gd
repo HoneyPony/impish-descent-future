@@ -1,10 +1,4 @@
-extends ColorRect
-
-@onready var rows = [
-	$ImpSelectRow,
-	$ImpSelectRow2,
-	$ImpSelectRow3
-]
+extends Control
 
 @onready var cards := [
 	%Card1,
@@ -18,7 +12,6 @@ extends ColorRect
 	$Relics/NoRelic
 ]
 
-var current_new_imp = 0
 var current_new_relic = 0
 
 ## Which of the main row of cards will be picked.
@@ -34,10 +27,6 @@ func unselect_main_cards() -> void:
 	for card in cards:
 		card.selected = false
 
-func unselect_imps():
-	for row in rows:
-		row.unselect()
-		
 func unselect_relics():
 	for row in relic_rows:
 		row.unselect()
@@ -66,10 +55,8 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 		imps.push_back(sample_imp(true))
 			
 	for i in range(0, 3):
-		rows[i].setup(GS.valid_imps[imps[i]], imps[i])
 		cards[i].setup_as_imp(GS.valid_imps[imps[i]], imps[i])
 		
-	rows[0].select_this()
 	cards[0].select_self()
 	
 	if relic:
@@ -132,10 +119,18 @@ func _ready():
 	if double_upgrade != null:
 		double_upgrade.get_node("ImpTitle").text = "Choose two Imps to add to your army"
 
+func _earn_reward(card: UpgradeCard) -> void:
+	if card == null:
+		return
+	if card.kind == UpgradeCard.RewardKind.IMP:
+		GS.current_army.push_back(card.id)
+
 # This is basically the entry point into the gameplay for now.
 func _on_confirm_button_pressed():
 	hide()
-	GS.current_army.push_back(current_new_imp)
+	
+	_earn_reward(current_main_card)
+	
 	if do_choose_relic and current_new_relic >= 0:
 		GS.accept_relic(current_new_relic)
 	

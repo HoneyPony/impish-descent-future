@@ -164,7 +164,7 @@ static func compute_action_speed(klass: GS.Class, item: GS.Item) -> Vector2:
 # Computes intrinsic class-based properties before we get to the effects of
 # relics.
 func compute_basic_properties():
-	action_speed = compute_action_speed(current_class, current_item)
+	action_speed = compute_action_speed(current_class, current_item).x
 	
 	if GS.relic_daggers_150_speed and current_item == GS.Item.Dagger:
 		# Also change the cooldown.

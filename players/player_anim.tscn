@@ -453,7 +453,7 @@ rest = Transform2D(1, 0, 0, 1, -29, -32)
 [node name="ik_r" type="Bone2D" parent="Node2D/Skeleton2D"]
 position = Vector2(5, -32)
 rotation = -0.21276
-scale = Vector2(0.999837, 0.999837)
+scale = Vector2(0.999836, 0.999836)
 rest = Transform2D(1, 0, 0, 1, 5, -32)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -69,8 +69,8 @@ func _physics_process(delta):
 	velocity = vel_dir * 32
 	
 	# weird hack for rotation
-	if abs(vel_dir.dot(Vector2.UP)) < 0.4:
-		anim.scale.x = abs(anim.scale.x) * sign(velocity.x)
+	#if abs(vel_dir.dot(Vector2.UP)) < 0.4:
+		#anim.scale.x = abs(anim.scale.x) * sign(velocity.x)
 	
 	move_and_slide()
 	handle_simple_projectile(delta)
