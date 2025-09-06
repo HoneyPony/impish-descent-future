@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c530bsw0pmjhi"]
+[gd_scene load_steps=11 format=3 uid="uid://c530bsw0pmjhi"]
 
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="1_j1wn2"]
 [ext_resource type="Texture2D" uid="uid://bau4fcmilhohm" path="res://ui/cards/portrait_bg.png" id="2_08k0w"]
@@ -6,24 +6,41 @@
 [ext_resource type="Script" uid="uid://csg67rt3bras1" path="res://ui/cards/card.gd" id="3_fijmi"]
 [ext_resource type="Texture2D" uid="uid://da3lgcyu0ciub" path="res://players/red/body-f.png" id="3_tts3a"]
 [ext_resource type="Texture2D" uid="uid://cy7h3fabcfink" path="res://players/red/head.png" id="4_fijmi"]
+[ext_resource type="Texture2D" uid="uid://c3g0g62vwwe8g" path="res://ui/cards/card-hover.png" id="4_yfa6u"]
 [ext_resource type="Texture2D" uid="uid://dr3r2hlhd06fe" path="res://ui/cards/portrait_circle.png" id="5_yfa6u"]
 [ext_resource type="Texture2D" uid="uid://bogo0wcmwdx6i" path="res://players/mace.png" id="6_fn7ga"]
 [ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="7_fijmi"]
 
-[node name="Card" type="TextureRect"]
-offset_left = -38.0
-offset_top = -30.0
-offset_right = 221.0
-offset_bottom = 271.0
+[node name="Card" type="Node2D"]
+script = ExtResource("3_fijmi")
+
+[node name="Card" type="TextureRect" parent="."]
+unique_name_in_owner = true
+offset_left = -128.0
+offset_top = -175.0
+offset_right = 131.0
+offset_bottom = 126.0
+pivot_offset = Vector2(128, 176)
 theme = ExtResource("1_j1wn2")
 texture = ExtResource("2_tts3a")
 expand_mode = 1
-script = ExtResource("3_fijmi")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="HoverTex" type="TextureRect" parent="Card"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_yfa6u")
+expand_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Card"]
 position = Vector2(38, 30)
 
-[node name="Title" type="RichTextLabel" parent="."]
+[node name="Title" type="RichTextLabel" parent="Card"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 37.0
@@ -33,7 +50,7 @@ offset_bottom = 165.0
 text = "Cleric / Scythe"
 horizontal_alignment = 1
 
-[node name="ActionSpeed" type="RichTextLabel" parent="."]
+[node name="ActionSpeed" type="RichTextLabel" parent="Card"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 38.0
@@ -45,7 +62,7 @@ bbcode_enabled = true
 text = "[color=#a0ffc0]200% action speed"
 horizontal_alignment = 1
 
-[node name="Damage" type="RichTextLabel" parent="."]
+[node name="Damage" type="RichTextLabel" parent="Card"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -58,7 +75,7 @@ bbcode_enabled = true
 text = "4 Ranged Damage"
 horizontal_alignment = 1
 
-[node name="Description" type="RichTextLabel" parent="."]
+[node name="Description" type="RichTextLabel" parent="Card"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 55.0
@@ -69,38 +86,38 @@ theme_override_font_sizes/normal_font_size = 13
 text = "- Attacks for 5 Melee damage.
 - Can only attack when enemies are below half health."
 
-[node name="PortraitBg" type="Sprite2D" parent="."]
+[node name="PortraitBg" type="Sprite2D" parent="Card"]
 clip_children = 2
 position = Vector2(129.478, 61.4778)
 scale = Vector2(0.302648, 0.302648)
 texture = ExtResource("2_08k0w")
 
-[node name="ImpBody" type="Sprite2D" parent="PortraitBg"]
+[node name="ImpBody" type="Sprite2D" parent="Card/PortraitBg"]
 unique_name_in_owner = true
 position = Vector2(-18.0999, 226.409)
 scale = Vector2(2.028, 2.028)
 texture = ExtResource("3_tts3a")
 
-[node name="ImpHead" type="Sprite2D" parent="PortraitBg"]
+[node name="ImpHead" type="Sprite2D" parent="Card/PortraitBg"]
 unique_name_in_owner = true
 position = Vector2(-77.8645, 91.7935)
 scale = Vector2(2.02776, 2.02776)
 texture = ExtResource("4_fijmi")
 offset = Vector2(28, 60)
 
-[node name="Relic" type="Sprite2D" parent="PortraitBg"]
+[node name="Relic" type="Sprite2D" parent="Card/PortraitBg"]
 unique_name_in_owner = true
 position = Vector2(-34.6207, -84.1829)
 scale = Vector2(1.30621, 1.30621)
 texture = ExtResource("7_fijmi")
 offset = Vector2(28, 60)
 
-[node name="PortraitCircle" type="Sprite2D" parent="."]
+[node name="PortraitCircle" type="Sprite2D" parent="Card"]
 position = Vector2(129.478, 61.4778)
 scale = Vector2(0.302648, 0.302648)
 texture = ExtResource("5_yfa6u")
 
-[node name="ImpItem" type="Sprite2D" parent="."]
+[node name="ImpItem" type="Sprite2D" parent="Card"]
 unique_name_in_owner = true
 position = Vector2(170.806, 102)
 rotation = 0.30058

@@ -200,27 +200,15 @@ text = "Choose an Imp to add to your army"
 
 [node name="Card1" parent="." instance=ExtResource("7_sf0oj")]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = -28.0
-offset_top = 0.0
-offset_right = 231.0
-offset_bottom = 301.0
+position = Vector2(101, 169)
 
 [node name="Card2" parent="." instance=ExtResource("7_sf0oj")]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 231.0
-offset_top = 0.0
-offset_right = 490.0
-offset_bottom = 301.0
+position = Vector2(369, 165)
 
 [node name="Card3" parent="." instance=ExtResource("7_sf0oj")]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 498.0
-offset_top = 0.0
-offset_right = 757.0
-offset_bottom = 301.0
+position = Vector2(628, 164)
 
 [connection signal="pressed" from="ConfirmButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="Relics/ConfirmButton2" to="." method="_on_confirm_button_pressed"]

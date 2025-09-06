@@ -1,4 +1,4 @@
-extends TextureRect
+extends Node2D
 ## Represents a single upgrade in the upgrade menu. Handles selection of itself
 ## and display.
 class_name UpgradeCard
@@ -16,6 +16,9 @@ enum RewardKind {
 var kind: RewardKind = RewardKind.IMP
 
 const BBCODE_MODIFIED := "[color=#a0ffc0]"
+
+@onready var hover_tex := %HoverTex
+@onready var card_rect := %Card
 
 func setup_as_imp(data, id: int) -> void:
 	var klass       = data[0]
@@ -43,3 +46,15 @@ func setup_as_imp(data, id: int) -> void:
 	
 	%Title.text = str(GS.get_class_name(klass), " / ", GS.get_item_name(item))
 	%Description.text = description
+
+var hover_t: float = 0.0
+
+func _physics_process(delta: float) -> void:
+	var is_hovered = card_rect.get_global_rect().has_point(get_global_mouse_position())
+	
+	var hover_t_to = 1.0 if is_hovered else 0.0
+	hover_t += (hover_t_to - hover_t) * 0.2
+	
+	hover_tex.modulate.a = hover_t
+	scale.x = lerp(1.0, 1.08, hover_t)
+	scale.y = scale.x
