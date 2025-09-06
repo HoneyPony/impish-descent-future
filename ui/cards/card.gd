@@ -18,7 +18,10 @@ var kind: RewardKind = RewardKind.IMP
 const BBCODE_MODIFIED := "[color=#a0ffc0]"
 
 @onready var hover_tex := %HoverTex
+@onready var select_tex := %SelectTex
 @onready var card_rect := %Card
+
+var selected: bool = false
 
 func setup_as_imp(data, id: int) -> void:
 	var klass       = data[0]
@@ -47,14 +50,34 @@ func setup_as_imp(data, id: int) -> void:
 	%Title.text = str(GS.get_class_name(klass), " / ", GS.get_item_name(item))
 	%Description.text = description
 
-var hover_t: float = 0.0
-
 func _physics_process(delta: float) -> void:
 	var is_hovered = card_rect.get_global_rect().has_point(get_global_mouse_position())
 	
-	var hover_t_to = 1.0 if is_hovered else 0.0
-	hover_t += (hover_t_to - hover_t) * 0.2
+	var hover_tex_target := 1.0 if is_hovered else 0.0
+	var scale_target := 1.0
+	if is_hovered:
+		scale_target = 1.08 # select overrides hover..?
+	if selected:
+		scale_target = 0.95
 	
-	hover_tex.modulate.a = hover_t
-	scale.x = lerp(1.0, 1.08, hover_t)
+	var select_tex_target := 1.0 if selected else 0.0
+	
+	hover_tex.modulate.a += (hover_tex_target - hover_tex.modulate.a) * 0.2
+	
+	scale.x += (scale_target - scale.x) * 0.2
 	scale.y = scale.x
+	
+	select_tex.modulate.a += (select_tex_target - select_tex.modulate.a) * 0.2
+	
+func select_self() -> void:
+	get_parent().unselect_main_cards()
+	get_parent().current_main_card = self
+	
+	selected = true
+	
+func _ready() -> void:
+	%Card.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton:
+			if event.pressed:
+				select_self()
+	)

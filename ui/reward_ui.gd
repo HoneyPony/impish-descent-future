@@ -6,7 +6,7 @@ extends ColorRect
 	$ImpSelectRow3
 ]
 
-@onready var cards = [
+@onready var cards := [
 	%Card1,
 	%Card2,
 	%Card3
@@ -21,11 +21,18 @@ extends ColorRect
 var current_new_imp = 0
 var current_new_relic = 0
 
+## Which of the main row of cards will be picked.
+var current_main_card: UpgradeCard = null
+
 var do_choose_relic = false
 
 @export var double_upgrade: ColorRect = null
 @export var double_upgrade_child: ColorRect = null
 var flag_own_hide = false
+
+func unselect_main_cards() -> void:
+	for card in cards:
+		card.selected = false
 
 func unselect_imps():
 	for row in rows:
@@ -63,6 +70,7 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 		cards[i].setup_as_imp(GS.valid_imps[imps[i]], imps[i])
 		
 	rows[0].select_this()
+	cards[0].select_self()
 	
 	if relic:
 		var first = GS.avail_relics.pick_random()
