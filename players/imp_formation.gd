@@ -25,7 +25,7 @@ func _physics_process(delta: float) -> void:
 		pos += player.global_position - (target - player.global_position)
 	pos /= players.size()
 	
-	global_position += (pos - global_position) * 0.05
+	#global_position += (pos - global_position) * 0.05
 	
 	var vel = Vector2.ZERO
 	vel.x = Input.get_axis("player_left", "player_right")
@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 	vel = vel.normalized() * Player.MAX_VEL
 	# print(global_position)
 	
-	global_position += vel * delta * 4.0
+	global_position += vel * delta #* 4.0
 	
 	# We need to use the global mouse position versus our own position, because
 	# the local mouse position is affected by our own rotation.

@@ -590,15 +590,11 @@ func _physics_process(delta: float) -> void:
 			if dir_to.length_squared() < melee_attack_range * melee_attack_range:
 				# Target the center of enemies (averaging 2 tiles large)
 				melee_attack(closest.global_position + Vector2(0, -64))
-	elif stay_away_enemies: # NOTE: THIS MUST BE TRUE FOR RANGED FOR THE ATTACKS TO WORK.
 		# If we're ranged, we want to avoid damage, so back away from nearby enemies
 		# TODO: I guess we want a larger ranged here..?
+		
+	if goal == Goals.GOAL_RANGED:
 		var bodies: Array = melee_range.get_overlapping_bodies()
-		#for body in bodies:
-			#var to_vec = global_position - body.global_position
-			#var IMPULSE = 20000
-			#var goal_shift = IMPULSE * to_vec / (to_vec.length_squared() + 512)
-			#target_noise_nosmooth += goal_shift
 			
 		# Ranged characters actually try to attack the enemies
 		if not bodies.is_empty() and goal == Goals.GOAL_RANGED:
@@ -615,7 +611,7 @@ func _physics_process(delta: float) -> void:
 		
 	target_noise += (target_noise_nosmooth - target_noise) * smoothing
 		
-	move_target += target_noise
+	# move_target += target_noise
 	
 	move_target = GS.get_nav_move_target(global_position, move_target)
 	var vel = (move_target - global_position) * 5.0
@@ -624,27 +620,30 @@ func _physics_process(delta: float) -> void:
 	#vel.y = Input.get_axis("player_up", "player_down")
 	#vel = vel.normalized() * MAX_VEL
 	
-	var target_vel = vel.limit_length(MAX_VEL)
+	# Let us move slightly faster than the formation moves, so that we can
+	# stay in position.
+	var vel_buf = 1.5 #clamp((move_target - global_position).length() / 100.0, 1.0, 1.3)
+	var target_vel = vel.limit_length(MAX_VEL * vel_buf)
 	
 	velocity += (target_vel - velocity) * 0.5
 	
-	# Add impulses for each nearby imp.
+	## Add impulses for each nearby imp.
 	var all_players = get_tree().get_nodes_in_group("Players")
-	for imp in all_players:
-		var impulse_strength = 2048
-		var max_range = 72
-		var stay_away = false
-		#if happy_to_take_hit() != imp.happy_to_take_hit():
-		#	stay_away = true
-		# summoners want to get hit, so make them stay far away from other imps.
-		if stay_away:
-			impulse_strength = 2048
-			max_range = 256
-		var to_vec = global_position - imp.global_position
-		if to_vec.length_squared() < max_range * max_range:
-			var impulse = impulse_strength * to_vec / (to_vec.length_squared() + 512)
-			#print(impulse)
-			velocity += impulse
+	#for imp in all_players:
+		#var impulse_strength = 2048
+		#var max_range = 72
+		#var stay_away = false
+		##if happy_to_take_hit() != imp.happy_to_take_hit():
+		##	stay_away = true
+		## summoners want to get hit, so make them stay far away from other imps.
+		#if stay_away:
+			#impulse_strength = 2048
+			#max_range = 256
+		#var to_vec = global_position - imp.global_position
+		#if to_vec.length_squared() < max_range * max_range:
+			#var impulse = impulse_strength * to_vec / (to_vec.length_squared() + 512)
+			##print(impulse)
+			#velocity += impulse
 	
 	if goal == Goals.GOAL_BUFF or goal == Goals.GOAL_ATTACK_OWN:
 		# 10 tries to find a player
