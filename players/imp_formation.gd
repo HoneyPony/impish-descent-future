@@ -3,6 +3,8 @@ class_name ImpFormation
 
 var edited_player: Player = null
 
+@onready var circle = %Circle
+
 func _ready() -> void:
 	# Reparent ourselves off of the ImpStartPos. This makes sure our starting
 	# point is always synchronized
@@ -20,10 +22,12 @@ func _physics_process(delta: float) -> void:
 	for player in players:
 		# Get the player's target position
 		var target = global_transform * player.formation_position
-		# Compute the player's 'where should we be for this to be neutral' target,
-		# which is our current position + the target formation - their position?
-		pos += player.global_position - (target - player.global_position)
+		# Compute the player's 'where should we be for this to be neutral' target
+		var our_rel_pos: Vector2 = player.global_position + global_position - target
+		pos += our_rel_pos
 	pos /= players.size()
+	
+	
 	
 	#global_position += (pos - global_position) * 0.05
 	
@@ -34,6 +38,11 @@ func _physics_process(delta: float) -> void:
 	# print(global_position)
 	
 	global_position += vel * delta #* 4.0
+	
+	var dist: float = (circle.global_position - pos).length()
+	var circle_vis: float = 1.0 - clamp(dist / 50.0, 0.0, 1.0)
+	circle.self_modulate.a = 1.0 #circle_vis
+	circle.global_position = pos
 	
 	# We need to use the global mouse position versus our own position, because
 	# the local mouse position is affected by our own rotation.

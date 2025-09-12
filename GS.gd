@@ -173,6 +173,14 @@ var combat_imps = [
 var current_army      = []
 var current_formation = []
 
+# Formation idea:
+# - Have a list of "available formation positions",
+#   with closer positions sorted earlier.
+# - Whenever an imp is spawned, it picks one of the available formation positions
+#   as its position.
+# - Whenever an imp dies, it puts its position back into the pool.
+
+
 func pick_nonbreaking_imp():
 	return valid_imps[nonbreaking_imps.pick_random()]
 

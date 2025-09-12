@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=15 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="Script" uid="uid://77reaige6ecr" path="res://camera.gd" id="1_qvjw2"]
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="2_f1kks"]
@@ -11,7 +11,12 @@
 [ext_resource type="Script" uid="uid://bj7vvgyka0aft" path="res://ui/formation_menu.gd" id="10_t5hyg"]
 [ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="12_w2t3q"]
 [ext_resource type="Script" uid="uid://cejur8ehkbc8c" path="res://relic_icon.gd" id="13_50h4x"]
+[ext_resource type="Texture2D" uid="uid://cpbatt7pbv0j3" path="res://formation/formation.png" id="13_fbe54"]
 [ext_resource type="Script" uid="uid://dsl5sdm752l86" path="res://players/imp_formation.gd" id="14_pvn8g"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fbe54"]
+blend_mode = 1
+light_mode = 1
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -268,6 +273,14 @@ position = Vector2(2, 124)
 
 [node name="ImpFormation" type="Node2D" parent="ImpStartPos" groups=["ImpFormation"]]
 script = ExtResource("14_pvn8g")
+
+[node name="Circle" type="Sprite2D" parent="ImpStartPos/ImpFormation"]
+unique_name_in_owner = true
+modulate = Color(0.498039, 0, 0.152941, 0.396078)
+z_index = -100
+material = SubResource("CanvasItemMaterial_fbe54")
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("13_fbe54")
 
 [connection signal="pressed" from="UpgradeMenu/Control/SuccessMenu/ConfirmButton" to="UpgradeMenu/Control/SuccessMenu" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/DefeatMenu/MainMenu" to="UpgradeMenu/Control/DefeatMenu" method="_on_main_menu_pressed"]
