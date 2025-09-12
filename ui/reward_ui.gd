@@ -106,8 +106,9 @@ func _ready():
 	if GS.flag_retry_this_level:
 		GS.flag_retry_this_level = false
 		hide()
-		GS.spawn_current_army()
-		%DefeatMenu.going = true
+		
+		GS.flag_in_upgrade_menu = false
+		%FormationMenu.show_menu()
 		return
 	GS.flag_in_upgrade_menu = true
 		

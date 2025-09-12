@@ -14,6 +14,10 @@ var dead = false
 var collision_timeouts = {}
 
 func init_ghost_base():
+	# Disable ourselves until the formation menu is done
+	set_process(false)
+	set_physics_process(false)
+	
 	if GS.ascensions[2]:
 		max_health = int(max_health * 1.5)
 		

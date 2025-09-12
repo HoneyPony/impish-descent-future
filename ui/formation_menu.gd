@@ -15,5 +15,10 @@ func show_menu() -> void:
 func _on_confirm_pressed() -> void:
 	GS.flag_in_formation_menu = false
 	
+	# Once the formation is confirmed, re-enable all the enemies
+	for enemy in get_tree().get_nodes_in_group("Enemy"):
+		enemy.set_process(true)
+		enemy.set_physics_process(true)
+	
 	hide()
 	%DefeatMenu.going = true
