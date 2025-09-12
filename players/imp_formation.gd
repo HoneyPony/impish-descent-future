@@ -5,6 +5,9 @@ var edited_player: Player = null
 
 @onready var circle = %Circle
 
+# The mouse that the camera hands to us
+var tracked_mouse: Vector2 = Vector2.ZERO
+
 func _ready() -> void:
 	# Reparent ourselves off of the ImpStartPos. This makes sure our starting
 	# point is always synchronized
@@ -14,6 +17,7 @@ func _physics_process(delta: float) -> void:
 	if GS.flag_in_formation_menu:
 		# TODO: There is probably a better way to do this
 		global_position = get_tree().get_first_node_in_group("ImpStartPos").global_position
+		circle.position = Vector2.ZERO
 		return
 	
 	# This is probably not even what we want...
@@ -50,5 +54,5 @@ func _physics_process(delta: float) -> void:
 	
 	# Add an offset of 90 degrees because we want the user to configure their
 	# formation pointing 'up'.
-	var target_rot = (get_global_mouse_position() - global_position).angle() + TAU * 0.25
+	var target_rot = (tracked_mouse).angle() + TAU * 0.25
 	rotation = rotate_toward(rotation, target_rot, TAU * delta)
