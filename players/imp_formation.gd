@@ -29,7 +29,8 @@ func _physics_process(delta: float) -> void:
 	
 	
 	
-	#global_position += (pos - global_position) * 0.05
+	global_position += (pos - global_position) * 0.05
+	#global_position = pos
 	
 	var vel = Vector2.ZERO
 	vel.x = Input.get_axis("player_left", "player_right")
@@ -37,12 +38,12 @@ func _physics_process(delta: float) -> void:
 	vel = vel.normalized() * Player.MAX_VEL
 	# print(global_position)
 	
-	global_position += vel * delta #* 4.0
+	global_position += vel * delta * 2.0
 	
 	var dist: float = (circle.global_position - pos).length()
 	var circle_vis: float = 1.0 - clamp(dist / 50.0, 0.0, 1.0)
 	circle.self_modulate.a = 1.0 #circle_vis
-	circle.global_position = pos
+	circle.global_position += (pos - circle.global_position) * 0.9
 	
 	# We need to use the global mouse position versus our own position, because
 	# the local mouse position is affected by our own rotation.
@@ -50,4 +51,4 @@ func _physics_process(delta: float) -> void:
 	# Add an offset of 90 degrees because we want the user to configure their
 	# formation pointing 'up'.
 	var target_rot = (get_global_mouse_position() - global_position).angle() + TAU * 0.25
-	rotation = rotate_toward(rotation, target_rot, TAU * 4.0 * delta)
+	rotation = rotate_toward(rotation, target_rot, TAU * delta)
