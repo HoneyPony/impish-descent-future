@@ -3,10 +3,15 @@ extends Camera2D
 # let the win screen freeze the camera so we don't get motion sickness
 var frozen := false
 
-const MOUSE_WEIGHT := 0.6
+const MOUSE_WEIGHT := 0.48
 
 var player_smoothed: Vector2 = Vector2.ZERO
 var mouse_smoothed: Vector2 = Vector2.ZERO
+
+func _ready() -> void:
+	# Lower our priority so we step after ImpFormation
+	process_priority = 5
+	process_physics_priority = 5
 
 func _physics_process(delta: float) -> void:
 	if frozen:
@@ -32,7 +37,7 @@ func _physics_process(delta: float) -> void:
 	var lerp_strength = ((player_target - player_smoothed).length() - 512.0) / 1024.0
 	#lerp_strength = clamp(lerp_strength, 0.0, 1.0)
 	#lerp_strength = 1.0 - lerp_strength
-	lerp_strength = clamp(lerp_strength, 0.0, 0.2)
+	lerp_strength = clamp(lerp_strength, 0.05, 0.2)
 	player_smoothed += (player_target - player_smoothed) * lerp_strength
 	
 	# TODO: This should probably be the relative mouse pos...?
@@ -47,7 +52,7 @@ func _physics_process(delta: float) -> void:
 		
 	# We track the mouse position in local coordinates so that it can be smoothed
 	# separately.
-	var mouse_target = get_local_mouse_position()#formation.global_position + mouse_dir - global_position
+	var mouse_target = formation.global_position + mouse_dir - global_position
 	
 	#var mouse_target = get_local_mouse_position()
 	mouse_smoothed += (mouse_target - mouse_smoothed) * 0.05

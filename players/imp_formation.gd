@@ -4,6 +4,7 @@ class_name ImpFormation
 var edited_player: Player = null
 
 @onready var circle = %Circle
+@onready var star = %Star
 
 # The mouse that the camera hands to us
 var tracked_mouse: Vector2 = Vector2.ZERO
@@ -14,8 +15,11 @@ func _ready() -> void:
 	reparent.call_deferred(get_parent().get_parent())
 
 func _physics_process(delta: float) -> void:
+	star.rotation += -TAU * delta * 0.125 * 0.03
+	
 	if GS.flag_in_formation_menu:
 		# TODO: There is probably a better way to do this
+		rotation = 0
 		global_position = get_tree().get_first_node_in_group("ImpStartPos").global_position
 		circle.position = Vector2.ZERO
 		return
