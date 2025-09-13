@@ -84,6 +84,11 @@ var buffs = [GS.Buff.None, GS.Buff.None, GS.Buff.None]
 
 var ranged_attack_is_nova: bool = false
 
+# TODO: Deduplicate this with split buff?
+# Set this when this enemy  is split, so it can choose a relevant position in
+# the formation.
+var spawn_as_split_flag: bool = false
+
 func grab_buff_tex(buf):
 	match buf:
 		GS.Buff.None:
@@ -294,10 +299,14 @@ func _ready():
 			global_position = formation.global_position + formation_position
 		print("my pos: ", formation_position)
 	else:
-		# Get a formation position from the temporary ones, if possible.
-		var pos = GS.formation_avail_temp.pop_back()
-		if pos != null:
-			formation_position = pos * 32
+		# If we're a split guy, try to get a position near the middle, for now.
+		if spawn_as_split_flag:
+			formation_position = GS.take_middle_formation() * 32
+		else:
+			# Get a formation position from the temporary ones, if possible.
+			var pos = GS.formation_avail_temp.pop_back()
+			if pos != null:
+				formation_position = pos * 32
 	
 	# TODO: Just delete the FormationEdit once the formation is done being
 	# edited? Although I guess we might have the option to re-edit it dynamically...
@@ -719,7 +728,8 @@ func split_into_eth():
 	var pos = self.global_position
 	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, false, true, true, true)
 
-func split():
+var did_split: bool = false
+func split(new_army_id: int = -1):
 	if self.is_split(true):
 		return
 	
@@ -731,7 +741,9 @@ func split():
 		#split_dmg = 0
 	var pos = self.global_position
 	#pos += Vector2.from_angle(randf_range(0, TAU)) * randf_range(16, 256)
-	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, true)
+	GS.spawn_imp(get_parent(), [self.current_class, self.current_item], pos, true,
+		false, true, false, new_army_id)
+	did_split = true # Keep track of this..?
 
 func set_own_damage(amount: int):
 	melee_base_damage = amount
@@ -742,8 +754,8 @@ func on_death(body) -> bool:
 	if not self.is_split():
 		# Splitters can't themselves be split.
 		if body != null and is_instance_of(body, SplitBuff) and self.goal != Goals.GOAL_ATTACK_OWN:
-			split()
-			split()
+			split(-1)
+			split(army_id)
 			# Don't let us resurrect after we split
 			return true
 		# In order to ensure that the relic doesn't change the bevhaivor of whether we can resurrect
@@ -838,9 +850,12 @@ func die(killer_projectile):
 		
 		# If we died permanently, then put our formation position back onto
 		# the list.
-		var pos = Vector2i(formation_position / 32.0)
-		GS.formation_avail_temp.append(pos)
-		GS.sort_formation_temp()
+		if not did_split:
+			# If we got here because we split and "died", then don't put our
+			# position back on the list.
+			var pos = Vector2i(formation_position / 32.0)
+			GS.formation_avail_temp.append(pos)
+			GS.sort_formation_temp()
 		
 		Sounds.imp_kill_eth.play_rand()
 		return

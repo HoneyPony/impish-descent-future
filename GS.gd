@@ -213,6 +213,27 @@ func create_formation_avail() -> Array[Vector2i]:
 	dict.sort_custom(sort_for_formation)
 	
 	return dict
+	
+func take_middle_formation() -> Vector2i:
+	var result = Vector2i.ZERO
+	if formation_avail_temp.is_empty():
+		print("take_middle_formation: :(")
+		# Nothing really to do...
+		return result
+	print("take_middle_formation: ", formation_avail_temp)
+	print("take_middle_formation: ", Vector2i.ZERO in formation_avail_temp, " ", formation_avail_temp.size())
+		
+	result = formation_avail_temp[0]
+	for i in range(1, formation_avail_temp.size()):
+		var check = formation_avail_temp[i]
+		if check.length_squared() < result.length_squared():
+			result = check
+			
+	print("take_middle_formation: ", result)
+	# This should be possible
+	formation_avail_temp.erase(result)
+	sort_formation_temp()
+	return result
 
 # Formation idea:
 # - Have a list of "available formation positions",
@@ -226,10 +247,6 @@ func pick_nonbreaking_imp():
 	return valid_imps[nonbreaking_imps.pick_random()]
 
 func spawn_current_army():
-	# TODO: Maybe this should go somewhere else
-	formation_avail_temp = formation_avail_perm.duplicate()
-	sort_formation_temp()
-	
 	var pos = get_tree().get_first_node_in_group("ImpStartPos")
 	assert(pos != null)
 	
@@ -241,6 +258,7 @@ func spawn_current_army():
 func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: bool, ethereal: bool, play_sound: bool, invuln: bool, army_id: int):
 	var imp = Player.instantiate()
 	imp.army_id = army_id
+	imp.spawn_as_split_flag = split
 	print("army id -> ", army_id)
 	parent.add_child(imp)
 	imp.global_position = global_pos
