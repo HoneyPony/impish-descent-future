@@ -288,11 +288,16 @@ func _ready():
 	assert(formation)
 	
 	if army_id >= 0:
-		formation_position = GS.current_formation[army_id]
+		formation_position = GS.current_formation[army_id] * 32
 		# Reset to the formation position for editing if we're in the menu
 		if GS.flag_in_formation_menu:
 			global_position = formation.global_position + formation_position
 		print("my pos: ", formation_position)
+	else:
+		# Get a formation position from the temporary ones, if possible.
+		var pos = GS.formation_avail_temp.pop_back()
+		if pos != null:
+			formation_position = pos * 32
 	
 	# TODO: Just delete the FormationEdit once the formation is done being
 	# edited? Although I guess we might have the option to re-edit it dynamically...
@@ -372,13 +377,31 @@ func _formation_physics_process(delta: float) -> void:
 		#print(get_global_mouse_position())
 		#print(formation.global_position)
 		formation_position = get_global_mouse_position() - formation.global_position
-		formation_position = round(formation_position / 64) * 64
-		GS.current_formation[army_id] = formation_position
+		var formation_pos_i = round(formation_position / 32)
+		formation_position = formation_pos_i * 32
+		#GS.current_formation[army_id] = Vector2i(formation_pos_i)
 		#print(formation_position)
-		global_position = formation.global_position + formation_position
+		
 		
 		if not Input.is_action_pressed("edit_player"):
+			# Finalize ourselves here.
 			formation.edited_player = null
+			var fpi := Vector2i(formation_pos_i)
+			var prev: Vector2i = GS.current_formation[army_id]
+			
+			# If we can use this new position cause it's avail, do so.
+			#
+			# TODO: Let us swap with another player if they're there.
+			if fpi in GS.formation_avail_perm:
+				GS.formation_avail_perm.erase(fpi)
+				GS.formation_avail_perm.append(prev)
+				GS.current_formation[army_id] = fpi
+				GS.sort_formation_avail()
+			# Now update our actual position
+			formation_position = GS.current_formation[army_id] * 32.0
+			#if GS.formation_avail_perm.erase()
+				
+		global_position = formation.global_position + formation_position
 	else:
 		global_position = formation.global_position + formation_position
 		pass
@@ -812,6 +835,12 @@ func die(killer_projectile):
 		explode.global_position = global_position
 		add_sibling(explode)
 		queue_free()
+		
+		# If we died permanently, then put our formation position back onto
+		# the list.
+		var pos = Vector2i(formation_position / 32.0)
+		GS.formation_avail_temp.append(pos)
+		GS.sort_formation_temp()
 		
 		Sounds.imp_kill_eth.play_rand()
 		return

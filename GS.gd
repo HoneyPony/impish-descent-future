@@ -171,7 +171,48 @@ var combat_imps = [
 ]
 
 var current_army      = []
-var current_formation = []
+var current_formation: Array[Vector2i] = []
+
+var formation_avail_perm: Array[Vector2i] = []
+var formation_avail_temp: Array[Vector2i] = []
+
+func sort_formation_avail() -> void:
+	formation_avail_perm.sort_custom(sort_for_formation)
+	
+# We actually want to sort this one in the opposite way of the perm one.
+# You usually want temporary imps in the front.
+func sort_formation_temp() -> void:
+	formation_avail_temp.sort_custom(func(a, b):
+		var adist = (a - Vector2i(0, 5)).length_squared()
+		var bdist = (b - Vector2i(0, 5)).length_squared()
+		# Sort based on who is closer to the front??
+		return bdist > adist
+		#var al = a.length_squared()
+		#var bl = b.length_squared()
+		#if al < bl:
+			#return true
+		#if bl < al:
+			#return false
+		## Ok, length is equal, what else?
+		## I think this should do the thing?
+		#return a.y > b.y
+	)
+
+func sort_for_formation(a, b):
+	# Shorter ones go near the back
+	return a.length_squared() > b.length_squared()
+
+func create_formation_avail() -> Array[Vector2i]:
+	var dict: Array[Vector2i] = []
+	
+	for x in range(-5, 6):
+		for y in range(-5, 6):
+			if x*x + y*y <= 5*5:
+				dict.append(Vector2i(x, y))
+	
+	dict.sort_custom(sort_for_formation)
+	
+	return dict
 
 # Formation idea:
 # - Have a list of "available formation positions",
@@ -185,6 +226,10 @@ func pick_nonbreaking_imp():
 	return valid_imps[nonbreaking_imps.pick_random()]
 
 func spawn_current_army():
+	# TODO: Maybe this should go somewhere else
+	formation_avail_temp = formation_avail_perm.duplicate()
+	sort_formation_temp()
+	
 	var pos = get_tree().get_first_node_in_group("ImpStartPos")
 	assert(pos != null)
 	
@@ -355,6 +400,9 @@ func reset_game_state():
 	current_army = []
 	current_formation = []
 	owned_relics = []
+	
+	formation_avail_perm = create_formation_avail()
+	formation_avail_temp = create_formation_avail()
 	#relic_tripledmg_killself = true
 
 func get_imp_spawn_info():

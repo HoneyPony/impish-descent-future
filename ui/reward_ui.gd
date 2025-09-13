@@ -168,7 +168,7 @@ func _earn_reward(card: UpgradeCard) -> void:
 		return
 	if card.kind == UpgradeCard.RewardKind.IMP:
 		GS.current_army.push_back(card.id)
-		GS.current_formation.push_back(Vector2.ZERO)
+		GS.current_formation.push_back(GS.formation_avail_perm.pop_back())
 	if card.kind == UpgradeCard.RewardKind.RELIC:
 		GS.accept_relic(card.id)
 
