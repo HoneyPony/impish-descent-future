@@ -300,13 +300,15 @@ func _ready():
 		print("my pos: ", formation_position)
 	else:
 		# If we're a split guy, try to get a position near the middle, for now.
-		if spawn_as_split_flag:
-			formation_position = GS.take_middle_formation() * 32
-		else:
-			# Get a formation position from the temporary ones, if possible.
-			var pos = GS.formation_avail_temp.pop_back()
-			if pos != null:
-				formation_position = pos * 32
+		#
+		# Maybe just always take middle formation??
+		#if spawn_as_split_flag:
+		formation_position = GS.take_middle_formation() * 32
+		#else:
+			## Get a formation position from the temporary ones, if possible.
+			#var pos = GS.formation_avail_temp.pop_back()
+			#if pos != null:
+				#formation_position = pos * 32
 	
 	# TODO: Just delete the FormationEdit once the formation is done being
 	# edited? Although I guess we might have the option to re-edit it dynamically...
