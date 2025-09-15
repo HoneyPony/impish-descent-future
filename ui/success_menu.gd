@@ -16,9 +16,13 @@ func _process(delta):
 	# Cheat code
 	#if Input.is_action_just_pressed("debug"):
 	#	_on_confirm_button_pressed()
-
+	
+var _has_fired := false
 
 func _on_confirm_button_pressed():
+	if _has_fired:
+		return
+	_has_fired = true
 	GS.current_level += 1
 	if GS.current_level < GS.levels_size():
 		SceneTransition.change_scene(GS.levels(GS.current_level))
