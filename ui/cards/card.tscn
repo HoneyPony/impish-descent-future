@@ -137,3 +137,7 @@ position = Vector2(170.806, 102)
 rotation = 0.30058
 scale = Vector2(0.344041, 0.344041)
 texture = ExtResource("6_fn7ga")
+
+[node name="TooltipPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(83, -116)

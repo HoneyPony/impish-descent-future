@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://brtsquk6yo32k"]
+
+[ext_resource type="Texture2D" uid="uid://dcgbf1d0yxa2e" path="res://ui/panel_graygray_2_smol.png" id="1_5feom"]
+[ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="2_4n3nm"]
+[ext_resource type="Script" uid="uid://bct2rxry4fnif" path="res://ui/tooltips/tooltip.gd" id="2_ci8qb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ci8qb"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+texture = ExtResource("1_5feom")
+texture_margin_left = 100.0
+texture_margin_top = 10.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[node name="Tooltip" type="PanelContainer"]
+offset_right = 326.0
+offset_bottom = 92.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ci8qb")
+script = ExtResource("2_ci8qb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="RichTextLabel" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("2_4n3nm")
+theme_override_font_sizes/normal_font_size = 14
+text = "Ethereal"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Description" type="RichTextLabel" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("2_4n3nm")
+theme_override_font_sizes/normal_font_size = 12
+text = "An Ethereal imp is temporary. They will automatically die after 4 seconds, and cannot be resurrected."
+fit_content = true

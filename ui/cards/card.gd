@@ -31,6 +31,9 @@ const BBCODE_MODIFIED := "[color=#a0ffc0]"
 
 var selected: bool = false
 
+@onready var description := %Description
+@onready var tooltip_pos := %TooltipPos
+
 func setup_as_relic(id: int) -> void:
 	self.kind = RewardKind.RELIC
 	self.id   = id
@@ -81,6 +84,9 @@ func setup_as_imp(data, id: int) -> void:
 
 func _physics_process(delta: float) -> void:
 	var is_hovered = card_rect.get_global_rect().has_point(get_global_mouse_position())
+	
+	if visible:
+		TooltipStack.update_label(description, tooltip_pos.global_position, is_hovered)
 	
 	var hover_tex_target := 1.0 if is_hovered else 0.0
 	var scale_target := 1.0

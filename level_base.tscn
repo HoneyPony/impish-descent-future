@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b7h6g17gdadaw"]
+[gd_scene load_steps=14 format=4 uid="uid://b7h6g17gdadaw"]
 
 [ext_resource type="Script" uid="uid://77reaige6ecr" path="res://camera.gd" id="1_qvjw2"]
 [ext_resource type="PackedScene" uid="uid://dojkqhtsd73go" path="res://ui/PauseMenu.tscn" id="2_f1kks"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://yi8dgjkkdken" path="res://formation/imp_formation.tscn" id="12_fdc3t"]
 [ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="12_w2t3q"]
 [ext_resource type="Script" uid="uid://cejur8ehkbc8c" path="res://relic_icon.gd" id="13_50h4x"]
+[ext_resource type="PackedScene" uid="uid://clqqw2b86udwb" path="res://ui/tooltips/tooltip_stack.tscn" id="13_fbe54"]
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -267,6 +268,25 @@ index = 2
 position = Vector2(2, 124)
 
 [node name="ImpFormation" parent="ImpStartPos" instance=ExtResource("12_fdc3t")]
+
+[node name="Tooltips" type="CanvasLayer" parent="."]
+layer = 101
+
+[node name="Control" type="Control" parent="Tooltips"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TooltipStack" parent="Tooltips/Control" instance=ExtResource("13_fbe54")]
+layout_mode = 0
+offset_left = 568.0
+offset_top = 218.0
+offset_right = 893.0
+offset_bottom = 845.0
 
 [connection signal="pressed" from="UpgradeMenu/Control/SuccessMenu/ConfirmButton" to="UpgradeMenu/Control/SuccessMenu" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="UpgradeMenu/Control/DefeatMenu/MainMenu" to="UpgradeMenu/Control/DefeatMenu" method="_on_main_menu_pressed"]

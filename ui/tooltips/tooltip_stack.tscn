@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://clqqw2b86udwb"]
+
+[ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="1_2cauq"]
+[ext_resource type="Script" uid="uid://b3gvsakxvbbm3" path="res://ui/tooltips/tooltip_stack.gd" id="2_eo2rk"]
+
+[node name="TooltipStack" type="VBoxContainer"]
+custom_minimum_size = Vector2(325, 0)
+offset_right = 325.0
+mouse_filter = 2
+theme = ExtResource("1_2cauq")
+theme_override_constants/separation = 1
+script = ExtResource("2_eo2rk")
