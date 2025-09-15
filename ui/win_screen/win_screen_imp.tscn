@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://bfrqygrumvdsl"]
+
+[ext_resource type="Script" uid="uid://cjh617h8adf6a" path="res://ui/imp_disp.gd" id="1_gc5p1"]
+[ext_resource type="Texture2D" uid="uid://erbivihveymh" path="res://players/red/lleg.png" id="2_6c2qw"]
+[ext_resource type="Texture2D" uid="uid://cd4vah3nxiw7f" path="res://players/red/rleg.png" id="3_23ikb"]
+[ext_resource type="Texture2D" uid="uid://bg4756tpljutm" path="res://players/imp-hand-bot.png" id="4_swiph"]
+[ext_resource type="Texture2D" uid="uid://dlefoohwcy7vf" path="res://players/sword.png" id="5_lquse"]
+[ext_resource type="Texture2D" uid="uid://fjy2iqwuprvx" path="res://players/imp-hand-top.png" id="6_plq0x"]
+[ext_resource type="Texture2D" uid="uid://c1jjxv6u45wvu" path="res://players/red/body-m.png" id="7_tu1yo"]
+[ext_resource type="Texture2D" uid="uid://cy7h3fabcfink" path="res://players/red/head.png" id="8_d2n6n"]
+
+[node name="ImpDisp" type="Node2D"]
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_gc5p1")
+
+[node name="Scaler" type="Node2D" parent="."]
+position = Vector2(16, -56)
+scale = Vector2(0.530112, 0.530112)
+
+[node name="LLeg" type="Sprite2D" parent="Scaler"]
+unique_name_in_owner = true
+position = Vector2(-18.1001, 226.409)
+scale = Vector2(2.028, 2.028)
+texture = ExtResource("2_6c2qw")
+
+[node name="RLeg" type="Sprite2D" parent="Scaler"]
+unique_name_in_owner = true
+position = Vector2(-18.1001, 226.409)
+scale = Vector2(2.028, 2.028)
+texture = ExtResource("3_23ikb")
+
+[node name="Hand" type="Node2D" parent="Scaler"]
+position = Vector2(75.4556, 188.639)
+rotation = 0.220064
+scale = Vector2(3.34396, 3.34396)
+
+[node name="Bot" type="Sprite2D" parent="Scaler/Hand"]
+position = Vector2(-13.1752, -71.624)
+scale = Vector2(0.486566, 0.486566)
+texture = ExtResource("4_swiph")
+
+[node name="Item" type="Sprite2D" parent="Scaler/Hand"]
+unique_name_in_owner = true
+position = Vector2(3.63686, -23.8048)
+scale = Vector2(0.507, 0.507)
+texture = ExtResource("5_lquse")
+
+[node name="Top" type="Sprite2D" parent="Scaler/Hand"]
+position = Vector2(-13.1752, -71.624)
+scale = Vector2(0.486566, 0.486566)
+texture = ExtResource("6_plq0x")
+
+[node name="Body" type="Sprite2D" parent="Scaler"]
+unique_name_in_owner = true
+position = Vector2(-18.0999, 226.409)
+scale = Vector2(2.028, 2.028)
+texture = ExtResource("7_tu1yo")
+
+[node name="ImpHead" type="Sprite2D" parent="Scaler"]
+unique_name_in_owner = true
+position = Vector2(-77.8645, 91.7935)
+scale = Vector2(2.02776, 2.02776)
+texture = ExtResource("8_d2n6n")
+offset = Vector2(28, 60)

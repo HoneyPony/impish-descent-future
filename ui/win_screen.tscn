@@ -1,10 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://etpy5iodwxou"]
+[gd_scene load_steps=9 format=3 uid="uid://etpy5iodwxou"]
 
 [ext_resource type="Theme" uid="uid://briaychot8p50" path="res://ui/MainUITheme.tres" id="1_jva50"]
 [ext_resource type="Script" uid="uid://dxm2l8j47it47" path="res://ui/win_screen.gd" id="2_jamyw"]
-[ext_resource type="Texture2D" uid="uid://so31a8iyooat" path="res://players/body0.png" id="3_o6qnu"]
-[ext_resource type="Script" uid="uid://cjh617h8adf6a" path="res://ui/imp_disp.gd" id="4_infrv"]
-[ext_resource type="Texture2D" uid="uid://bq4fctqe3aplh" path="res://players/club.png" id="5_45dha"]
+[ext_resource type="PackedScene" uid="uid://bfrqygrumvdsl" path="res://ui/win_screen/win_screen_imp.tscn" id="3_psil3"]
 [ext_resource type="Texture2D" uid="uid://cqxtrwo0fj1wb" path="res://relics/relic0.png" id="6_a08gb"]
 [ext_resource type="Script" uid="uid://cejur8ehkbc8c" path="res://relic_icon.gd" id="7_nketm"]
 
@@ -336,7 +334,7 @@ text = "Main Menu"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../ColorRect")
 libraries = {
-"": SubResource("AnimationLibrary_ojl18")
+&"": SubResource("AnimationLibrary_ojl18")
 }
 autoplay = "FadeIn"
 
@@ -354,15 +352,8 @@ grow_horizontal = 2
 modulate = Color(1, 1, 1, 0)
 position = Vector2(-556, 0)
 
-[node name="ImpDisp" type="Sprite2D" parent="Control/Sprite2D"]
+[node name="ImpDisp" parent="Control/Sprite2D" instance=ExtResource("3_psil3")]
 position = Vector2(573, 99)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_o6qnu")
-script = ExtResource("4_infrv")
-
-[node name="Item" type="Sprite2D" parent="Control/Sprite2D/ImpDisp"]
-position = Vector2(136, 52)
-texture = ExtResource("5_45dha")
 
 [node name="Relic0" type="Sprite2D" parent="Control/Sprite2D"]
 position = Vector2(522, 177.8)
