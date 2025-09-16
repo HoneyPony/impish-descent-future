@@ -422,6 +422,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if is_dead:
+		player_anim.update_tree(0.0, true)
 		return
 		
 	if GS.flag_in_formation_menu:
@@ -705,7 +706,7 @@ func _physics_process(delta: float) -> void:
 			ranged_attack(target_player)
 
 	move_and_slide()
-	player_anim.update_tree(get_real_velocity().length() / MAX_VEL)
+	player_anim.update_tree(get_real_velocity().length() / MAX_VEL, is_dead)
 	
 	#if goal == Goals.GOAL_ATTACK_OWN:
 		#if other_players_hit >= 5:
@@ -824,8 +825,9 @@ func resurrect():
 	add_to_group("Players")
 	
 	# Undo other changes
-	$Item/Look.show()
+	$Item.modulate = Color(1, 1, 1)
 	player_anim.modulate = Color(1, 1, 1)
+	
 	# Back to life
 	is_dead = false
 	
@@ -873,8 +875,11 @@ func die(killer_projectile):
 	render_buffs()
 	
 	# Hide our item when we die
-	$Item/Look.hide()
+	#$Item/Look.hide()
+	$Item.modulate = Color(0.5, 0.5, 0.5)
 	player_anim.modulate = Color(0.5, 0.5, 0.5)
+	melee_collision_shape.disabled = true
+	item.position = item_rest.position
 	# We will stop doing stuff till we're resurrected
 	is_dead = true
 	# TODO Show a "dead" sprite
