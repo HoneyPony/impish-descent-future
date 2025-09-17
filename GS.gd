@@ -344,8 +344,7 @@ func _process(delta):
 
 var relics: Array[String] = [
 "Essence of Slime
-When your imps die, summon 3 Ethereal copies of them.
-Your imps can no longer resurrect.",
+When your imps die, summon 3 Ethereal copies of them. Your imps can no longer resurrect.",
 
 "Conch Horn
 Every 3rd time you kill an enemy, spawn a random Brawler.",
@@ -357,8 +356,7 @@ All Mages now Melee attack for 3 damage.",
 All imps spawn with 1 Shield.",
 
 "Thorny Bush
-Your Shields no longer protect. Instead, they grant +2 damage
-to the next attack.",
+Your Shields no longer protect. Instead, they grant +2 damage to the next attack.",
 
 "Book of Stabbing
 All daggers gain an additional x1.5 speed.",
@@ -370,8 +368,7 @@ Melee attacks gain +1 damage. Your imps can no longer resurrect.",
 When you kill an enemy, summon two random Ethereal imps.",
 
 "Holy Scepter
-Non-Ethereal imps deal triple melee damage.
-Attacks made this way kill that imp.",
+Non-Ethereal imps deal triple melee damage. Attacks made this way kill that imp.",
 ]
 
 var relic_sprite: Array[Texture2D] = [

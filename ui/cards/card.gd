@@ -54,6 +54,9 @@ func setup_as_relic(id: int) -> void:
 	%Relic.texture = GS.relic_sprite[id]
 	
 	%ActionSpeed.queue_free()
+	
+	# Just for fun, center the text for relics.
+	%Description.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 func setup_as_imp(id: int) -> void:
 	self.kind = RewardKind.IMP
