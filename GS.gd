@@ -310,6 +310,8 @@ func get_body_tex_path(klass: Class) -> String:
 			return "res://players/green"
 		GS.Class.Cleric:
 			return "res://players/purple"
+		GS.Class.Summoner:
+			return "res://players/black"
 		_:
 			print("oops, we don't have specific textures yet.")
 			return "res://players/red"
