@@ -172,6 +172,56 @@ static func compute_action_speed(klass: GS.Class, item: GS.Item) -> Vector2:
 	
 	return Vector2(speed, 1.0 if modified else 0.0)
 	
+# TODO: Deduplicate this for safety
+# Tuple:
+# .x = the damage
+# .y = whether it was modified
+static func compute_melee_base_damage(klass: GS.Class, item: GS.Item) -> Vector2i:
+	var base_damage: int = 0
+	var modified: bool = false
+	
+	match klass:
+		GS.Class.Brawler:
+			match item:
+				GS.Item.Sword:
+					base_damage = 2
+				GS.Item.Dagger:
+					base_damage = 1
+				GS.Item.Club:
+					base_damage = 3
+				GS.Item.Mace:
+					base_damage = 5
+		GS.Class.Mage:
+			# Relic can turn mages into melee fighters
+			if GS.relic_mages_melee:
+				base_damage = 3
+				# For now, this modified is actually false, because it isn't
+				# damage modified by a relic. (?) That is, this is the actual
+				# base damage.
+				#modified = true
+		GS.Class.Cleric:
+			match item:
+				GS.Item.Dagger:
+					base_damage = 1
+	
+	return Vector2i(base_damage, int(modified))
+# Tuple:
+# .x = the damage
+# .y = whether it was modified
+static func compute_melee_relic_damage(klass: GS.Class, item: GS.Item) -> Vector2i:
+	var input: Vector2i = compute_melee_base_damage(klass, item)
+	var damage: int = input.x
+	var modified: bool = bool(input.y)
+	
+	if GS.relic_attacks_1dmg_no_resurrect:
+		damage += 1
+		modified = true
+	if GS.relic_tripledmg_killself:
+		damage *= 3
+		modified = true
+	
+	return Vector2i(damage, int(modified))
+	
 # Computes intrinsic class-based properties before we get to the effects of
 # relics.
 func compute_basic_properties():

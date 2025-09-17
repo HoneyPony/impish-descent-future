@@ -91,14 +91,16 @@ horizontal_alignment = 1
 [node name="Description" type="RichTextLabel" parent="Card"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 55.0
+offset_left = 46.0
 offset_top = 181.0
-offset_right = 207.0
-offset_bottom = 269.0
+offset_right = 216.0
+offset_bottom = 283.0
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 13
-text = "- Attacks for 5 Melee damage.
-- Can only attack when enemies are below half health."
+bbcode_enabled = true
+text = "[color=#d0d0ff]- Attacks for [color=#a0ffc0]17[/color] Melee damage.[/color]
+- Can only attack when enemies are below half health.
+- Dies on attack."
 
 [node name="PortraitBg" type="Sprite2D" parent="Card"]
 clip_children = 2

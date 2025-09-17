@@ -124,21 +124,21 @@ enum Buff {
 }
 
 var valid_imps = [
-	[Class.Brawler, Item.Sword , "- Attacks for 2 Melee damage."],
-	[Class.Brawler, Item.Club  , "- Attacks for 3 Melee damage."],
-	[Class.Brawler, Item.Dagger, "- Attacks for 1 Melee damage."],
-	[Class.Brawler, Item.Mace  , "- Attacks for 5 Melee damage.\n- Can only attack when enemies are below half health."],
+	[Class.Brawler, Item.Sword , "- Attacks for %m Melee damage."],
+	[Class.Brawler, Item.Club  , "- Attacks for %m Melee damage."],
+	[Class.Brawler, Item.Dagger, "- Attacks for %m Melee damage."],
+	[Class.Brawler, Item.Mace  , "- Attacks for %m Melee damage.\n- Can only attack when enemies are below half health."],
 	
 	[Class.Mage, Item.Staff , "- Attacks for 1 Ranged damage."],
-	[Class.Mage, Item.Dagger, "- Applies Strength buff to other imps.\n- Strength adds 1 damage to the next attack."],
+	[Class.Mage, Item.Dagger, "- Applies Strength buff to nearby imps.\n"],
 	[Class.Mage, Item.Club  , "- Attacks for 0-4 Ranged damage.\n- Damage is rolled randomly."],
 	[Class.Mage, Item.Scythe, "- Attacks for 1 Ranged damage.\n- Shoots 7 shots in random directions."],
 	
-	[Class.Cleric, Item.Staff , "- Applies Shield buff to nearby imps.\n- Shield buff blocks 1 hit from enemies."],
-	[Class.Cleric, Item.Dagger, "- Attacks for 1 Melee damage.\n- On kill, increase damage by 1 (resets next level)"],
-	[Class.Cleric, Item.Scythe, "- Splits nearby imps into two imps.\n- Split imps randomize their damage."],
+	[Class.Cleric, Item.Staff , "- Applies Shield buff to nearby imps."],
+	[Class.Cleric, Item.Dagger, "- Attacks for %m Melee damage.\n- On kill, increase damage by 1 (resets next level)"],
+	[Class.Cleric, Item.Scythe, "- Splits nearby imps into two imps.\n"],
 	
-	[Class.Summoner, Item.Staff , "- Summons random Ethereal imps.\n- Ethereal imps disappear after 4 seconds."],
+	[Class.Summoner, Item.Staff , "- Summons random Ethereal imps.\n"],
 	[Class.Summoner, Item.Scythe, "- Resurrects dead imps."],
 ]
 
@@ -354,8 +354,7 @@ Every 3rd time you kill an enemy, spawn a random Brawler.",
 All Mages now Melee attack for 3 damage.",
 
 "Amulet of Protection
-All imps spawn with 1 Shield.
-(Shields protect against one hit).",
+All imps spawn with 1 Shield.",
 
 "Thorny Bush
 Your Shields no longer protect. Instead, they grant +2 damage
@@ -481,6 +480,30 @@ func accept_relic(id: int):
 		6: relic_attacks_1dmg_no_resurrect = true
 		7: relic_kill_equals_eth_resurrecter = true
 		8: relic_tripledmg_killself = true
+	
+# Sets the flag but does not add it to the owned_relics array.	
+func tmp_accept_relic(id: int):
+	match id:
+		0: relic_always_split = true
+		1: relic_3_enemies_spawn_brawler = true
+		2: relic_mages_melee = true
+		3: relic_spawn_shield = true
+		4: relic_shields_are_damage = true
+		5: relic_daggers_150_speed = true
+		6: relic_attacks_1dmg_no_resurrect = true
+		7: relic_kill_equals_eth_resurrecter = true
+		8: relic_tripledmg_killself = true
+func tmp_reject_relic(id: int):
+	match id:
+		0: relic_always_split = false
+		1: relic_3_enemies_spawn_brawler = false
+		2: relic_mages_melee = false
+		3: relic_spawn_shield = false
+		4: relic_shields_are_damage = false
+		5: relic_daggers_150_speed = false
+		6: relic_attacks_1dmg_no_resurrect = false
+		7: relic_kill_equals_eth_resurrecter = false
+		8: relic_tripledmg_killself = false
 
 func _ready():
 		# Go in fullscreen for nicer experience..?

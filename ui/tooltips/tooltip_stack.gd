@@ -8,6 +8,11 @@ static var instance: TooltipStack = null
 
 func _ready() -> void:
 	instance = self
+	SignalBus.relic_selection_changed.connect(func():
+		# When the relic selection changes, hide ourselves, so that we can
+		# be re-created, because the text of some buffs might have changed.
+		hide_for(current_owner)
+	)
 	
 static func update_label(label, global_pos: Vector2, do_show: bool) -> void:
 	if not instance:
@@ -52,8 +57,15 @@ func add_tooltip(title: String, contents: String) -> void:
 func render_keyword(keyword: String) -> void:
 	match keyword:
 		"Ethereal": add_tooltip("Ethereal", "An Ethereal imp is temporary. They will automatically die after 4 seconds, and cannot be resurrected.")
-		"Shield": add_tooltip("Shield", "A Buff that prevents the next damage that would kill the imp.")
+		"Shield":
+			if GS.relic_shields_are_damage:
+				add_tooltip("Shield", "A Buff that provides +2 damage to the next attack the imp makes.")
+			else:
+				add_tooltip("Shield", "A Buff that prevents the next damage that would kill the imp.")
 		"Buff": add_tooltip("Buff", "A helpful effect that can be temporarily applied to an imp. Each imp can hold up to 3 Buffs.")
+		"Strength": add_tooltip("Strength", "A Buff that provides +1 damage to the next attack the imp makes.")
+		"Split": add_tooltip("Split", "A Split imp behaves normally, except any damage they do is randomized.")
+		
 	
 func render_keyword_tooltips_in_string(key_string: String, avail: Dictionary[String, bool]) -> void:
 	for key in avail.keys():
@@ -66,6 +78,8 @@ func render_keyword_tooltips(key_string: String) -> void:
 		"Ethereal": true,
 		"Shield": true,
 		"Buff": true,
+		"Strength": true,
+		"Split": true
 	}
 	
 	render_keyword_tooltips_in_string(key_string, avail)

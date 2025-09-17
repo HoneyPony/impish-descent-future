@@ -24,6 +24,7 @@ enum Row {
 var kind: RewardKind = RewardKind.IMP
 
 const BBCODE_MODIFIED := "[color=#a0ffc0]"
+const BBCODE_DESC_CHANGE := "[color=#d0d0ff]"
 
 @onready var hover_tex := %HoverTex
 @onready var select_tex := %SelectTex
@@ -54,13 +55,26 @@ func setup_as_relic(id: int) -> void:
 	
 	%ActionSpeed.queue_free()
 
-func setup_as_imp(data, id: int) -> void:
+func setup_as_imp(id: int) -> void:
 	self.kind = RewardKind.IMP
 	self.id = id
 	
+	var data = GS.valid_imps[id]
+	
 	var klass       = data[0]
 	var item        = data[1]
-	var description = data[2]
+	var description: String = data[2]
+	
+	var desc_modified = false
+	
+	if klass == GS.Class.Mage:
+		if GS.relic_mages_melee:
+			description = "- Attacks for %m Melee damage."
+			desc_modified = true
+	if klass == GS.Class.Summoner and item == GS.Item.Scythe:
+		if GS.relic_attacks_1dmg_no_resurrect or GS.relic_always_split:
+			description = "- Attempts to resurrect imps, but a relic blocks this power."
+			desc_modified = true
 	
 	var tex_path: String = GS.get_body_tex_path(klass)
 	
@@ -70,7 +84,8 @@ func setup_as_imp(data, id: int) -> void:
 	
 	%ImpItem.texture = GS.get_item_tex(item)
 	
-	%Relic.queue_free()
+	if %Relic:
+		%Relic.queue_free()
 	
 	var speed := Player.compute_action_speed(klass, item)
 	var speed_percent = int(speed.x * 100) # speed.x is the actual speed
@@ -78,9 +93,30 @@ func setup_as_imp(data, id: int) -> void:
 		%ActionSpeed.text = str(BBCODE_MODIFIED, speed_percent, "%[/color] action speed")
 	else:
 		%ActionSpeed.text = str(speed_percent, "% action speed")
+		
+	if "%m" in description:
+		var melee_damage_tuple := Player.compute_melee_relic_damage(klass, item)
+		var damage: int = melee_damage_tuple.x
+		var modified: bool = bool(melee_damage_tuple.y)
+		var str = str(damage)
+		if modified:
+			str = str(BBCODE_MODIFIED, str, "[/color]")
+		# Replace melee damage in the description
+		description = description.replace("%m", str)
+		
+		# For now, %m is a proxy for melee attack. This is maybe bad. Anyway,
+		# If this is a thing, add a line about holy scepter.
+		if GS.relic_tripledmg_killself:
+			description += str(BBCODE_DESC_CHANGE, "\n- Dies on attack.\n[/color]")
 	
 	%Title.text = str(GS.get_class_name(klass), " / ", GS.get_item_name(item))
 	%Description.text = description
+	
+	if desc_modified:
+		%Description.text = str(BBCODE_DESC_CHANGE, description, "[/color]")
+	
+func update_as_imp() -> void:
+	setup_as_imp(id)
 
 func _physics_process(delta: float) -> void:
 	var is_hovered = card_rect.get_global_rect().has_point(get_global_mouse_position())

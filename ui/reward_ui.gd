@@ -38,16 +38,33 @@ func unselect_main_cards() -> void:
 func unselect_second_imp() -> void:
 	for card in second_imp:
 		card.selected = false
+		
+func update_imps_to_reflect_relics() -> void:
+	SignalBus.relic_selection_changed.emit()
+	for card in cards:
+		card.update_as_imp()
+	if choose_second_imp:
+		for card in second_imp:
+			card.update_as_imp()
 
 func unselect_relics() -> void:
 	for relic in relics:
+		if relic.selected:
+			GS.tmp_reject_relic(relic.id)
 		relic.selected = false
 	%NoRelic.button_pressed = true
+	
+	# TODO: Maybe avoid the redundant update when we just switch to a
+	# different relic (not unselect)?
+	update_imps_to_reflect_relics()
 	
 func select_relic(card: UpgradeCard) -> void:
 	unselect_relics()
 	current_relic = card
+	GS.tmp_accept_relic(card.id)
 	%NoRelic.button_pressed = false
+	
+	update_imps_to_reflect_relics()
 
 func sample_imp(require_combat: bool) -> int:
 	if require_combat:
@@ -78,14 +95,14 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 	var imps = choose_three_imps(require_combat)
 			
 	for i in range(0, 3):
-		cards[i].setup_as_imp(GS.valid_imps[imps[i]], imps[i])
+		cards[i].setup_as_imp(imps[i])
 		
 	cards[0].select_self()
 	
 	if choose_second_imp:
 		var second_set = choose_three_imps(require_combat)
 		for i in range(0, 3):
-			second_imp[i].setup_as_imp(GS.valid_imps[second_set[i]], second_set[i])
+			second_imp[i].setup_as_imp(second_set[i])
 	
 	if relic:
 		var first = GS.avail_relics.pick_random()
