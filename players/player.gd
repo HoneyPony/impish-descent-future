@@ -264,6 +264,8 @@ func compute_basic_properties():
 			if GS.relic_mages_melee:
 				melee_base_damage = 3
 				goal = Goals.GOAL_MELEE
+				# Reset damage mode
+				damage_mode = DamageMode.Fixed
 		GS.Class.Cleric:
 			goal = Goals.GOAL_BUFF
 			buff_target_buff = GS.Buff.Shield
