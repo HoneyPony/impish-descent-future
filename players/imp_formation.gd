@@ -27,13 +27,21 @@ func _physics_process(delta: float) -> void:
 	# This is probably not even what we want...
 	var pos = Vector2.ZERO
 	var players = get_tree().get_nodes_in_group("Players")
+	var contributing_players = 0
 	for player in players:
-		# Get the player's target position
-		var target = global_transform * player.formation_position
-		# Compute the player's 'where should we be for this to be neutral' target
-		var our_rel_pos: Vector2 = player.global_position + global_position - target
-		pos += our_rel_pos
-	pos /= players.size()
+		if player.is_in_formation:
+			# Get the player's target position
+			var target = global_transform * player.formation_position
+			# Compute the player's 'where should we be for this to be neutral' target
+			var our_rel_pos: Vector2 = player.global_position + global_position - target
+			pos += our_rel_pos
+			
+			contributing_players += 1
+	if contributing_players == 0:
+		pos = global_position
+	else:
+		pos /= contributing_players
+	
 	
 	
 	

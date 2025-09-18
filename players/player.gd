@@ -34,6 +34,14 @@ var damage_mode: DamageMode = DamageMode.Fixed
 
 var is_dead: bool = false
 
+## Whether this imp is currently in the formation.
+##
+## When an imp is resurrected, it isn't in the formation until it gets back
+## inside the circle.
+var is_in_formation: bool = true
+
+const FORMATION_RADIUS = 512 * 0.7 * 0.5
+
 # We need to reset this each time we melee swing due to the possibility of buffs.
 # (too stateful, I guess...)
 var melee_base_damage = 1
@@ -479,6 +487,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if is_dead:
+		is_in_formation = false
 		player_anim.update_tree(0.0, true)
 		return
 		
@@ -704,6 +713,10 @@ func _physics_process(delta: float) -> void:
 	target_noise += (target_noise_nosmooth - target_noise) * smoothing
 		
 	# move_target += target_noise
+	
+	# Track whether we got back to the formation
+	if global_position.distance_squared_to(formation.global_position) < FORMATION_RADIUS * FORMATION_RADIUS:
+		is_in_formation = true
 	
 	move_target = GS.get_nav_move_target(global_position, move_target)
 	var vel = (move_target - global_position) * 5.0
@@ -939,6 +952,9 @@ func die(killer_projectile):
 	item.position = item_rest.position
 	# We will stop doing stuff till we're resurrected
 	is_dead = true
+	# We are not part of the formation anymore, and we won't be when we 
+	# respawn, until we get back there
+	is_in_formation = false
 	# TODO Show a "dead" sprite
 
 func add_buff(buff: GS.Buff):
