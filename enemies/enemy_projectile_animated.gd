@@ -57,6 +57,10 @@ func fire_now():
 	
 	var dir = Vector2.DOWN
 	
+	# Safer way to check if get_tree() is null?
+	if not is_inside_tree():
+		return
+	
 	var tree = get_tree()
 	if tree == null:
 		return

@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://xx44173k4hig"]
+[gd_scene load_steps=12 format=3 uid="uid://xx44173k4hig"]
 
 [ext_resource type="Script" uid="uid://yr0b2ntqtqs3" path="res://ui/reward_ui.gd" id="1_0gvwy"]
 [ext_resource type="Theme" uid="uid://bmach4nts3c8n" path="res://ui/rewards_menu_theme.tres" id="4_sf0oj"]
+[ext_resource type="Texture2D" uid="uid://b6hujrc7c0adn" path="res://ui/panel_orangegray_hover.png" id="5_wl8nm"]
 [ext_resource type="Texture2D" uid="uid://bwp1t744i5mcq" path="res://ui/panel_graygray.png" id="6_wl8nm"]
+[ext_resource type="Texture2D" uid="uid://ogabbuhvpgq3" path="res://ui/panel_orangegray.png" id="7_m2nq5"]
 [ext_resource type="PackedScene" uid="uid://c530bsw0pmjhi" path="res://ui/cards/card.tscn" id="7_sf0oj"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m2nq5"]
@@ -11,6 +13,18 @@ texture_margin_left = 100.0
 texture_margin_top = 100.0
 texture_margin_right = 100.0
 texture_margin_bottom = 100.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fqfyu"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4xh40"]
+texture = ExtResource("5_wl8nm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qa03q"]
+texture = ExtResource("7_m2nq5")
+modulate_color = Color(0.458405, 0.458405, 0.458405, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6tjhb"]
+texture = ExtResource("7_m2nq5")
 
 [node name="UpgradeMenu" type="Control"]
 layout_mode = 3
@@ -149,6 +163,10 @@ offset_right = 45.0
 offset_bottom = 146.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fqfyu")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4xh40")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_qa03q")
+theme_override_styles/normal = SubResource("StyleBoxTexture_6tjhb")
 toggle_mode = true
 text = "Skip Relic"
 
