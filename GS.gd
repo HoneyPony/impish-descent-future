@@ -217,11 +217,8 @@ func create_formation_avail() -> Array[Vector2i]:
 func take_middle_formation() -> Vector2i:
 	var result = Vector2i.ZERO
 	if formation_avail_temp.is_empty():
-		print("take_middle_formation: :(")
 		# Nothing really to do...
 		return result
-	print("take_middle_formation: ", formation_avail_temp)
-	print("take_middle_formation: ", Vector2i.ZERO in formation_avail_temp, " ", formation_avail_temp.size())
 		
 	result = formation_avail_temp[0]
 	for i in range(1, formation_avail_temp.size()):
@@ -229,7 +226,6 @@ func take_middle_formation() -> Vector2i:
 		if check.length_squared() < result.length_squared():
 			result = check
 			
-	print("take_middle_formation: ", result)
 	# This should be possible
 	formation_avail_temp.erase(result)
 	sort_formation_temp()
@@ -259,7 +255,6 @@ func finish_spawn_imp(parent: Node, config: Array, global_pos: Vector2, split: b
 	var imp = Player.instantiate()
 	imp.army_id = army_id
 	imp.spawn_as_split_flag = split
-	print("army id -> ", army_id)
 	parent.add_child(imp)
 	imp.global_position = global_pos
 	

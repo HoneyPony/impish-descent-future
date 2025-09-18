@@ -18,8 +18,6 @@ func _on_confirm_pressed() -> void:
 	# TODO: Maybe this should go somewhere else
 	GS.formation_avail_temp = GS.formation_avail_perm.duplicate()
 	GS.sort_formation_temp()
-	print(GS.formation_avail_perm, "; ", Vector2i(0, 0) in GS.formation_avail_perm)
-	print(GS.formation_avail_temp, "; ", Vector2i(0, 0) in GS.formation_avail_temp)
 	
 	# Once the formation is confirmed, re-enable all the enemies
 	for enemy in get_tree().get_nodes_in_group("Enemy"):
