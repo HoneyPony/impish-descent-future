@@ -97,7 +97,7 @@ texture = ExtResource("2_skhln")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_lnosb")
+&"": SubResource("AnimationLibrary_lnosb")
 }
 autoplay = "Spawn"
 

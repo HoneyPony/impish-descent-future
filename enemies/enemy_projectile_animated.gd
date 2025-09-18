@@ -8,7 +8,9 @@ var targetted_player = null
 
 var goal_position = Vector2.ZERO
 
-var projectile_source = null
+## The node that fired the projectile. If it dies before we are ourselves fired,
+## we die.
+var projectile_source: Node = null
 
 const SPEED = 512
 
@@ -36,6 +38,9 @@ func _physics_process(delta):
 	if not fired:
 		var to_goal = (goal_position - global_position)
 		move_and_collide(to_goal * 0.1)
+		if not is_instance_valid(projectile_source):
+			die()
+			return
 	
 	if velocity != Vector2.ZERO:
 		var collide = move_and_collide(velocity * delta)

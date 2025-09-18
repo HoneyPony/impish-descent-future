@@ -392,7 +392,7 @@ rest = Transform2D(-0.0165629, 0.999863, -0.999863, -0.0165629, 40, -8.88744e-05
 [node name="head" type="Bone2D" parent="Node2D/Skeleton2D/root/chest"]
 position = Vector2(-16.7929, -47.7284)
 rotation = -1.51252
-scale = Vector2(0.99984, 0.99984)
+scale = Vector2(0.999839, 0.999839)
 rest = Transform2D(0.058242, -0.998303, 0.998303, 0.058242, -16.7929, -47.7284)
 auto_calculate_length_and_angle = false
 length = 29.06
@@ -441,7 +441,7 @@ bone_angle = 119.489
 [node name="ik_l" type="Bone2D" parent="Node2D/Skeleton2D"]
 position = Vector2(-29, -32)
 rotation = 0.183964
-scale = Vector2(0.999826, 0.999826)
+scale = Vector2(0.999829, 0.999829)
 rest = Transform2D(1, 0, 0, 1, -29, -32)
 auto_calculate_length_and_angle = false
 length = 16.0

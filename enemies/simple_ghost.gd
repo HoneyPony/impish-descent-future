@@ -47,6 +47,7 @@ func handle_simple_projectile(delta):
 			var proj = GS.EnemyProjectile1.instantiate()
 			proj.global_position = global_position
 			proj.goal_position = $FireFrom.global_position + start_offset
+			proj.projectile_source = self
 			add_sibling(proj)
 			
 			start_offset.x += randf_range(dx - 2, dx + 2)
