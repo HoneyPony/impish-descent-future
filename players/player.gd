@@ -398,6 +398,11 @@ func finalize_properties():
 	
 	$Item.slowness = 1.0 / action_speed
 	
+	# Set up hand textures
+	var tex_base = GS.get_body_tex_path(current_class)
+	%HandBot.texture = load(tex_base + "/hand-bot.png")
+	%HandTop.texture = load(tex_base + "/hand-top.png")
+	
 	#print(action_cooldown)
 	
 	
@@ -930,7 +935,7 @@ func die(killer_projectile):
 	#$Item/Look.hide()
 	$Item.modulate = Color(0.5, 0.5, 0.5)
 	player_anim.modulate = Color(0.5, 0.5, 0.5)
-	melee_collision_shape.disabled = true
+	melee_collision_shape.set_deferred("disabled", true)
 	item.position = item_rest.position
 	# We will stop doing stuff till we're resurrected
 	is_dead = true

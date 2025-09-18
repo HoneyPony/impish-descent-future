@@ -11,6 +11,9 @@ func setup_with(klass: GS.Class, item: GS.Item) -> void:
 	%LLeg.texture    = load(tex_path + "/lleg.png")
 	%RLeg.texture    = load(tex_path + "/rleg.png")
 	%Item.texture = GS.get_item_tex(item)
+	
+	%HandBot.texture = load(tex_path + "/hand-bot.png")
+	%HandTop.texture = load(tex_path + "/hand-top.png")
 
 func setup():
 	var first = true

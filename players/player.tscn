@@ -40,7 +40,8 @@ collision_mask = 0
 sync_to_physics = false
 script = ExtResource("2_ot2ip")
 
-[node name="Sprite2D" type="Sprite2D" parent="Item"]
+[node name="HandBot" type="Sprite2D" parent="Item"]
+unique_name_in_owner = true
 position = Vector2(-8.28975, -23.5795)
 scale = Vector2(0.239924, 0.239924)
 texture = ExtResource("3_l1fvc")
@@ -49,7 +50,8 @@ texture = ExtResource("3_l1fvc")
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("4_5illy")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Item"]
+[node name="HandTop" type="Sprite2D" parent="Item"]
+unique_name_in_owner = true
 position = Vector2(-8.28975, -23.5795)
 scale = Vector2(0.239924, 0.239924)
 texture = ExtResource("5_0yn0j")

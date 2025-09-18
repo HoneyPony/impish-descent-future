@@ -34,7 +34,8 @@ position = Vector2(75.4556, 188.639)
 rotation = 0.220064
 scale = Vector2(3.34396, 3.34396)
 
-[node name="Bot" type="Sprite2D" parent="Scaler/Hand"]
+[node name="HandBot" type="Sprite2D" parent="Scaler/Hand"]
+unique_name_in_owner = true
 position = Vector2(-13.1752, -71.624)
 scale = Vector2(0.486566, 0.486566)
 texture = ExtResource("4_swiph")
@@ -45,7 +46,8 @@ position = Vector2(3.63686, -23.8048)
 scale = Vector2(0.507, 0.507)
 texture = ExtResource("5_lquse")
 
-[node name="Top" type="Sprite2D" parent="Scaler/Hand"]
+[node name="HandTop" type="Sprite2D" parent="Scaler/Hand"]
+unique_name_in_owner = true
 position = Vector2(-13.1752, -71.624)
 scale = Vector2(0.486566, 0.486566)
 texture = ExtResource("6_plq0x")
