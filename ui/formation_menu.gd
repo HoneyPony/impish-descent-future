@@ -26,3 +26,5 @@ func _on_confirm_pressed() -> void:
 	
 	hide()
 	%DefeatMenu.going = true
+	
+	SignalBus.real_gameplay_started.emit()
