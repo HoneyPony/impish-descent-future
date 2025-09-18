@@ -87,7 +87,7 @@ func setup_as_imp(id: int) -> void:
 	
 	%ImpItem.texture = GS.get_item_tex(item)
 	
-	if %Relic:
+	if has_node("%Relic"):
 		%Relic.queue_free()
 	
 	var speed := Player.compute_action_speed(klass, item)
