@@ -103,6 +103,7 @@ func setup_rewards(relic: bool = false, require_combat: bool = false):
 		var second_set = choose_three_imps(require_combat)
 		for i in range(0, 3):
 			second_imp[i].setup_as_imp(second_set[i])
+		second_imp[0].select_self()
 	
 	if relic:
 		var first = GS.avail_relics.pick_random()
