@@ -380,7 +380,7 @@ modification_stack = SubResource("SkeletonModificationStack2D_hnwh0")
 [node name="root" type="Bone2D" parent="Node2D/Skeleton2D"]
 position = Vector2(-15, -100)
 rotation = -1.62684
-scale = Vector2(0.999826, 0.999826)
+scale = Vector2(0.999825, 0.999825)
 rest = Transform2D(2.22127e-06, -1, 1, 2.22127e-06, -12, -100)
 
 [node name="chest" type="Bone2D" parent="Node2D/Skeleton2D/root"]

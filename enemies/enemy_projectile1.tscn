@@ -33,7 +33,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_7ple2"]
 resource_name = "Spawn"
-length = 6.0
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -41,7 +41,7 @@ tracks/0/path = NodePath("EnemyProjectile1:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2, 2.96667, 6),
+"times": PackedFloat32Array(0, 1.5, 2, 3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(1e-05, 1e-05), Vector2(0.25, 0.25), Vector2(0.25, 0.25), Vector2(0.2, 0.2)]
@@ -53,7 +53,7 @@ tracks/1/path = NodePath("EnemyProjectile1:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(5, 5, 5, 1), Color(1, 1, 1, 1)]
@@ -65,7 +65,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(2, 6),
+"times": PackedFloat32Array(1.5, 3),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
