@@ -173,10 +173,10 @@ func _ready():
 		%Second3.hide()
 		
 	if choose_second_imp or do_choose_relic:
-		%PanelSmall.hide()
+		#%PanelSmall.hide()
 		%ConfirmSmall.hide()
 	else:
-		%PanelBig.hide()
+		#%PanelBig.hide()
 		%ConfirmBig.hide()
 		%BigTitle.hide()
 	

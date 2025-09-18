@@ -30,6 +30,7 @@ script = ExtResource("1_0gvwy")
 
 [node name="PanelBig" type="Panel" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 23.0
 offset_top = -13.0
